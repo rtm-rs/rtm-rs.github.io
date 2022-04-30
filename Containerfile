@@ -1,8 +1,8 @@
 # Dockerfile
 
-FROM ruby:2.6.3
+FROM ghcr.io/getzola/zola:v0.15.1
 
-WORKDIR /app
+WORKDIR /rtm
 
 EXPOSE 4567
 EXPOSE 1234

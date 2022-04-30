@@ -30,12 +30,31 @@ The official Ramets website.
 ## Container Instructions
 
 1. Install [podman](https://podman.io)
-2. `podman build --tag ramets.org ./`
-3.
+2. `podman pull ghcr.io/getzola/zola:v0.15.1`
+3. Build
+
    ```bash
-   podman stop web
-   podman rm web
-   podman run --volume .:/app --volume node_modules:/app/node_modules --restart=always --name=web --publish 4567:4567 --publish 1234:1234 ramets.org
+   podman stop rtm-site
+   podman rm rtm-site
+   podman run --volume $PWD:/app \
+              --workdir /app \
+              ghcr.io/getzola/zola:v0.15.1 build
+   ```
+
+4. Serve
+
+   ```bash
+   podman stop rtm-site
+   podman rm rtm-site
+   podman run --volume $PWD:/app \
+              --workdir /app \
+              --publish 1111:1111 \
+              --restart=always \
+              --name=rtm-site \
+              ghcr.io/getzola/zola:v0.15.1 serve --interface 0.0.0.0 \
+                                                 --port 1111 \
+                                                 --base-url localhost
+   podman run --volume .:/rtm --volume node_modules:/app/node_modules  --publish 4567:4567 --publish 1234:1234 ramets.org
    ```
 
 ## Localhost Build Instructions
