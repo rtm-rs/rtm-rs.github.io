@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rtm-rs.org/sitemap.xml
