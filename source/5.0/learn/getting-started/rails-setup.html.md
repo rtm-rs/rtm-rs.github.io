@@ -4,7 +4,7 @@ title: Rails Setup
 ---
 
 Rails integration is provided by
-[rom-rails](https://github.com/rom-rb/rom-rails) project. Simply add it to your
+[rom-rails](https://github.com/taqtiqa/ramets-rails) project. Simply add it to your
 Gemfile:
 
 ``` ruby
@@ -143,7 +143,7 @@ end
 There might be some cases where you will want to run ROM alongside ActiveRecord.
 Since ROM is designed to work independently, you will need to take few additional steps.
 
-ROM creates its own connections and Rails above version 5 won't allow you to drop the 
+ROM creates its own connections and Rails above version 5 won't allow you to drop the
 database since there are active connections on it.
 
 ``` ruby

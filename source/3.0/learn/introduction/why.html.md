@@ -48,8 +48,8 @@ This flexibility is of primary concern to ROM.
 
 ROM makes it easy to work with, and switch between, different data sources. A
 minimum structure is provided with more adapters being created every day. The
-primary adapter, [`rom-sql`](https://github.com/rom-rb/rom-sql), is built on
-the battle-tested [`Sequel`](https://github.com/jeremyevans/sequel) library 
+primary adapter, [`rom-sql`](https://github.com/taqtiqa/ramets-sql), is built on
+the battle-tested [`Sequel`](https://github.com/jeremyevans/sequel) library
 which is stable and brings with it immediate support for many different types
 of databases.
 

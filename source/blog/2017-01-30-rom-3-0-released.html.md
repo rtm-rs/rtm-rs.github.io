@@ -274,16 +274,16 @@ Check out [Repository#aggregate](http://www.rubydoc.info/gems/rom-repository/ROM
 
 As part of this release following gems have been published:
 
-* rom 3.0.0 [CHANGELOG](https://github.com/rom-rb/rom/blob/main/CHANGELOG.md#v300-2017-01-29)
-* rom-sql 1.0.0 [CHANGELOG](https://github.com/rom-rb/rom-sql/blob/main/CHANGELOG.md#v100-2017-01-29)
-* rom-repository 1.0.0 [CHANGELOG](https://github.com/rom-rb/rom-repository/blob/main/CHANGELOG.md#v100-2017-01-29)
-* rom-rails 0.9.0 [CHANGELOG](https://github.com/rom-rb/rom-rails/blob/main/CHANGELOG.md#v090--2017-01-30)
+* rom 3.0.0 [CHANGELOG](https://github.com/taqtiqa/ramets/blob/main/CHANGELOG.md#v300-2017-01-29)
+* rom-sql 1.0.0 [CHANGELOG](https://github.com/taqtiqa/ramets-sql/blob/main/CHANGELOG.md#v100-2017-01-29)
+* rom-repository 1.0.0 [CHANGELOG](https://github.com/taqtiqa/ramets-repository/blob/main/CHANGELOG.md#v100-2017-01-29)
+* rom-rails 0.9.0 [CHANGELOG](https://github.com/taqtiqa/ramets-rails/blob/main/CHANGELOG.md#v090--2017-01-30)
 
 Please check out [rom-rb.org](http://rom-rb.org) as it was updated with more documentation!
 
 ## Upgrading
 
-Please do read [rom-sql 1.0.0 upgrade guide](https://github.com/rom-rb/rom-sql/wiki/Upgrading-from-0.9.x-to-1.0.0) as it includes useful information. Making the transition should not be difficult, many applications (including big ones), have been already upgraded during beta/RC testing, and it was a smooth process.
+Please do read [rom-sql 1.0.0 upgrade guide](https://github.com/taqtiqa/ramets-sql/wiki/Upgrading-from-0.9.x-to-1.0.0) as it includes useful information. Making the transition should not be difficult, many applications (including big ones), have been already upgraded during beta/RC testing, and it was a smooth process.
 
 If you have problems with the upgrade, please report an issue or ask for help on [the discussion forum](https://discourse.rom-rb.org).
 

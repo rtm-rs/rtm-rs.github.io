@@ -86,7 +86,7 @@ MyFactory.define(:user) do |f|
 
   # this will use :group builder to create a group for a user
   f.association(:group)
-  
+
   # this will create 2 posts for a user
   f.association(:posts, count: 2)
 end
@@ -117,5 +117,5 @@ For now, give it a try and tell us what you think. If you have any questions or 
 
 Useful links:
 
-* GitHub: [rom-rb/rom-factory](https://github.com/rom-rb/rom-factory)
+* GitHub: [rom-rb/rom-factory](https://github.com/taqtiqa/ramets-factory)
 * API docs: [rubydoc.info/gems/rom-factory](http://www.rubydoc.info/gems/rom-factory/0.5.0)

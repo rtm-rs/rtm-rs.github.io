@@ -1,0 +1,56 @@
+- name: ramets
+  repo: https://github.com/taqtiqa/ramets.git
+- name: ramets-core
+  slug: core
+  repo: https://github.com/taqtiqa/ramets.git
+  versions:
+    - value: "main"
+      branch: "main"
+      component: true
+    - value: "5.2"
+      branch: "release-5.2"
+      dir: core
+- name: ramets-repository
+  slug: repository
+  repo: https://github.com/taqtiqa/ramets.git
+  versions:
+    - value: "main"
+      branch: "main"
+      component: true
+    - value: "5.2"
+      branch: "release-5.2"
+      dir: repository
+- name: ramets-changeset
+  slug: changeset
+  repo: https://github.com/taqtiqa/ramets.git
+  versions:
+    - value: "main"
+      branch: "main"
+      component: true
+    - value: "5.2"
+      branch: "release-5.2"
+      dir: changeset
+- name: ramets-sql
+  slug: sql
+  repo: https://github.com/taqtiqa/ramets-sql.git
+  versions:
+    - value: "3.2"
+      branch: "release-3.2"
+    - value: "3.3"
+      branch: "release-3.3"
+- name: ramets-http
+  slug: http
+  repo: https://github.com/taqtiqa/ramets-http.git
+  versions:
+    - value: "0.8"
+      branch: "release-0.8"
+- name: ramets-factory
+  slug: factory
+  repo: https://github.com/taqtiqa/ramets-factory.git
+  versions:
+    - value: "0.10"
+      branch: "release-0.10"
+- name: ramets-csv
+- name: ramets-git
+- name: ramets-json
+- name: ramets-yaml

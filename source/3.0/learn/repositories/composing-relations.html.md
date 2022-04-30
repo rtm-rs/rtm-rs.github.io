@@ -57,7 +57,7 @@ class PostRepo < ROM::Repository[:posts]
 end
 ```
 
-Check out [API documentation](http://www.rubydoc.info/github/rom-rb/rom-repository/ROM/Repository/RelationProxy/Combine)
+Check out [API documentation](http://www.rubydoc.info/github/taqtiqa/ramets-repository/ROM/Repository/RelationProxy/Combine)
 for all types of compositions that are available in repositories.
 
 ## When to use custom compositions?

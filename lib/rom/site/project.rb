@@ -6,7 +6,7 @@ module ROM
   module Site
     class Project < Middleman::Docsite::Project
       def org
-        'rom-rb'
+        'taqtiqa'
       end
 
       def versioned?

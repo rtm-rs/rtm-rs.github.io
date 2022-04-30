@@ -31,13 +31,14 @@ Middleman::Docsite.projects.select(&:versioned?).each do |project|
   proxy(
     "/learn/#{project.slug}/index.html",
     '/project-index-redirect.html',
-    locals: { path: project.latest_path },
+    # locals: { path: project.latest_path },
+    locals: { path: "/learn/core/5.2" },
     layout: false,
     ignore: true
   )
 end
 
-set :api_base_url, 'https://api.rom-rb.org'
+set :api_base_url, 'https://api.ramets.org'
 set :api_url_template, "#{config.api_base_url}/%{project}/ROM/%{path}"
 set :api_anchor_url_template, "#{config.api_base_url}/%{project}/ROM/%{path}#%{anchor}"
 
@@ -79,7 +80,8 @@ helpers do
       .map { |project|
         sitemap
           .find_resource_by_destination_path(
-            "learn/#{project.slug}/#{project.latest_version}/index.html"
+            # "learn/#{project.slug}/#{project.latest_version}/index.html"
+            "learn/#{project.slug}/5.2/index.html"
           )
       }
   end
@@ -154,7 +156,7 @@ helpers do
   end
 
   def version
-    current_path[%r{(\d+\.\d+)}] || 'main'
+    current_path[%r{(\d+\.\d+)}] || '5.2'
   end
 
   def versions_match?(v1, v2)
@@ -165,7 +167,7 @@ helpers do
     ["3.0", "4.0", "5.0"]
   end
 
-  GH_NEW_ISSUE_URL = 'https://github.com/rom-rb/rom-rb.org/issues/new?labels=%{labels}&assignees=%{assignees}&title=%{title}'
+  GH_NEW_ISSUE_URL = 'https://github.com/taqtiqa/ramets.org/issues/new?labels=%{labels}&assignees=%{assignees}&title=%{title}'
   def feedback_link
     tokens = {
       title: "Feedback on #{URI.encode(head_title)}",
@@ -180,7 +182,7 @@ helpers do
     @current_branch ||= `git branch`.chomp.split("\n").map(&:strip).grep(/^\*/)[0].split.last
   end
 
-  GH_EDIT_FILE_URL = 'https://github.com/rom-rb/rom-rb.org/blob/%{branch}%{current_path}'
+  GH_EDIT_FILE_URL = 'https://github.com/taqtiqa/ramets.org/blob/%{branch}%{current_path}'
   def edit_file_link
     match = current_source_file[%r[(\w+)/(\d+\.\d+)]]
 
@@ -204,10 +206,9 @@ helpers do
 end
 
 # General configuration
+set :relative_links, true
 set :build_dir, 'docs'
 set :layout, 'content'
-set :css_dir, 'assets/stylesheets'
-set :js_dir, 'assets/javascripts'
 
 set :markdown_engine, :redcarpet
 set :markdown, renderer: ROM::Site::Markdown::Renderer,
@@ -235,6 +236,10 @@ activate :external_pipeline,
          command: build? ? 'node ./node_modules/webpack/bin/webpack.js --bail' : 'node ./node_modules/webpack/bin/webpack.js --watch -d',
          source: 'tmp/dist',
          latency: 1
+
+# activate :livereload,
+#          host: '0.0.0.0',
+#          port: '1234'
 
 begin
   require 'pry-byebug'

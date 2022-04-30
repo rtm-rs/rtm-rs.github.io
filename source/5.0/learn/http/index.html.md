@@ -104,7 +104,7 @@ ROM::HTTP::Handlers.register(:my_handlers,
 Then you can use `:my_handlers` when setting up a gateway.
 
 ^INFO
-  Your custom handlers must be compatible with the required interface. Refer to [the built-in JSON handlers](https://github.com/rom-rb/rom-http/blob/main/lib/rom/http/handlers/json.rb) to get the idea.
+  Your custom handlers must be compatible with the required interface. Refer to [the built-in JSON handlers](https://github.com/taqtiqa/ramets-http/blob/main/lib/rom/http/handlers/json.rb) to get the idea.
 ^
 
 ## Learn more

@@ -168,14 +168,14 @@ There are dozens of other improvements and new features, to quickly summarize fe
 
 ## Release information and upgrading
 
-This is a major release with breaking changes. Please refer to [the upgrade guide](https://github.com/rom-rb/rom/wiki/4.0-Upgrade-Guide) for more information. As part of 4.0.0, following gems have been released:
+This is a major release with breaking changes. Please refer to [the upgrade guide](https://github.com/taqtiqa/ramets/wiki/4.0-Upgrade-Guide) for more information. As part of 4.0.0, following gems have been released:
 
-* `rom-core 4.0.0` [CHANGELOG](https://github.com/rom-rb/rom/blob/main/core/CHANGELOG.md)
-* `rom-mapper 1.0.0` [CHANGELOG](https://github.com/rom-rb/rom/blob/main/mapper/CHANGELOG.md)
-* `rom-repository 1.0.0` [CHANGELOG](https://github.com/rom-rb/rom/blob/main/repository/CHANGELOG.md)
-* `rom-changeset 1.0.0` [CHANGELOG](https://github.com/rom-rb/rom/blob/main/changeset/CHANGELOG.md)
-* `rom 4.0.0` [CHANGELOG](https://github.com/rom-rb/rom/blob/main/CHANGELOG.md) - this is now a meta-gem which depends on all core components
-* `rom-sql 2.0.0` [CHANGELOG](https://github.com/rom-rb/rom-sql/blob/main/CHANGELOG.md)
+* `rom-core 4.0.0` [CHANGELOG](https://github.com/taqtiqa/ramets/blob/main/core/CHANGELOG.md)
+* `rom-mapper 1.0.0` [CHANGELOG](https://github.com/taqtiqa/ramets/blob/main/mapper/CHANGELOG.md)
+* `rom-repository 1.0.0` [CHANGELOG](https://github.com/taqtiqa/ramets/blob/main/repository/CHANGELOG.md)
+* `rom-changeset 1.0.0` [CHANGELOG](https://github.com/taqtiqa/ramets/blob/main/changeset/CHANGELOG.md)
+* `rom 4.0.0` [CHANGELOG](https://github.com/taqtiqa/ramets/blob/main/CHANGELOG.md) - this is now a meta-gem which depends on all core components
+* `rom-sql 2.0.0` [CHANGELOG](https://github.com/taqtiqa/ramets-sql/blob/main/CHANGELOG.md)
 
 If you're having problems with the upgrade, please seek for help on [discussion forum](https://discourse.rom-rb.org).
 

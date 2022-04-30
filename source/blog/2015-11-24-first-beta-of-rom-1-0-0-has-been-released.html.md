@@ -10,13 +10,13 @@ The core API, which also includes adapter interface, is stabilizing. This means 
 
 To ease testing we also released beta versions of minor upgrades of other rom gems so that you can install them from rubygems rather than relying on github sources. Overall the release includes following updates:
 
-- [rom](https://rubygems.org/gems/rom) 1.0.0.beta1 [CHANGELOG](https://github.com/rom-rb/rom/blob/main/CHANGELOG.md#v100-to-be-released)
-- [rom-support](https://rubygems.org/gems/rom-support) 1.0.0.beta1 [CHANGELOG](https://github.com/rom-rb/rom-support/blob/main/CHANGELOG.md#v100-to-be-released)
-- [rom-mapper](https://rubygems.org/gems/rom-mapper) 0.3.0.beta1 [CHANGELOG](https://github.com/rom-rb/rom-mapper/blob/main/CHANGELOG.md#v030-to-be-released)
-- [rom-repository](https://rubygems.org/gems/rom-repository) 0.2.0.beta1 [CHANGELOG](https://github.com/rom-rb/rom-repository/blob/main/CHANGELOG.md#v020-to-be-released)
-- [rom-sql](https://rubygems.org/gems/rom-sql) 0.7.0.beta1 [CHANGELOG](https://github.com/rom-rb/rom-sql/blob/main/CHANGELOG.md#v070-to-be-released)
-- [rom-rails](https://rubygems.org/gems/rom-rails) 0.6.0.beta1 [CHANGELOG](https://github.com/rom-rb/rom-rails/blob/main/CHANGELOG.md#v060-to-be-released)
-- [rom-model](https://rubygems.org/gems/rom-model) 0.2.0.beta1 [CHANGELOG](https://github.com/rom-rb/rom-model/blob/main/CHANGELOG.md#020-to-be-released)
+- [rom](https://rubygems.org/gems/rom) 1.0.0.beta1 [CHANGELOG](https://github.com/taqtiqa/ramets/blob/main/CHANGELOG.md#v100-to-be-released)
+- [rom-support](https://rubygems.org/gems/rom-support) 1.0.0.beta1 [CHANGELOG](https://github.com/taqtiqa/ramets-support/blob/main/CHANGELOG.md#v100-to-be-released)
+- [rom-mapper](https://rubygems.org/gems/rom-mapper) 0.3.0.beta1 [CHANGELOG](https://github.com/taqtiqa/ramets-mapper/blob/main/CHANGELOG.md#v030-to-be-released)
+- [rom-repository](https://rubygems.org/gems/rom-repository) 0.2.0.beta1 [CHANGELOG](https://github.com/taqtiqa/ramets-repository/blob/main/CHANGELOG.md#v020-to-be-released)
+- [rom-sql](https://rubygems.org/gems/rom-sql) 0.7.0.beta1 [CHANGELOG](https://github.com/taqtiqa/ramets-sql/blob/main/CHANGELOG.md#v070-to-be-released)
+- [rom-rails](https://rubygems.org/gems/rom-rails) 0.6.0.beta1 [CHANGELOG](https://github.com/taqtiqa/ramets-rails/blob/main/CHANGELOG.md#v060-to-be-released)
+- [rom-model](https://rubygems.org/gems/rom-model) 0.2.0.beta1 [CHANGELOG](https://github.com/taqtiqa/ramets-model/blob/main/CHANGELOG.md#020-to-be-released)
 
 ## Changes In Setup API
 
@@ -227,6 +227,6 @@ Please try out the beta releases and provide feedback. Once we are sure that it 
 
 The final release also means a major update of [rom-rb.org](http://rom-rb.org) along with a new set of documentation, guides and tutorials. This is still a work in progress and needs help, please [get in touch](https://rom-rb.zulipchat.com) if you're interested in helping out.
 
-Once rom 1.0.0 is out there will be major focus on rom-sql and rom-repository. There's a plan to [improve query DSL](https://github.com/rom-rb/rom-sql/issues/48) in rom-sql and provide full CRUD interface for repositories that should be handy for simple applications.
+Once rom 1.0.0 is out there will be major focus on rom-sql and rom-repository. There's a plan to [improve query DSL](https://github.com/taqtiqa/ramets-sql/issues/48) in rom-sql and provide full CRUD interface for repositories that should be handy for simple applications.
 
-If you see any issues, please report them in the individual issue trackers on Github or main [rom](https://github.com/rom-rb/rom/issues) if you are not sure which gem it relates to.
+If you see any issues, please report them in the individual issue trackers on Github or main [rom](https://github.com/taqtiqa/ramets/issues) if you are not sure which gem it relates to.

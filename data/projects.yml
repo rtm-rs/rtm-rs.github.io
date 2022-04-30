@@ -1,74 +1,32 @@
-- name: rom
-  repo: https://github.com/rom-rb/rom.git
-- name: rom-core
+- name: ramets
+  repo: https://github.com/taqtiqa/ramets.git
+- name: ramets-core
   slug: core
-  repo: https://github.com/rom-rb/rom.git
+  repo: https://github.com/taqtiqa/ramets.git
   versions:
-    - value: 'main'
-      branch: 'main'
+    - value: "main"
+      branch: "main"
       component: true
-    - value: '5.2'
-      branch: 'release-5.2'
+    - value: "5.2"
+      branch: "release-5.2"
       dir: core
-- name: rom-repository
+- name: ramets-repository
   slug: repository
-  repo: https://github.com/rom-rb/rom.git
+  repo: https://github.com/taqtiqa/ramets.git
   versions:
-    - value: 'main'
-      branch: 'main'
+    - value: "main"
+      branch: "main"
       component: true
-    - value: '5.2'
-      branch: 'release-5.2'
+    - value: "5.2"
+      branch: "release-5.2"
       dir: repository
-- name: rom-changeset
+- name: ramets-changeset
   slug: changeset
-  repo: https://github.com/rom-rb/rom.git
+  repo: https://github.com/taqtiqa/ramets.git
   versions:
-    - value: 'main'
-      branch: 'main'
+    - value: "main"
+      branch: "main"
       component: true
-    - value: '5.2'
-      branch: 'release-5.2'
+    - value: "5.2"
+      branch: "release-5.2"
       dir: changeset
-- name: rom-rails
-  slug: rails
-  repo: https://github.com/rom-rb/rom-rails.git
-  versions:
-    - value: '2.2'
-      branch: 'release-2.2'
-- name: rom-sql
-  slug: sql
-  repo: https://github.com/rom-rb/rom-sql.git
-  versions:
-    -
-      value: '3.2'
-      branch: 'release-3.2'
-    -
-      value: '3.3'
-      branch: 'release-3.3'
-- name: rom-http
-  slug: http
-  repo: https://github.com/rom-rb/rom-http.git
-  versions:
-    - value: '0.8'
-      branch: 'release-0.8'
-- name: rom-factory
-  slug: factory
-  repo: https://github.com/rom-rb/rom-factory.git
-  versions:
-    - value: '0.10'
-      branch: 'release-0.10'
-- name: rom-elasticsearch
-- name: rom-cassandra
-- name: rom-couchdb
-- name: rom-csv
-- name: rom-event_store
-- name: rom-git
-- name: rom-influxdb
-- name: rom-json
-- name: rom-kafka
-- name: rom-mongo
-- name: rom-neo4j
-- name: rom-rethinkdb
-- name: rom-yaml
-- name: rom-yesql

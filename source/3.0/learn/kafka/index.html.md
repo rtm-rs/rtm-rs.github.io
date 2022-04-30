@@ -318,9 +318,9 @@ Mappers can be applied to relations and commands in a
 [kafka]: http://kafka.apache.org/
 [poseidon]: https://github.com/bpot/poseidon
 [rom-commands]: /%{version}/learn/advanced/commands
-[rom-github]: https://github.com/rom-rb/rom
+[rom-github]: https://github.com/taqtiqa/ramets
 [rom-zulip]: https://rom-rb.zulipchat.com
-[rom-kafka]: https://github.com/rom-rb/rom-kafka
+[rom-kafka]: https://github.com/taqtiqa/ramets-kafka
 [rom-mappers]: /%{version}/learn/advanced/mappers
 [rom-relations]: /%{version}/learn/core/relations
 [rom-setup]: /%{version}/learn/getting-started/setup-dsl

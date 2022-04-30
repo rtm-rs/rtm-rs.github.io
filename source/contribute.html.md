@@ -10,7 +10,7 @@ The best way to contribute to ROM is to use it. The more places it’s used and 
 
 ## Getting Started
 
-Install [ROM](https://github.com/rom-rb/rom) and [its dependencies](/status) and try it out in an existing project.
+Install [ROM](https://github.com/taqtiqa/ramets) and [its dependencies](/status) and try it out in an existing project.
 
 Dive deeper into the ROM ecosystem by writing an adapter for a new data source.
 
@@ -18,11 +18,11 @@ Dive deeper into the ROM ecosystem by writing an adapter for a new data source.
 
 Join [the conversation on Zulip](https://rom-rb.zulipchat.com) to discuss anything related to ROM.
 
-Report bugs and offer feedback on features via [GitHub Issues](https://github.com/rom-rb/rom/issues).
+Report bugs and offer feedback on features via [GitHub Issues](https://github.com/taqtiqa/ramets/issues).
 
 ## Contribute to Core Libraries
 
-Look for issues marked with [help wanted](https://github.com/rom-rb/rom/labels/help%20wanted). That’s a sign that a unit of work is up for grabs.
+Look for issues marked with [help wanted](https://github.com/taqtiqa/ramets/labels/help%20wanted). That’s a sign that a unit of work is up for grabs.
 
 Before diving into code contributions, it’s best to check in [on chat](https://rom-rb.zulipchat.com) or post a comment on the relevant GitHub issue to let others know you’re interested and ensure you understand the context.
 

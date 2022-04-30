@@ -33,7 +33,7 @@ the excellent [Sequel](http://sequel.jeremyevans.net/) gem by Jeremy Evans.
 However, Sequel is an implementation detail of ROM and as such should not be
 relied upon for functionality. If <mark>rom-sql</mark> is missing functionality
 that can be accomplished in Sequel then please leave a report in our [issue
-tracker](https://github.com/rom-rb/rom-rb.org/issues).
+tracker](https://github.com/taqtiqa/ramets.org/issues).
 
 ^INFO
   The SQL Adapter documentation is still being created & revised. If something
@@ -63,11 +63,11 @@ script like so:
 require 'rom-sql'
 ```
 
-Once loaded the SQL Adapter will register itself with ROM and become available 
+Once loaded the SQL Adapter will register itself with ROM and become available
 for immediate use via the `:sql` identifier.
 
 ^INFO
-  Each database type requires a separate driver gem to also be installed. 
+  Each database type requires a separate driver gem to also be installed.
   Be sure to check out the documentation of your preferred database for
   more information.
 ^
@@ -93,14 +93,14 @@ An example of this can be seen below:
 
 ```ruby
   opts = {
-    username: 'postgres', 
-    password: 'postgres', 
+    username: 'postgres',
+    password: 'postgres',
     encoding: 'UTF8'
   }
-  
+
   # Options Hash
   config = ROM::Configuration.new(:sql, 'postgres://localhost:5432/mydbname', opts)
-  
+
   # Named Parameters
   config = ROM::Configuration.new(:sql, 'postgres://localhost/mydbname', port: 5432)
 ```
@@ -125,19 +125,19 @@ configure the connection between ROM and the database.
     <td>String</td>
     <td>Name of the database to open after successful connection.</td>
   </tr>
-  
+
   <tr>
     <td>:user</td>
     <td>String</td>
     <td>Name of the user account to use when logging in.</td>
   </tr>
-  
+
   <tr>
     <td>:password</td>
     <td>String</td>
     <td>Password that matches the user account.</td>
   </tr>
-  
+
   <tr>
     <td>:adapter</td>
     <td>Symbol</td>
@@ -145,7 +145,7 @@ configure the connection between ROM and the database.
       Sets the database driver which should be used when making a connection.
       This option is only to be used in situations where a connection string
       is <strong>NOT</strong> provided to the ROM Configuration instance.
-      
+
       <h5>Available Options:</h5>
       <ul>
         <li>:postgres</li>
@@ -155,7 +155,7 @@ configure the connection between ROM and the database.
       </ul>
     </td>
   </tr>
-  
+
   <tr>
     <td>:host</td>
     <td>String</td>
@@ -164,19 +164,19 @@ configure the connection between ROM and the database.
       when the adapter option is being used.
     </td>
   </tr>
-  
+
   <tr>
     <td>:port</td>
     <td>Integer</td>
     <td>Port number used during connection.</td>
   </tr>
-  
+
   <tr>
     <td>:max_connections</td>
     <td>Integer</td>
     <td>The maximum number of connections the connection pool will open (default 4).</td>
   </tr>
-  
+
 </tbody>
 </table>
 
@@ -185,7 +185,7 @@ configure the connection between ROM and the database.
 *Requires:* `pg` gem <br>
 *Recommends:* `sequel_pg` gem in addition to `pg` gem
 
-The only supported structure for connecting to PostgreSQL databases is the 
+The only supported structure for connecting to PostgreSQL databases is the
 Connection String URI format:
 
 ```
@@ -202,8 +202,8 @@ documentation page.
 
 ```ruby
   opts = {
-    username: 'postgres', 
-    password: 'postgres', 
+    username: 'postgres',
+    password: 'postgres',
     encoding: 'UTF8'
   }
   config = ROM::Configuration.new(:sql, 'postgres://localhost/database_name', opts)
@@ -228,7 +228,7 @@ documentation page.
     <td>String, Array&lt;String&gt;</td>
     <td>['$user', 'public']</td>
   </tr>
-  
+
   <tr>
     <td>:encoding</td>
     <td>
@@ -240,59 +240,59 @@ documentation page.
     <td>String</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:connect_timeout</td>
     <td>Set the number of seconds to wait for a connection</td>
     <td>Integer</td>
     <td>20</td>
   </tr>
-  
+
   <tr>
     <td>:driver_options</td>
     <td>Symbolized keys hash of options that are passed to the <mark>pg</mark> gem</td>
     <td>Hash</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:sslmode</td>
     <td>
       Determines the priority or whether or not an SSL TCP/IP connection is to
       be made.
-      
+
       <h5> Available Options:</h5>
       <ul>
         <li>
           <mark>'disable'</mark>
           - Only try non-SSL Connections
         </li>
-        
+
         <li>
           <mark>'allow'</mark>
           - first try a non-SSL connection; if that fails, try an SSL connection
         </li>
-        
+
         <li>
           <mark>'prefer'</mark>
           - first try an SSL connection; if that fails, try a non SSL connection
         </li>
-        
+
         <li>
           <mark>'require'</mark>
           - only try an SSL connection. If a root CA file is present, verify the
             certificate in the same way as if verify-ca was specified
         </li>
-        
+
         <li>
           <mark>'verify-ca'</mark>
           - only try an SSL connection, and verify that the server certificate is
             issued by a trusted certificate authority (CA)
         </li>
-        
+
         <li>
           <mark>'verify-full'</mark>
-          - only try an SSL connection, verify that the server certificate is 
+          - only try an SSL connection, verify that the server certificate is
             issued by a trusted CA and that the requested server host name matches
             that in the certificate
         </li>
@@ -301,39 +301,39 @@ documentation page.
     <td>String</td>
     <td>'disable'</td>
   </tr>
-  
+
   <tr>
     <td>:sslrootcert</td>
     <td>Path to the root SSL certificate to use.</td>
     <td>String</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:use_iso_data_format</td>
     <td>When enabled, Sequel will ensure the ISO 8601 date format is used.</td>
     <td>Boolean</td>
     <td>true</td>
   </tr>
-  
+
   <tr>
     <td>:convert_infinite_timestamps</td>
     <td>
       Determines if infinite timestamps/dates will be converted. By default, an
       error is raised and no conversion is done.
-      
+
       <h5> Available Options:</h5>
       <ul>
         <li>
           <mark>:nil</mark>
           - Converts the timestamp to nil
         </li>
-        
+
         <li>
           <mark>:string</mark>
           - Leaves the timestamp as a string
         </li>
-        
+
         <li>
           <mark>:float</mark>
           - Converts to an infinite float
@@ -343,7 +343,7 @@ documentation page.
     <td>Symbol</td>
     <td>true</td>
   </tr>
-  
+
 </tbody>
 </table>
 
@@ -394,7 +394,7 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>String</td>
     <td>'UTF8'</td>
   </tr>
-  
+
   <tr>
     <td>:write_timeout</td>
     <td>
@@ -403,7 +403,7 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>Integer</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:read_timeout</td>
     <td>
@@ -412,7 +412,7 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>Integer</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:connect_timeout</td>
     <td>
@@ -421,7 +421,7 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>Integer</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>Boolean</td>
     <td>
@@ -431,13 +431,13 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>:secure_auth</td>
     <td>true</td>
   </tr>
-  
+
   <tr>
     <td>:sql_mode</td>
     <td>
       Sets the sql_mode(s) for a given connection.
       eg: <mark>[:no_zero_date, :pipes_as_concat]</mark>
-      
+
       <p>
         Available sql_modes can be found in MySQL
         <a href="https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html#sql-mode-full">Server SQL Modes</a>
@@ -447,15 +447,15 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>Array&lt;String, Symbol&gt;, String, Symbol</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:flags</td>
     <td>
       Flags added to an array are added to the Default flags, while flags with a
       <mark>-</mark> (minus) prefix are removed from the default flags.
-      
+
       For more information see <a href="https://github.com/brianmario/mysql2#flags-option-parsing">Flag Option Parsing</a>.
-      
+
       <h5> Available Options:</h5>
       <ul>
         <li>'REMEMBER_OPTIONS'</li>
@@ -470,7 +470,7 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>String, Array&lt;String&gt;</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:socket</td>
     <td>
@@ -479,36 +479,36 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>String</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:sslmode</td>
     <td>
       Determines the priority or whether or not a SSL TCP/IP connection is to
       be made.
-      
+
       <h5> Available Options:</h5>
       <ul>
         <li>
           <mark>:disabled</mark>
           - Establish an unencrypted connection
         </li>
-        
+
         <li>
           <mark>:preferred</mark>
           - First try a non-SSL connection; if that fails, try an SSL connection
         </li>
-        
+
         <li>
           <mark>:required</mark>
           - Establish a secure connection if the server supports secure connections
         </li>
-        
+
         <li>
           <mark>:verify_ca</mark>
           - Only establish an SSL connection and verify the servers TLS certificate
             against the configured Certificate Authority (CA) certificates.
         </li>
-        
+
         <li>
           <mark>:verify_identity</mark>
           - Like <mark>:verify_ca</mark>, but additionally verify the server
@@ -519,7 +519,7 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>Symbol</td>
     <td>:disabled</td>
   </tr>
-  
+
   <tr>
     <td>:sslkey</td>
     <td>
@@ -528,7 +528,7 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>String</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:sslcert</td>
     <td>
@@ -537,7 +537,7 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>String</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:sslca</td>
     <td>
@@ -546,7 +546,7 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>String</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:sslcapath</td>
     <td>
@@ -555,7 +555,7 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>String</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:sslcipher</td>
     <td>
@@ -566,7 +566,7 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
     <td>String</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:sslverify</td>
     <td>
@@ -585,7 +585,7 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
 
 SQLite is a self contained in-process database that supports loading databases
 from files located on the file system or by creating and running the database
-completely in-memory. 
+completely in-memory.
 
 Documentation on the connection string format has been skipped for this database driver as there
 are no configuration options supported through the uri. The below
@@ -597,9 +597,9 @@ to this type of database.
   This is a restriction imposed by SQLite itself and for this reason,
   Sequel sets the maximum number of connections in the connection pool to `1`.
   Overriding the connection pool limit will result in weird behavior as new
-  connections will be to separate memory databases. 
+  connections will be to separate memory databases.
 
-For more information see 
+For more information see
 [Sequel's SQLite](http://sequel.jeremyevans.net/rdoc/files/doc/opening_databases_rdoc.html#label-sqlite)
 documentation or for URI file formats see
 [URI Filenames in SQLite](https://www.sqlite.org/uri.html)
@@ -611,16 +611,16 @@ documentation or for URI file formats see
   opts = {
     readonly: true
   }
-  
+
   # Absolute path examples
   config = ROM::Configuration.new(:sql, 'sqlite://path/to/db-file.db', opts)
   config = ROM::Configuration.new(:sql, 'sqlite://C:/databases/db-file.db', opts)
   config = ROM::Configuration.new(:sql, 'sqlite:///var/sqlite/db-file.db', opts)
-  
+
   # Relative path examples
   config = ROM::Configuration.new(:sql, 'sqlite://db-file.db', opts)
   config = ROM::Configuration.new(:sql, 'sqlite://../db-file.db', opts)
-  
+
   # In-memory database example
   config = ROM::Configuration.new(:sql, 'sqlite::memory', opts)
 ```
@@ -646,7 +646,7 @@ documentation or for URI file formats see
     <td>String</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:host</td>
     <td>
@@ -655,7 +655,7 @@ documentation or for URI file formats see
     <td>String</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:port</td>
     <td>
@@ -664,7 +664,7 @@ documentation or for URI file formats see
     <td>String</td>
     <td></td>
   </tr>
-  
+
   <tr>
     <td>:readonly</td>
     <td>
@@ -673,7 +673,7 @@ documentation or for URI file formats see
     <td>Boolean</td>
     <td>false</td>
   </tr>
-  
+
   <tr>
     <td>:timeout</td>
     <td>
@@ -682,7 +682,7 @@ documentation or for URI file formats see
     <td>Integer</td>
     <td>5000</td>
   </tr>
-  
+
 </tbody>
 </table>
 
@@ -727,7 +727,7 @@ OCI8 driver connection strings use the following pattern:
     <td>Boolean</td>
     <td>false</td>
   </tr>
-  
+
   <tr>
     <td>:prefetch_rows</td>
     <td>
@@ -737,7 +737,7 @@ OCI8 driver connection strings use the following pattern:
     <td>Integer</td>
     <td>100</td>
   </tr>
-  
+
   <tr>
     <td>:privilege</td>
     <td>
@@ -755,7 +755,7 @@ OCI8 driver connection strings use the following pattern:
     <td>String</td>
     <td></td>
   </tr>
-  
+
 </tbody>
 </table>
 
@@ -783,7 +783,7 @@ ones documented here.
 
 These drivers have not been documented because their use is fairly uncommon
 however they should work and documentation for connecting with each of these
-drivers can be found in Sequel's 
+drivers can be found in Sequel's
 [Opening Databases](http://sequel.jeremyevans.net/rdoc/files/doc/opening_databases_rdoc.html)
 document.
 
@@ -793,12 +793,12 @@ document.
 
 In a JRuby environment, it's best to use the `JDBC` driver available to
 you via the Java SDK. Support for databases in JRuby is handled via
-Sequel's JDBC sub adapters. 
+Sequel's JDBC sub adapters.
 
 A list of supported databases can be found below along with additional
 requirements:
 
-| Database   | Required Gem     | 
+| Database   | Required Gem     |
 | ---------- | ---------------- |
 | Derby      | jdbc-derby       |
 | H2         | jdbc-h2          |
@@ -826,7 +826,7 @@ jdbc:mysql://localhost/database?user=root&password=root
 jdbc:sqlite::memory
 ```
 
-For more information see 
+For more information see
 [Sequel's JDBC](http://sequel.jeremyevans.net/rdoc/files/doc/opening_databases_rdoc.html#label-jdbc+)
 and
 [Java SE - Database](http://www.oracle.com/technetwork/java/javase/jdbc/index.html)
@@ -840,6 +840,6 @@ Future addition should include configuring sequel and extensions
 
 ```ruby
 Sequel.application_timezone = :utc
-``` 
+```
 
 -->

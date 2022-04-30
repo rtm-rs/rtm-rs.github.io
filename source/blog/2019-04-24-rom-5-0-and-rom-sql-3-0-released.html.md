@@ -85,10 +85,10 @@ You can also expect new releases of `rom-elasticsearch`, `rom-http` and `rom-yam
 
 ### Release information and upgrading
 
-This is a major release with breaking changes. Please refer to [the upgrade guide](https://github.com/rom-rb/rom/wiki/5.0-Upgrade-Guide) for more information. As part of 5.0.0, following gems have been released:
+This is a major release with breaking changes. Please refer to [the upgrade guide](https://github.com/taqtiqa/ramets/wiki/5.0-Upgrade-Guide) for more information. As part of 5.0.0, following gems have been released:
 
-* `rom 5.0.0` [CHANGELOG](https://github.com/rom-rb/rom/blob/main/core/CHANGELOG.md)
-* `rom-sql 3.0.0` [CHANGELOG](https://github.com/rom-rb/rom-sql/blob/main/CHANGELOG.md)
-* `rom-factory 0.8.0` [CHANGELOG](https://github.com/rom-rb/rom-factory/blob/main/CHANGELOG.md)
+* `rom 5.0.0` [CHANGELOG](https://github.com/taqtiqa/ramets/blob/main/core/CHANGELOG.md)
+* `rom-sql 3.0.0` [CHANGELOG](https://github.com/taqtiqa/ramets-sql/blob/main/CHANGELOG.md)
+* `rom-factory 0.8.0` [CHANGELOG](https://github.com/taqtiqa/ramets-factory/blob/main/CHANGELOG.md)
 
 If you're having problems with the upgrade, please ask questions on [discussion forum](https://discourse.rom-rb.org) or [our community chat](https://rom-rb.zulipchat.com).
