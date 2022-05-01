@@ -1,6 +1,6 @@
 +++
 title = "Quick Start"
-description = "Learn how to work with ROM repositories"
+description = "Learn how to work with RTM repositories"
 date = 2022-05-01T15:00:00+00:00
 updated = 2022-05-01T15:00:00+00:00
 draft = false
@@ -9,7 +9,7 @@ sort_by = "weight"
 template = "docs/page.html"
 
 [extra]
-lead = 'Learn how to work with ROM repositories'
+lead = 'Learn how to work with RTM repositories'
 toc = true
 top = false
 +++
@@ -82,7 +82,7 @@ By default, repos return simple `ROM::Struct` objects. You'll learn more about t
 
 ### Update and Delete
 
-Update and Delete commands require restricting relations so that ROM knows exactly which records to modify. Provide :update and :delete with the symbol name of the method to call to get that restricted relation.
+Update and Delete commands require restricting relations so that RTM knows exactly which records to modify. Provide :update and :delete with the symbol name of the method to call to get that restricted relation.
 
 The most popular adapter, rom-sql, automatically defines a method, `by_pk`, that restricts by the primary key. In projects with rom-sql, we would use it to define update and delete commands in a repo:
 

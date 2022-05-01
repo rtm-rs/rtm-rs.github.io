@@ -14,10 +14,10 @@ toc = true
 top = false
 +++
 
-ROM makes very little assumptions about its adapters that's why it is simple to
+RTM makes very little assumptions about its adapters that's why it is simple to
 build a custom adapter that will provide access to a specific datasource.
 
-A ROM adapter must provide the following components:
+A RTM adapter must provide the following components:
 
 * `ROM::Gateway` subclass that implements required interface
 * `ROM::Relation` subclass that exposes adapter-specific interface for queries
@@ -33,7 +33,7 @@ Let's build an adapter for a plain Ruby array, because why not.
 
 ## Gateway
 
-Adapter's gateway is used by ROM to retrieve datasets and inject them into
+Adapter's gateway is used by RTM to retrieve datasets and inject them into
 adapter's relations as their data-access backends. Here's a simple
 implementation:
 
@@ -69,7 +69,7 @@ gateway.dataset?(:users) # true
 gateway.dataset?(:tasks) # true
 ```
 
-This allows ROM to ask for specific datasets from your gateway.
+This allows RTM to ask for specific datasets from your gateway.
 
 ## Relation
 
@@ -105,13 +105,13 @@ relation.select { |tuple| tuple[:name] == 'Jane' }.inspect
 ```
 
 ^WARNING
-Please remember about setting `adapter` identifier - it is used by ROM to infer component types specific to a given adapter. It's essential during the setup.
+Please remember about setting `adapter` identifier - it is used by RTM to infer component types specific to a given adapter. It's essential during the setup.
 ^
 
 ## Registering Your Adapter
 
 The adapter must register itself under specific identifier which then can be
-used to set up ROM components for that particular adapter.
+used to set up RTM components for that particular adapter.
 
 To register your adapter:
 
@@ -149,7 +149,7 @@ Adapter commands are optional because you don't always want to change data in a
 given datastore. If your datastore supports create/update/delete operations you
 can provide an interface for that using commands.
 
-ROM adheres to the CQRS but it doesn't enforce it, this means that relations do
+RTM adheres to the CQRS but it doesn't enforce it, this means that relations do
 implement CRUD and commands are just thin wrappers around CUD and they depend on
 relations.
 
@@ -158,7 +158,7 @@ namespace.
 
 ### Common Command Behavior
 
-Every ROM command has a couple of features available out-of-the-box:
+Every RTM command has a couple of features available out-of-the-box:
 
 * `relation` - returns current relation for the current command
 * `source` - original relation that was injected to the current command initially
@@ -293,7 +293,7 @@ attributes.
 
 ### Putting It All Together
 
-Once your command classes are defined ROM will pick them up from your namespace
+Once your command classes are defined RTM will pick them up from your namespace
 and they will be available during setup:
 
 ``` ruby

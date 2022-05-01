@@ -24,4 +24,4 @@ In this section you can learn about APIs that are common for all adapters. Once 
 - [Commands](/learn/core/%{version}/commands) explains the purpose and basic usage of commands
 - [Structs](/learn/core/%{version}/structs) explains the purpose and basic usage of structs
 - [Mappers](/learn/core/%{version}/mappers) explains the purpose and basic usage of mappers
-- [Framework setup](/learn/core/%{version}/framework-setup) explains how to manually set up ROM components
+- [Framework setup](/learn/core/%{version}/framework-setup) explains how to manually set up RTM components

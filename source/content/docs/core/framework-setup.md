@@ -17,9 +17,9 @@ top = false
 Quick style setup is suitable for simple, quick'n'dirty scripts that need to access databases, in a typical application setup, you want to break down individual component definitions, like relations or commands, into separate files and define them as explicit classes.
 
 ^INFO
-#### ROM & Frameworks
+#### RTM & Frameworks
 
-Framework integrations **take care of the setup for you**. If you want to use ROM with a framework, please refer to specific instructions for that framework
+Framework integrations **take care of the setup for you**. If you want to use RTM with a framework, please refer to specific instructions for that framework
 ^
 
 ## Setup
@@ -36,7 +36,7 @@ When you’re finished configuring, pass the configuration object to `ROM.contai
 
 ### Registering Components
 
-ROM components need to be registered with the ROM configuration in order to be used.
+RTM components need to be registered with the RTM configuration in order to be used.
 
 ```ruby
 configuration = ROM::Configuration.new(:memory, 'memory://test')
@@ -59,7 +59,7 @@ You can pass multiple components to each `register` call, as a list of arguments
 
 ### Auto-registration
 
-ROM provides `auto_registration` as a convenience method for automatically `require`-ing and registering components that are not declared with the DSL. At a minimum, `auto_registration` requires a base directory. By default, it will load relations from `<base>/relations`, commands from `<base>/commands`, and mappers from `<base>/mappers`.
+RTM provides `auto_registration` as a convenience method for automatically `require`-ing and registering components that are not declared with the DSL. At a minimum, `auto_registration` requires a base directory. By default, it will load relations from `<base>/relations`, commands from `<base>/commands`, and mappers from `<base>/mappers`.
 
 #### Namespaces inferred from directory structure
 
@@ -99,7 +99,7 @@ module Persistence
 end
 ```
 
-Notice that the directory structure is different from our module structure. Since we use `Persistence` as our namespace, we need to set it explicitly so ROM can locate our relation after loading:
+Notice that the directory structure is different from our module structure. Since we use `Persistence` as our namespace, we need to set it explicitly so RTM can locate our relation after loading:
 
 ```ruby
 configuration = ROM::Configuration.new(:memory)

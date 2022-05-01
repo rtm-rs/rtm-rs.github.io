@@ -14,7 +14,7 @@ toc = true
 top = false
 +++
 
-Associations in ROM are based on Relation API, you can configure them using `associations`
+Associations in RTM are based on Relation API, you can configure them using `associations`
 block in schema definition. All adapters have access to this API and you can define
 associations between different databases too.
 

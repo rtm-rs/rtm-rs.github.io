@@ -18,7 +18,7 @@ top = false
 
 Ruby Object Mapper (rom-rb) is a *fast* ruby persistence library with the goal of providing powerful object mapping capabilities without limiting the full *power* of the underlying datastore.
 
-More specifically, ROM exists to:
+More specifically, RTM exists to:
 
 * Isolate the application from persistence details
 * Provide minimum infrastructure for mapping and persistence
@@ -48,24 +48,24 @@ The problems with ORMs are numerous, and the above issues only begin to scratch 
 
 ## Why use ROM
 
-ROM provides an alternative way of handling persistence and related concerns. It focuses on *simplicity* by providing enough *abstractions* to help you efficiently **turn your raw data into meaningful information**.
+RTM provides an alternative way of handling persistence and related concerns. It focuses on *simplicity* by providing enough *abstractions* to help you efficiently **turn your raw data into meaningful information**.
 
-While many ORMs focus on objects and state tracking, **ROM focuses on data and transformations**. Users of ROM implement `Relations`, which give access to data. Then using the relations you can associate them with other relations and query the data using features offered by the datastore. Once raw data has been loaded, it gets coerced into configured data types, and from there can be mapped into whatever format is needed by the application domain, including plain ruby hashes, convenient ROM Structs, or custom objects.
+While many ORMs focus on objects and state tracking, **RTM focuses on data and transformations**. Users of RTM implement `Relations`, which give access to data. Then using the relations you can associate them with other relations and query the data using features offered by the datastore. Once raw data has been loaded, it gets coerced into configured data types, and from there can be mapped into whatever format is needed by the application domain, including plain ruby hashes, convenient RTM Structs, or custom objects.
 
 The important concept above is that during the entire process there is no dirty tracking, no identity management, and no mutable state. Just *pure* data being loaded and mapped as a result of a **direct** request made from the application domain. Data can be persisted in ways that take advantage of the features provided by the datastore, and the application domain can receive that data in any form it needs. Furthermore, you get the added benefits of:
 
 * decoupling the application from the persistence layer without sacrificing flexibility, and
 * bypassing the critical problems associated with object relational mapping and mutable state
 
-Most likely, a decent percentage of developers will see the added abstractions as extraneous boilerplate. For those people, we ask that you give ROM a chance, embrace its patterns and principles and see just how much easier it is to pull and transform your data. For those who have been burned by *simple* ORMs in the past, ROM represents a real, solid alternative.
+Most likely, a decent percentage of developers will see the added abstractions as extraneous boilerplate. For those people, we ask that you give RTM a chance, embrace its patterns and principles and see just how much easier it is to pull and transform your data. For those who have been burned by *simple* ORMs in the past, RTM represents a real, solid alternative.
 
 ## Principles & Design
 
-ROM leverages Ruby’s linguistic strengths with a blend of Object Oriented and Functional styles. Following a powerful composition pattern, every ROM object shares a common pipeline interface and returns data without side-effects.
+RTM leverages Ruby’s linguistic strengths with a blend of Object Oriented and Functional styles. Following a powerful composition pattern, every RTM object shares a common pipeline interface and returns data without side-effects.
 
-All ROM components are stand-alone; they are loosely coupled, can be used independently, and follow the single responsibility principle. A single object that handles coercion, state, persistence, validation, and all-important business logic rapidly becomes complex. Instead, ROM provides the infrastructure that allows you to easily create small, dedicated classes for handling each concern individually, and then ties them together in a developer-friendly way.
+All RTM components are stand-alone; they are loosely coupled, can be used independently, and follow the single responsibility principle. A single object that handles coercion, state, persistence, validation, and all-important business logic rapidly becomes complex. Instead, RTM provides the infrastructure that allows you to easily create small, dedicated classes for handling each concern individually, and then ties them together in a developer-friendly way.
 
-Above all else ROM favors:
+Above all else RTM favors:
 
 * **Explicitness** over "magic" whenever possible
 * **Speed**, because performance is a *feature*
@@ -73,7 +73,7 @@ Above all else ROM favors:
 
 ## Inspirations, Ideas, and Friends
 
-Like ROM & its fundamental ideas? You should check these out, too:
+Like RTM & its fundamental ideas? You should check these out, too:
 
 * [Rich Hickey on state, immutability, and how to leverage OO principles](http://www.infoq.com/presentations/Are-We-There-Yet-Rich-Hickey)
 * [Gary Bernhardt on boundaries, immutability, and clean design](https://www.youtube.com/watch?v=yTkzNHF6rMs)

@@ -15,7 +15,7 @@ top = false
 +++
 
 
-ROM provides an abstract `HTTP` adapter that you can use to build HTTP client libraries. It provides powerful core features that work out-of-the-box. You have access to relation schemas, custom attribute types, aliasing, auto-mapping to structs, using custom struct namespaces and more.
+RTM provides an abstract `HTTP` adapter that you can use to build HTTP client libraries. It provides powerful core features that work out-of-the-box. You have access to relation schemas, custom attribute types, aliasing, auto-mapping to structs, using custom struct namespaces and more.
 
 Requests and responses can be handled by the built-in handlers, or you can register your own.
 
@@ -36,7 +36,7 @@ script like so:
 require 'rom-http'
 ```
 
-Once loaded the http Adapter will register itself with ROM and become available
+Once loaded the http Adapter will register itself with RTM and become available
 for immediate use via the `:http` identifier.
 
 ## Connection

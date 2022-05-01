@@ -14,12 +14,12 @@ toc = true
 top = false
 +++
 
-This guide explains how to quickly configure ROM using setup DSL, which is suitable for simple scripts.
+This guide explains how to quickly configure RTM using setup DSL, which is suitable for simple scripts.
 
 ^INFO
-#### ROM & frameworks
+#### RTM & frameworks
 
-If you want to use ROM with a framework, see specific instructions in the documentation for that framework.
+If you want to use RTM with a framework, see specific instructions in the documentation for that framework.
 
 #### Configuration
 
@@ -41,7 +41,7 @@ ROM.container(:sql, 'postgres://localhost/my_db', extensions: [:pg_json]) do |co
   # define relations and commands here...
 end
 
-# ROM also comes with a very barebones in-memory adapter.
+# RTM also comes with a very barebones in-memory adapter.
 ROM.container(:memory, 'memory://test') do |config|
   # define relations and commands here...
 end
@@ -84,7 +84,7 @@ end
 
 ^WARNING
 ActiveRecord and DataMapper provide global access to their components, but this
-is considered a bad practice in modern standards. ROM creates an isolated, local
+is considered a bad practice in modern standards. RTM creates an isolated, local
 container without polluting global namespaces. This allows you to easily pass
 it around without being worried about accidental side-effects like conflicting
 database connections or configurations being overridden in a non-thread-safe

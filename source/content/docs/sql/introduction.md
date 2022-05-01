@@ -14,14 +14,14 @@ toc = true
 top = false
 +++
 
-ROM supports SQL databases via the <mark>rom-sql</mark> adapter which augments
+RTM supports SQL databases via the <mark>rom-sql</mark> adapter which augments
 and enhances `Relation`. <mark>rom-sql</mark> supports a sql-specific query DSL
 and association macros that simplify constructing joins and exposes the
 flexibility & power of the RDMS to relation users.
 
-Direct interactions between the database and ROM happen through the use of
+Direct interactions between the database and RTM happen through the use of
 the excellent [Sequel](http://sequel.jeremyevans.net/) gem by Jeremy Evans.
-However, Sequel is an implementation detail of ROM and as such should not be
+However, Sequel is an implementation detail of RTM and as such should not be
 relied upon for functionality. If <mark>rom-sql</mark> is missing functionality
 that can be accomplished in Sequel then please leave a report in our [issue
 tracker](https://github.com/taqtiqa/ramets.org/issues).
@@ -54,7 +54,7 @@ script like so:
 require 'rom-sql'
 ```
 
-Once loaded the SQL Adapter will register itself with ROM and become available
+Once loaded the SQL Adapter will register itself with RTM and become available
 for immediate use via the `:sql` identifier.
 
 ^INFO
@@ -65,7 +65,7 @@ for immediate use via the `:sql` identifier.
 
 ## Connecting to a Database
 
-Configuring ROM and opening a connection to a database requires three parts.
+Configuring RTM and opening a connection to a database requires three parts.
 
   1. The name of an adapter,
   2. a connection string, and
@@ -99,7 +99,7 @@ An example of this can be seen below:
 #### General Connection Options
 
 Options below are available to all database drivers and can be used to
-configure the connection between ROM and the database.
+configure the connection between RTM and the database.
 
 <table>
 <thead>
@@ -135,7 +135,7 @@ configure the connection between ROM and the database.
     <td>
       Sets the database driver which should be used when making a connection.
       This option is only to be used in situations where a connection string
-      is <strong>NOT</strong> provided to the ROM Configuration instance.
+      is <strong>NOT</strong> provided to the RTM Configuration instance.
 
       <h5>Available Options:</h5>
       <ul>

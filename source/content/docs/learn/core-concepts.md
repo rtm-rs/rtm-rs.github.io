@@ -18,15 +18,15 @@ Before you start writing any data access code with ROM, it's a good idea to
 get a high-level overview of what each major component is and its overall
 purpose.
 
-ROM fundamentally is a series of abstractions built on one another to create
+RTM fundamentally is a series of abstractions built on one another to create
 a very flexible system for accessing and manipulating complex data in your
 applications.
 
-The following diagram shows an overview of the ROM architecture and provides an
-outline of how data flows within a ROM based data access layer. Further down
+The following diagram shows an overview of the RTM architecture and provides an
+outline of how data flows within a RTM based data access layer. Further down
 is a basic explanation of each component.
 
-![ROM Design Overview](images/rom-overview.jpg)
+![RTM Design Overview](images/rom-overview.jpg)
 
 ## Data flow
 
@@ -55,7 +55,7 @@ is a basic explanation of each component.
 
 ### Writing Data
 
-Writing data with ROM is fundamentally a process of applying commands to relations
+Writing data with RTM is fundamentally a process of applying commands to relations
 in order to modify the stored data.
 
 **Step 7.** Application Domain has a need to update an entity.
@@ -106,7 +106,7 @@ the adapter.
 An example of relations are tables in a SQL server. Tables can reference
 other tables, and sometimes all of the pieces for some "view" of the data are
 spread out among two or more tables (think Multi Table Inheritance). In
-situations like this, ROM really shines because relations can be created for
+situations like this, RTM really shines because relations can be created for
 each table and composed together to pull the data into a coherent form then
 finally mapped to an output object which your application can depend on safely
 without worrying about shared state, sessions or identity mapping commonly
@@ -118,7 +118,7 @@ To learn more about relations, check out the
 
 ## Commands
 
-Commands in ROM are intended to safely modify data. Commands can be used to
+Commands in RTM are intended to safely modify data. Commands can be used to
 create, update, and delete. They are usually provided by the adapter, but you may
 define your own.
 
@@ -130,7 +130,7 @@ To learn more about commands, check out the
 
 A mapper is an object that takes a relation and maps it onto a different
 representation. Mappers are generated automatically, and in typical
-cases, you don't have to define them. However, ROM provides a DSL to define custom
+cases, you don't have to define them. However, RTM provides a DSL to define custom
 mappings, or you can register your mapper objects for custom, non-standard
 queries, or complex cross-datastore mappings.
 
@@ -154,7 +154,7 @@ To learn more about changesets, check out the
 
 ## Adapters
 
-ROM uses adapters to connect to different data sources (a database, a csv file -
+RTM uses adapters to connect to different data sources (a database, a csv file -
 it doesn't matter) and exposes a native CRUD interface to its relations. Every
 adapter has extension points to support database-specific functionality.
 It provides its own relation types, extensions for built-in commands, and
@@ -163,7 +163,7 @@ features that are needed to work with a given database type. For example,
 `rom-sql` provides Migration API for managing the schema in a SQL database.
 
 ^INFO
-  **Remember**, all of the abstractions provided by ROM are ultimately there
+  **Remember**, all of the abstractions provided by RTM are ultimately there
   to separate any hard dependencies higher up in the application stack. So
   when creating relations, take advantage of that separation by not leaking
   adapter implementation details.
@@ -175,7 +175,7 @@ An object that encapsulates access to a specific persistence backend. ROM
 supports loading multiple gateways allowing an application to pull from
 multiple data sources easily, including cross-datastore relations.
 
-Gateways are provided by the adapter, and after ROM finishes loading, they're
+Gateways are provided by the adapter, and after RTM finishes loading, they're
 generally hidden behind the scenes.
 
 ### Datasets

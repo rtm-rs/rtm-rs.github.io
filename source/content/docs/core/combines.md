@@ -21,7 +21,7 @@ data structures.
 
 In cases where there is a need to load some data along with its dependent nested
 data then <mark>Relation#combine</mark> is the tool to reach for. It might be a
-bit of a paradigm shift, but it's important to realize ROM will **never** load
+bit of a paradigm shift, but it's important to realize RTM will **never** load
 associated data unless it is explicitly told to do so.
 
 This idea is in stark contrast with other ORMs such as Active Record for Rails
@@ -115,7 +115,7 @@ users_relation.combine(:projects).by_id(2).one
 As you can see from the output in the first example, only the data available in the user
 relation is available where as in the second example the user with their projects are
 included in the output. It's important to note that while the project records are
-in the output, no project task records are. This again is because ROM only loads the data
+in the output, no project task records are. This again is because RTM only loads the data
 you've requested. So what if you want to load a user with all of their projects and tasks?
 
 ### Nested Combine
@@ -219,7 +219,7 @@ broken into smaller, easily retrieved entities.
 Sometimes you only want a subset of the data in a nested relation or you
 want to restrict a nested relation to only return certain matching data.
 
-Luckily with ROM that can easily be accomplished with the use of `Relation#node`, or
+Luckily with RTM that can easily be accomplished with the use of `Relation#node`, or
 more accurately `Relation::Combined#node`. The node method allows for the adjustment
 of all the relations in the composition.
 

@@ -1,6 +1,6 @@
 +++
 title = "Introduction"
-description = "Learn how to work with ROM repositories"
+description = "Learn how to work with RTM repositories"
 date = 2022-05-01T15:00:00+00:00
 updated = 2022-05-01T15:00:00+00:00
 draft = false
@@ -9,12 +9,12 @@ sort_by = "weight"
 template = "docs/page.html"
 
 [extra]
-lead = 'Learn how to work with ROM repositories'
+lead = 'Learn how to work with RTM repositories'
 toc = true
 top = false
 +++
 
-In this section you can learn how to work with ROM repositories.
+In this section you can learn how to work with RTM repositories.
 
 * [Quick Start](/learn/repository/%{version}/quick-start)
 * [Reading Simple Objects](/learn/repository/%{version}/reading-simple-objects)
