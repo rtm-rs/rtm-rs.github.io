@@ -20,6 +20,7 @@ This documentation uses `rom-sql` as an example. For in-depth information see do
 
 You can quickly create a schema inside the setup block. Let's configure our SQL gateway and create a `:users` table:
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 require 'rom'
 
@@ -37,6 +38,25 @@ rom = ROM.container(:sql, 'sqlite::memory') do |conf|
   conf.register_relation(Users)
 end
 ```
+---
+```rust
+require 'rom'
+
+rom = ROM.container(:sql, 'sqlite::memory') do |conf|
+  conf.default.create_table(:users) do
+    primary_key :id
+    column :name, String, null: false
+    column :email, String, null: false
+  end
+
+  class Users < ROM::Relation[:sql]
+    schema(infer: true)
+  end
+
+  conf.register_relation(Users)
+end
+```
+{% end %}
 
 ## Repositories
 
@@ -44,18 +64,33 @@ A Repository ("Repo") object provides a lot of conveniences for reading data wit
 
 To set up a repo to work with our `:users` relation simply define a class like this:
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 require 'rom-repository'
 
 class UserRepo < ROM::Repository[:users]
 end
 ```
+---
+```rust
+require 'rom-repository'
+
+class UserRepo < ROM::Repository[:users]
+end
+```
+{% end %}
 
 Repositories must be instantiated with a rom container passed to the constructor, this gives access to all components within the container:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 user_repo = UserRepo.new(rom)
 ```
+---
+```rust
+user_repo = UserRepo.new(rom)
+```
+{% end %}
 
 Let's see how Create, Update and Delete commands work with repositories.
 
@@ -63,20 +98,37 @@ Let's see how Create, Update and Delete commands work with repositories.
 
 A repo can be configured to provide access to `Create` commands:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 require 'rom-repository'
 
 class UserRepo < ROM::Repository[:users]
   commands :create
 end
 ```
+---
+```rust
+require 'rom-repository'
+
+class UserRepo < ROM::Repository[:users]
+  commands :create
+end
+```
+{% end %}
 
 The `commands` macro defines a `UserRepo#create` method for us:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 user_repo.create(name: "Jane", email: "jane@doe.org")
 # => #<ROM::Struct[User] id=1 name="Jane" email="jane@doe.org">
 ```
+---
+```rust
+user_repo.create(name: "Jane", email: "jane@doe.org")
+# => #<ROM::Struct[User] id=1 name="Jane" email="jane@doe.org">
+```
+{% end %}
 
 By default, repos return simple `ROM::Struct` objects. You'll learn more about them in [reading][reading-simple-objects] section.
 
@@ -86,17 +138,28 @@ Update and Delete commands require restricting relations so that RTM knows exact
 
 The most popular adapter, rom-sql, automatically defines a method, `by_pk`, that restricts by the primary key. In projects with rom-sql, we would use it to define update and delete commands in a repo:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 require 'rom-repository'
 
 class UserRepo < ROM::Repository[:users]
   commands :create, update: :by_pk, delete: :by_pk
 end
 ```
+---
+```rust
+require 'rom-repository'
+
+class UserRepo < ROM::Repository[:users]
+  commands :create, update: :by_pk, delete: :by_pk
+end
+```
+{% end %}
 
 Now we have a full `CRUD` setup, we can create, update and delete user data:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 user = user_repo.create(name: "Jane", email: "jane@doe.org")
 # => #<ROM::Struct[User] id=1 name="Jane" email="jane@doe.org">
 
@@ -107,6 +170,19 @@ updated_user = user_repo.update(user.id, name: "Jane Doe")
 # and now let's delete the user
 user_repo.delete(user.id)
 ```
+---
+```rust
+user = user_repo.create(name: "Jane", email: "jane@doe.org")
+# => #<ROM::Struct[User] id=1 name="Jane" email="jane@doe.org">
+
+# let's update the user
+updated_user = user_repo.update(user.id, name: "Jane Doe")
+# => #<ROM::Struct[User] id=1 name="Jane Doe" email="jane@doe.org">
+
+# and now let's delete the user
+user_repo.delete(user.id)
+```
+{% end %}
 
 ## Next
 

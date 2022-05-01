@@ -20,7 +20,8 @@ Relation schemas in SQL land can be used to define canonical associations. These
 
 The `belongs_to` definition establishes a many-to-one association type.
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Posts < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -29,6 +30,17 @@ class Posts < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Posts < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      belongs_to :user
+    end
+  end
+end
+```
+{% end %}
 
 ^INFO
 #### Naming convention
@@ -40,7 +52,8 @@ This method is a shortcut for `many_to_one :users, as: :user`.
 
 The `has_many` definition establishes a one-to-many association type.
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -49,13 +62,25 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      has_many :tasks
+    end
+  end
+end
+```
+{% end %}
 
 ## has_many-through (many-to-many)
 
 The `has_many` definition supports `:through` option which establishes a
 many-to-many association type.
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -74,12 +99,34 @@ class UsersTasks < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      has_many :users_tasks
+      has_many :tasks, through: :users_tasks
+    end
+  end
+end
+
+class UsersTasks < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      belongs_to :user
+      belongs_to :task
+    end
+  end
+end
+```
+{% end %}
 
 ## has_one (one-to-one)
 
 The `has_one` definition establishes a one-to-one association type.
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -88,6 +135,17 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      has_one :account
+    end
+  end
+end
+```
+{% end %}
 
 ^INFO
 #### Naming convention
@@ -100,7 +158,8 @@ This method is a shortcut for `has_one :accounts, as: :account`.
 The `has_one` definition supports `:through` option which establishes a
 one-to-one-through association type.
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -118,6 +177,26 @@ class UsersAccounts < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      has_one :account, through: :users_accounts
+    end
+  end
+end
+
+class UsersAccounts < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      belongs_to :account
+      belongs_to :user
+    end
+  end
+end
+```
+{% end %}
 
 ## Aliasing an association
 
@@ -127,7 +206,8 @@ All association types support this feature.
 For example, we have `:posts` belonging to `:users` but we'd like to call
 them `:authors`:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Posts < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -136,6 +216,17 @@ class Posts < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Posts < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      belongs_to :user, as: :author
+    end
+  end
+end
+```
+{% end %}
 
 ^INFO
 The alias is used by auto-mapping, which means that in our example, if you load an aggregate with posts and its authors, the attribute name in post structs will be called **author**.
@@ -147,7 +238,8 @@ You can use `:view` option and specify which relation view should be used to ext
 default association relation. Let's say you have users with many accounts through
 users_accounts and you want to add attributes from the join relation to accounts:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -164,6 +256,25 @@ class Accounts < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      has_many :accounts, through: :users_accounts, view: :ordered
+    end
+  end
+end
+
+class Accounts < ROM::Relation[:sql]
+  schema(infer: true)
+
+  def ordered
+    select_append(users_accounts[:position]).order(:position)
+  end
+end
+```
+{% end %}
 
 This way when you load users with their accounts, they will include `:position`
 attribute from the join table and will be ordered by that attribute.
@@ -177,7 +288,8 @@ for particular users, we can achieve that by defining `Accounts#for_users` and s
 as the overridden association view in `Users` associations. This method receives related
 association object, and a loaded users relation.
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -195,6 +307,26 @@ class Accounts < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      has_many :public_accounts, view: :for_users, override: true
+    end
+  end
+end
+
+class Accounts < ROM::Relation[:sql]
+  schema(infer: true)
+
+  def for_users(assoc, users)
+    join(:users_accounts, account_id: :id).
+      where(type: "Public", assoc[:target_key] => users.pluck(:id))
+  end
+end
+```
+{% end %}
 
 There are 2 requirements that every overridden association view must meet:
 
@@ -208,7 +340,8 @@ There are 2 requirements that every overridden association view must meet:
 You can reuse queries that associations use in your own methods too via `assoc`
 shortcut method:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -221,13 +354,29 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      has_many :tasks
+    end
+  end
+
+  def admin_tasks
+    assoc(:tasks).where(admin: true)
+  end
+end
+```
+{% end %}
 
 ## Setting a custom foreign-key
 
 By default, foreign keys found in schemas are used, but you can provide custom names too via
 `:foreign_key` option:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Flights < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -237,12 +386,25 @@ class Flights < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Flights < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      belongs_to :destinations, as: :from, foreign_key: :from_id
+      belongs_to :destinations, as: :to, foreign_key: :to_id
+    end
+  end
+end
+```
+{% end %}
 
 ## Using a relation named differently from the table
 
 It's a common case for legacy databases to have tables named differently from relations. Your legacy table name must be the first argument and the corresponding relation name must go with `:relation` option:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -251,6 +413,17 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      has_many :todos, as: :tasks, relation: :tasks
+    end
+  end
+end
+```
+{% end %}
 
 ^INFO
 All association types support this option.

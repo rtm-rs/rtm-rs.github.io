@@ -26,17 +26,31 @@ Assuming you have a users relation available:
 
 ### `:create`
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 users.changeset(:create, name: "Jane").commit
 => {:id=>1, :name=>"Jane"}
 ```
+---
+```rust
+users.changeset(:create, name: "Jane").commit
+=> {:id=>1, :name=>"Jane"}
+```
+{% end %}
 
 ### `:update`
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 users.by_pk(4).changeset(:update, name: "Jane Doe").commit
 => {:id=>4, :name=>"Jane Doe"}
 ```
+---
+```rust
+users.by_pk(4).changeset(:update, name: "Jane Doe").commit
+=> {:id=>4, :name=>"Jane Doe"}
+```
+{% end %}
 
 ^WARNING
 #### Checking diffs
@@ -45,13 +59,23 @@ users.by_pk(4).changeset(:update, name: "Jane Doe").commit
 
 ### `:delete`
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 users.by_pk(4).changeset(:delete).commit
 => {:id=>4, :name=>"Jane Doe"}
 
 users.by_pk(4).changeset(:delete).commit
 # => nil
 ```
+---
+```rust
+users.by_pk(4).changeset(:delete).commit
+=> {:id=>4, :name=>"Jane Doe"}
+
+users.by_pk(4).changeset(:delete).commit
+# => nil
+```
+{% end %}
 
 ^INFO
 In the examples above, we used `Relation#by_pk` method, this is a built-in method which restricts a relation by its primary key; however, you can use any method that's available, including native adapter query methods.

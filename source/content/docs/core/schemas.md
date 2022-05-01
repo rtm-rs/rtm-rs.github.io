@@ -30,7 +30,8 @@ Furthermore, schemas can provide meta-data that can be used to automate many com
 
 The DSL is simple. Provide a symbol name with a type from the Types module:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:http]
   schema do
     attribute :id, Types::Int
@@ -39,20 +40,40 @@ class Users < ROM::Relation[:http]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:http]
+  schema do
+    attribute :id, Types::Int
+    attribute :name, Types::String
+    attribute :age, Types::Int
+  end
+end
+```
+{% end %}
 
 ## Inferring schemas
 
 If the adapter that you use supports inferring schemas, your schemas can be defined as:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true)
+end
+```
+{% end %}
 
 You can also **override inferred attributes**:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
     # this overrides inferred :meta attribute
@@ -60,6 +81,16 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true) do
+    # this overrides inferred :meta attribute
+    attribute :meta, Types::MyCustomMetaType
+  end
+end
+```
+{% end %}
 
 ## Types namespace
 
@@ -69,7 +100,8 @@ All builtin types are defined in `ROM::Types` namespace, and individual adapters
 
 You can set up a primary key, either a single attribute or a composite:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:http]
   schema do
     attribute :id, Types::Int
@@ -80,10 +112,24 @@ class Users < ROM::Relation[:http]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:http]
+  schema do
+    attribute :id, Types::Int
+    attribute :name, Types::String
+    attribute :age, Types::Int
+
+    primary_key :id
+  end
+end
+```
+{% end %}
 
 For a composite primary key, pass the relevant attribute names:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class UsersGroups < ROM::Relation[:http]
   schema do
     attribute :user_id, Types::Int
@@ -93,6 +139,18 @@ class UsersGroups < ROM::Relation[:http]
   end
 end
 ```
+---
+```rust
+class UsersGroups < ROM::Relation[:http]
+  schema do
+    attribute :user_id, Types::Int
+    attribute :group_id, Types::Int
+
+    primary_key :id, :group_id
+  end
+end
+```
+{% end %}
 
 ^INFO
 `primary_key` is a shortcut for the annotation: Types::Int.meta(primary_key: true)
@@ -102,7 +160,8 @@ end
 
 You can set up foreign keys pointing to a specific relation:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Posts < ROM::Relation[:http]
   schema do
     attribute :user_id, Types::ForeignKey(:users)
@@ -111,6 +170,17 @@ class Posts < ROM::Relation[:http]
   end
 end
 ```
+---
+```rust
+class Posts < ROM::Relation[:http]
+  schema do
+    attribute :user_id, Types::ForeignKey(:users)
+    # defaults to `Types::Int` but can be overridden:
+    attribute :user_id, Types::ForeignKey(:users, Types::UUID)
+  end
+end
+```
+{% end %}
 
 ^INFO
 `foreign_key` is a shortcut for the annotation: Types::Int.meta(foreign_key: true, relation: :users)
@@ -122,19 +192,35 @@ Schema types provide an API for adding arbitrary meta-information. This is mostl
 
 Here's an example:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:http]
   schema do
     attribute :name, Types::String.meta(namespace: 'details')
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:http]
+  schema do
+    attribute :name, Types::String.meta(namespace: 'details')
+  end
+end
+```
+{% end %}
 
 Here we defined a `:namespace` meta-information, that can be used accessed via `:name` type:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 Users.schema[:name].meta[:namespace] # 'details'
 ```
+---
+```rust
+Users.schema[:name].meta[:namespace] # 'details'
+```
+{% end %}
 
 ## Using `write` types
 
@@ -142,7 +228,8 @@ Relations commands will automatically use schema attributes when processing the 
 
 Let's say our setup requires generating a UUID prior executing a command:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:http]
   UUID = Types::String.default { SecureRandom.uuid }
 
@@ -153,6 +240,19 @@ class Users < ROM::Relation[:http]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:http]
+  UUID = Types::String.default { SecureRandom.uuid }
+
+  schema do
+    attribute :id, UUID
+    attribute :name, Types::String
+    attribute :age, Types::Int
+  end
+end
+```
+{% end %}
 
 Now when you persist data using [repositories](/learn/repository/%{version}) or [commands](/learn/core/%{version}), your schema will be used to process the input data, and our `:id` value will be handled by the `UUID` type.
 
@@ -160,7 +260,8 @@ Now when you persist data using [repositories](/learn/repository/%{version}) or 
 
 Apart from `write` types, you can also specify `read` types, these are used by relations when they read data from a database. You can define them using `:read` option:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:http]
   schema do
     attribute :id, Types::Serial
@@ -169,6 +270,17 @@ class Users < ROM::Relation[:http]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:http]
+  schema do
+    attribute :id, Types::Serial
+    attribute :name, Types::String
+    attribute :birthday, Types::String, read: Types::Coercible::Date
+  end
+end
+```
+{% end %}
 
 Now when `Users` relation reads it data, `birthday` values will be processed via `Types::Coercible::Date`.
 

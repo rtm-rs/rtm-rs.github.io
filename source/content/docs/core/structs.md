@@ -32,7 +32,8 @@ Auto-struct is a relation feature which can automatically transform plain relati
 
 You can enable this feature via `auto_struct(true)` in a relation class:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -49,6 +50,25 @@ users.by_pk(1).one
 users.by_pk(1).combine(:tasks).one
 => #<User id=1 name="Jane" tasks=[#<Task id=1 user_id=1 title="Jane's Task">]>
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      has_many :tasks
+    end
+  end
+
+  auto_struct(true)
+end
+
+users.by_pk(1).one
+=> #<User id=1 name="Jane">
+
+users.by_pk(1).combine(:tasks).one
+=> #<User id=1 name="Jane" tasks=[#<Task id=1 user_id=1 title="Jane's Task">]>
+```
+{% end %}
 
 ^WARNING
 This feature is **enabled by default in repositories**.
@@ -60,7 +80,8 @@ Relations support configuring `struct_namespace`, it is set to `ROM::Struct` by 
 
 Let's say you have `Entities` namespace and would like to provide a custom `Entities::User` class:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 module Entities
   class User < ROM::Struct
     def full_name
@@ -80,6 +101,28 @@ user = users.by_pk(1).one
 user.full_name
 # => "Jane Doe"
 ```
+---
+```rust
+module Entities
+  class User < ROM::Struct
+    def full_name
+      "#{first_name} #{last_name}"
+    end
+  end
+end
+
+class Users < ROM::Relation[:sql]
+  schema(infer: true)
+
+  struct_namespace Entities
+  auto_struct true
+end
+
+user = users.by_pk(1).one
+user.full_name
+# => "Jane Doe"
+```
+{% end %}
 
 ### How struct types are determined
 
@@ -89,7 +132,8 @@ define `:admins` relation, which is restricted to users with `type` set to `"Adm
 if you have a `Entities::Admin` class, it will be used as the struct class for `:admins`
 relation.
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 module Entities
   class User < ROM::Struct
     def admin?
@@ -118,6 +162,37 @@ admin = admins.by_pk(1).one
 admin.admin?
 # true
 ```
+---
+```rust
+module Entities
+  class User < ROM::Struct
+    def admin?
+      false
+    end
+  end
+
+  class Admin < User
+    def admin?
+      true
+    end
+  end
+end
+
+class Admins < ROM::Relation[:sql]
+  dataset { where(type: "Admin") }
+
+  schema(:users, as: :admins, infer: true)
+
+  struct_namespace Entities
+  auto_struct true
+end
+
+admin = admins.by_pk(1).one
+
+admin.admin?
+# true
+```
+{% end %}
 
 ^INFO
 #### Usage with repositories
@@ -132,6 +207,7 @@ Your object class must have a constructor which accepts a hash with attributes.
 
 Here's a simple example:
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 class User
   attr_reader :attributes
@@ -148,6 +224,24 @@ end
 users.by_pk(1).map_to(User)
 # => #<User:0x007fa7eabf1a50 @attributes={:id=>1, :name=>"Jane"}>
 ```
+---
+```rust
+class User
+  attr_reader :attributes
+
+  def initialize(attributes)
+    @attributes = attributes
+  end
+
+  def [](name)
+    attributes[name]
+  end
+end
+
+users.by_pk(1).map_to(User)
+# => #<User:0x007fa7eabf1a50 @attributes={:id=>1, :name=>"Jane"}>
+```
+{% end %}
 
 ## Learn more
 

@@ -24,7 +24,8 @@ We have Users, each users is associated to a Team. Let's imagine we want to get 
 but we want them ordered by Team name, and if they're in the same team, we want them to be
 ordered by creation date. Here are our relations:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 module Relations
   class Users < ROM::Relation[:sql]
     attribute :created_at, ROM::Types::DateTime
@@ -47,6 +48,31 @@ module Relations
   end
 end
 ```
+---
+```rust
+module Relations
+  class Users < ROM::Relation[:sql]
+    attribute :created_at, ROM::Types::DateTime
+
+    schema(:users) do
+      associations do
+        belongs_to :team
+      end
+    end
+  end
+
+  class Teams < ROM::Relation[:sql]
+    schema(:teams) do
+      attribute :name, ROM::Types::String
+
+      associations do
+        has_many :users
+      end
+    end
+  end
+end
+```
+{% end %}
 
 And here is the code to get such ordering:
 

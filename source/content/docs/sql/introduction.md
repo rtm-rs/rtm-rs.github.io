@@ -42,17 +42,30 @@ tracker](https://github.com/taqtiqa/ramets.org/issues).
 To install <mark>rom-sql</mark> add the following to your
 <mark>Gemfile</mark>.
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 gem 'rom',     '~> 4.0'
 gem 'rom-sql', '~> 2.0'
 ```
+---
+```rust
+gem 'rom',     '~> 4.0'
+gem 'rom-sql', '~> 2.0'
+```
+{% end %}
 
 Afterwards either load `rom-sql` through your bundler setup or manually in your custom
 script like so:
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 require 'rom-sql'
 ```
+---
+```rust
+require 'rom-sql'
+```
+{% end %}
 
 Once loaded the SQL Adapter will register itself with RTM and become available
 for immediate use via the `:sql` identifier.
@@ -82,6 +95,7 @@ on the configuration method signature.
 
 An example of this can be seen below:
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
   opts = {
     username: 'postgres',
@@ -95,6 +109,21 @@ An example of this can be seen below:
   # Named Parameters
   config = ROM::Configuration.new(:sql, 'postgres://localhost/mydbname', port: 5432)
 ```
+---
+```rust
+  opts = {
+    username: 'postgres',
+    password: 'postgres',
+    encoding: 'UTF8'
+  }
+
+  # Options Hash
+  config = ROM::Configuration.new(:sql, 'postgres://localhost:5432/mydbname', opts)
+
+  # Named Parameters
+  config = ROM::Configuration.new(:sql, 'postgres://localhost/mydbname', port: 5432)
+```
+{% end %}
 
 #### General Connection Options
 
@@ -191,6 +220,7 @@ documentation page.
 
 #### Quick Connect
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
   opts = {
     username: 'postgres',
@@ -199,6 +229,16 @@ documentation page.
   }
   config = ROM::Configuration.new(:sql, 'postgres://localhost/database_name', opts)
 ```
+---
+```rust
+  opts = {
+    username: 'postgres',
+    password: 'postgres',
+    encoding: 'UTF8'
+  }
+  config = ROM::Configuration.new(:sql, 'postgres://localhost/database_name', opts)
+```
+{% end %}
 
 ##### Additional Options
 
@@ -354,12 +394,21 @@ see the [MySQL2](https://github.com/brianmario/mysql2) project site
 
 #### Quick Connect
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
   opts = {
     encoding: 'UTF8'
   }
   config = ROM::Configuration.new(:sql, 'mysql2://localhost/database_name', opts)
 ```
+---
+```rust
+  opts = {
+    encoding: 'UTF8'
+  }
+  config = ROM::Configuration.new(:sql, 'mysql2://localhost/database_name', opts)
+```
+{% end %}
 
 ##### Additional Options
 
@@ -598,6 +647,7 @@ documentation or for URI file formats see
 
 #### Quick Connect
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
   opts = {
     readonly: true
@@ -615,6 +665,25 @@ documentation or for URI file formats see
   # In-memory database example
   config = ROM::Configuration.new(:sql, 'sqlite::memory', opts)
 ```
+---
+```rust
+  opts = {
+    readonly: true
+  }
+
+  # Absolute path examples
+  config = ROM::Configuration.new(:sql, 'sqlite://path/to/db-file.db', opts)
+  config = ROM::Configuration.new(:sql, 'sqlite://C:/databases/db-file.db', opts)
+  config = ROM::Configuration.new(:sql, 'sqlite:///var/sqlite/db-file.db', opts)
+
+  # Relative path examples
+  config = ROM::Configuration.new(:sql, 'sqlite://db-file.db', opts)
+  config = ROM::Configuration.new(:sql, 'sqlite://../db-file.db', opts)
+
+  # In-memory database example
+  config = ROM::Configuration.new(:sql, 'sqlite::memory', opts)
+```
+{% end %}
 
 ##### Additional Options
 
@@ -689,12 +758,21 @@ OCI8 driver connection strings use the following pattern:
 
 #### Quick Connect
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
   opts = {
     autosequence: true
   }
   config = ROM::Configuration.new(:sql, 'oracle://localhost/database_name', opts)
 ```
+---
+```rust
+  opts = {
+    autosequence: true
+  }
+  config = ROM::Configuration.new(:sql, 'oracle://localhost/database_name', opts)
+```
+{% end %}
 
 ##### Additional Options
 
@@ -829,8 +907,14 @@ Future addition should include configuring sequel and extensions
 
  ### Configuring Sequel
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 Sequel.application_timezone = :utc
 ```
+---
+```rust
+Sequel.application_timezone = :utc
+```
+{% end %}
 
 -->

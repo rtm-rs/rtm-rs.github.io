@@ -25,7 +25,8 @@ as it gives you a lot of freedom in the way you fetch complex data structures fr
 
 Here's how it works using plain Ruby:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 users = [{ id: 1, name: "Jane" }, { id: 2, name: "John" }]
 tasks = [{ id: 1, user_id: 1, title: "Jane's task" }, { id: 2, user_id: 2, title: "John's task" }]
 
@@ -38,6 +39,21 @@ tasks_for_users = -> users {
 tasks_for_users.call([{ id: 2, name: "John" }])
 # [{ id: 2, user_id: 2, title: "John's task" }]
 ```
+---
+```rust
+users = [{ id: 1, name: "Jane" }, { id: 2, name: "John" }]
+tasks = [{ id: 1, user_id: 1, title: "Jane's task" }, { id: 2, user_id: 2, title: "John's task" }]
+
+tasks_for_users = -> users {
+  user_ids = users.map { |u| u[:id] }
+  tasks.select { |t| user_ids.include?(t[:user_id]) }
+}
+
+# fetch tasks for specific users
+tasks_for_users.call([{ id: 2, name: "John" }])
+# [{ id: 2, user_id: 2, title: "John's task" }]
+```
+{% end %}
 
 This example shows **the exact conceptual model of associations in ROM**. Here are important parts
 to understand:
@@ -48,7 +64,8 @@ to understand:
 
 Let's translate this to actual relations using the memory adapter:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 require "rom"
 require "rom/memory"
 
@@ -101,6 +118,61 @@ tasks.for_users(users.associations[:tasks], users.restrict(name: "John")).to_a
 puts users.restrict(name: "John").combine(:tasks).to_a
 # {:id=>2, :name=>"John", :tasks=>[{:id=>2, :user_id=>2, :title=>"John's task"}]}
 ```
+---
+```rust
+require "rom"
+require "rom/memory"
+
+class Users < ROM::Relation[:memory]
+  schema do
+    attribute :id, Types::Int
+    attribute :name, Types::String
+
+    primary_key :id
+
+    associations do
+      has_many :tasks, combine_key: :user_id, override: true, view: :for_users
+    end
+  end
+end
+
+class Tasks < ROM::Relation[:memory]
+  schema do
+    attribute :id, Types::Int
+    attribute :user_id, Types::Int
+    attribute :title, Types::String
+
+    primary_key :id
+  end
+
+  def for_users(_assoc, users)
+    restrict(user_id: users.map { |u| u[:id] })
+  end
+end
+
+rom = ROM.container(:memory) do |config|
+  config.register_relation(Users, Tasks)
+end
+
+users = rom.relations[:users]
+tasks = rom.relations[:tasks]
+
+[{ id: 1, name: "Jane" }, { id: 2, name: "John" }].each { |tuple| users.insert(tuple) }
+[{ id: 1, user_id: 1, title: "Jane's task" }, { id: 2, user_id: 2, title: "John's task" }].each { |tuple| tasks.insert(tuple) }
+
+# load all tasks for all users
+tasks.for_users(users.associations[:tasks], users).to_a
+# [{:id=>1, :user_id=>1, :title=>"Jane's task"}, {:id=>2, :user_id=>2, :title=>"John's task"}]
+
+# load tasks for particular users
+tasks.for_users(users.associations[:tasks], users.restrict(name: "John")).to_a
+# [{:id=>2, :user_id=>2, :title=>"John's task"}]
+
+# when we use `combine`, our `for_users` will be called behind the scenes
+puts users.restrict(name: "John").combine(:tasks).to_a
+# {:id=>2, :name=>"John", :tasks=>[{:id=>2, :user_id=>2, :title=>"John's task"}]}
+```
+{% end %}
 
 Notice that:
 
@@ -113,7 +185,8 @@ rom-sql default association views are generated for you, which is the whole magi
 behind associations in SQL, this is why in case of SQL, we could translate our
 previous example to this:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 require "rom"
 
 ROM.container(:sql, 'sqlite::memory') do |config|
@@ -155,6 +228,50 @@ users.combine(:tasks).to_a
 users.where(name: "John").combine(:tasks).to_a
 # [{:id=>2, :name=>"John", :tasks=>[{:id=>2, :user_id=>2, :title=>"John's task"}]}]
 ```
+---
+```rust
+require "rom"
+
+ROM.container(:sql, 'sqlite::memory') do |config|
+  config.gateways[:default].create_table(:users) do
+    primary_key :id
+    column :name, String
+  end
+
+  config.gateways[:default].create_table(:tasks) do
+    primary_key :id
+    foreign_key :user_id, :users
+    column :title, String
+  end
+
+  class Users < ROM::Relation[:sql]
+    schema(infer: true) do
+      associations do
+        has_many :tasks
+      end
+    end
+  end
+
+  class Tasks < ROM::Relation[:sql]
+    schema(infer: true)
+  end
+
+  config.register_relation(Users, Tasks)
+end
+
+users = rom.relations[:users]
+tasks = rom.relations[:tasks]
+
+[{ id: 1, name: "Jane" }, { id: 2, name: "John" }].each { |tuple| users.insert(tuple) }
+[{ id: 1, user_id: 1, title: "Jane's task" }, { id: 2, user_id: 2, title: "John's task" }].each { |tuple| tasks.insert(tuple) }
+
+users.combine(:tasks).to_a
+# [{:id=>1, :name=>"Jane", :tasks=>[{:id=>1, :user_id=>1, :title=>"Jane's task"}]}, {:id=>2, :name=>"John", :tasks=>[{:id=>2, :user_id=>2, :title=>"John's task"}]}]
+
+users.where(name: "John").combine(:tasks).to_a
+# [{:id=>2, :name=>"John", :tasks=>[{:id=>2, :user_id=>2, :title=>"John's task"}]}]
+```
+{% end %}
 
 ## Learn more
 

@@ -26,11 +26,19 @@ Framework integrations **take care of the setup for you**. If you want to use RT
 
 To do setup in flat style, create a `ROM::Configuration` object. This is the same object that gets yielded into your block in block-style setup, so the API is identical.
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 configuration = ROM::Configuration.new(:memory, 'memory://test')
 configuration.relation(:users)
 # ... etc
 ```
+---
+```rust
+configuration = ROM::Configuration.new(:memory, 'memory://test')
+configuration.relation(:users)
+# ... etc
+```
+{% end %}
 
 When you’re finished configuring, pass the configuration object to `ROM.container` to generate the finalized container. There are no differences in the internal semantics between block-style and flat-style setup.
 
@@ -38,14 +46,23 @@ When you’re finished configuring, pass the configuration object to `ROM.contai
 
 RTM components need to be registered with the RTM configuration in order to be used.
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 configuration = ROM::Configuration.new(:memory, 'memory://test')
 
 # Declare Relations, Commands, and Mappers here
 ```
+---
+```rust
+configuration = ROM::Configuration.new(:memory, 'memory://test')
+
+# Declare Relations, Commands, and Mappers here
+```
+{% end %}
 
 If you prefer to create explicit types for your components you must register them with the configuration directly:
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 configuration = ROM::Configuration.new(:memory, 'memory://test')
 
@@ -54,6 +71,16 @@ configuration.register_relation(AnotherOfMyRelations)
 configuration.register_command(User::CreateCommand)
 configuration.register_mapper(User::UserMapper)
 ```
+---
+```rust
+configuration = ROM::Configuration.new(:memory, 'memory://test')
+
+configuration.register_relation(OneOfMyRelations)
+configuration.register_relation(AnotherOfMyRelations)
+configuration.register_command(User::CreateCommand)
+configuration.register_mapper(User::UserMapper)
+```
+{% end %}
 
 You can pass multiple components to each `register` call, as a list of arguments.
 
@@ -65,6 +92,7 @@ RTM provides `auto_registration` as a convenience method for automatically `requ
 
 By default, auto-registration assumes that the directory structure reflects your module/class organization, for example:
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 # lib/persistence/relations/users.rb
 module Persistence
@@ -79,6 +107,22 @@ configuration = ROM::Configuration.new(:memory)
 configuration.auto_registration('root_dir/lib/persistence/')
 container = ROM.container(configuration)
 ```
+---
+```rust
+# lib/persistence/relations/users.rb
+module Persistence
+  module Relations
+    class Users < ROM::Relation[:memory]
+      schema(:users, infer: true) # Notice the dataset name is set explicitly
+    end
+  end
+end
+
+configuration = ROM::Configuration.new(:memory)
+configuration.auto_registration('root_dir/lib/persistence/')
+container = ROM.container(configuration)
+```
+{% end %}
 
 ^INFO
 In this scenario the [Dataset](/learn/introduction/glossary#dataset) name will need to be set explicitly otherwise the fully qualified relation name will be used, in this case `:persistence_relations_users`.
@@ -88,7 +132,8 @@ In this scenario the [Dataset](/learn/introduction/glossary#dataset) name will n
 
 If your directory structure doesn't reflect module/class organization but you do namespace components, then you can set up auto-registration via `:namespace` option:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 # lib/relations/users.rb
 module Persistence
   module Relations
@@ -98,17 +143,38 @@ module Persistence
   end
 end
 ```
+---
+```rust
+# lib/relations/users.rb
+module Persistence
+  module Relations
+    class Users < ROM::Relation[:sql]
+      schema(:users, infer: true)
+    end
+  end
+end
+```
+{% end %}
 
 Notice that the directory structure is different from our module structure. Since we use `Persistence` as our namespace, we need to set it explicitly so RTM can locate our relation after loading:
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 configuration = ROM::Configuration.new(:memory)
 configuration.auto_registration('/path/to/lib', namespace: 'Persistence')
 container = ROM.container(configuration)
 ```
+---
+```rust
+configuration = ROM::Configuration.new(:memory)
+configuration.auto_registration('/path/to/lib', namespace: 'Persistence')
+container = ROM.container(configuration)
+```
+{% end %}
 
 Keep in mind with this namespace strategy, each component must be located under a module matching the components name:
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 # Commands
 #
@@ -138,10 +204,42 @@ module Persistence
   end
 end
 ```
+---
+```rust
+# Commands
+#
+# lib/commands/update_user_command.rb
+module Persistence
+  module Commands
+    class UpdateUserCommand < ROM::SQL:Commands::Create
+      relation :users
+      register_as :update_user_command
+
+      def execute(tuple); end
+    end
+  end
+end
+
+# Mappers
+#
+# lib/mappers/user_mapper.rb
+module Persistence
+  module Mappers
+    class UserMapper < ROM::Transformer
+      relation :users
+      register_as :user_mapper
+
+      map_array do; end
+    end
+  end
+end
+```
+{% end %}
 
 If your components are under a nested namespace like `MyApp::Persistence`, you can send your nested namespace as the `namespace` argument to `#auto_registration`, like so:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 # lib/relations/users.rb
 module MyApp
   module Persistence
@@ -153,34 +251,73 @@ module MyApp
   end
 end
 ```
+---
+```rust
+# lib/relations/users.rb
+module MyApp
+  module Persistence
+    module Relations
+      class Users < ROM::Relation[:sql]
+        schema(:users, infer: true)
+      end
+    end
+  end
+end
+```
+{% end %}
 
 Then, auto-registration can be achieved with
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 configuration.auto_registration('/path/to/lib', namespace: 'MyApp::Persistence')
 ```
+---
+```rust
+configuration.auto_registration('/path/to/lib', namespace: 'MyApp::Persistence')
+```
+{% end %}
+---
 
 #### Turning namespace off
 
 If you keep all components under `{path}/(relations|commands|mappers)` directories and don't namespace them, then you can simply turn namespacing off:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 # lib/relations/users.rb
 class Users < ROM::Relation[:sql]
   schema(infer: true)
 end
 ```
+---
+```rust
+# lib/relations/users.rb
+class Users < ROM::Relation[:sql]
+  schema(infer: true)
+end
+```
+{% end %}
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 configuration = ROM::Configuration.new(:memory)
 configuration.auto_registration('/path/to/lib', namespace: false)
 container = ROM.container(configuration)
 ```
+---
+```rust
+configuration = ROM::Configuration.new(:memory)
+configuration.auto_registration('/path/to/lib', namespace: false)
+container = ROM.container(configuration)
+```
+{% end %}
 
 ## Relations
 
 Relations can be defined with a class extending `ROM::Relation` from the appropriate adapter.
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 # Defines a Users relation for the SQL adapter
 class Users < ROM::Relation[:sql]
@@ -192,9 +329,23 @@ class Posts < ROM::Relation[:http]
 
 end
 ```
+---
+```rust
+# Defines a Users relation for the SQL adapter
+class Users < ROM::Relation[:sql]
+
+end
+
+# Defines a Posts relation for the HTTP adapter
+class Posts < ROM::Relation[:http]
+
+end
+```
+{% end %}
 
 Relations can declare the specific [gateway](/learn/introduction/glossary#gateway) and [dataset](/learn/introduction/glossary#dataset) it takes data from, as well as the registered name of the relation. The following example sets the default options explicitly:
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 class Users < ROM::Relation[:sql]
   gateway :default # the gateway name, as defined in setup
@@ -209,19 +360,44 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  gateway :default # the gateway name, as defined in setup
+
+  # the first argument to schema() is the dataset name;
+  # by default it is inferred from the class name
+  #
+  # `as:` provides the registered name;
+  # under this name the relation will be available in repositories
+  schema(:users, as: :users) do
+    # ...
+  end
+end
+```
+{% end %}
 
 ## Commands
 
 Just like Relations, Commands can be defined as explicit classes:
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 class CreateUser < ROM::Commands::Create[:memory]
 
 end
 ```
+---
+```rust
+class CreateUser < ROM::Commands::Create[:memory]
+
+end
+```
+{% end %}
 
 Commands have three settings: their relation, which takes the registered name of a relation; their result type, either `:one` or `:many`; and their registered name.
 
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
 ```ruby
 class CreateUser < ROM::Commands::Create[:memory]
    register_as :create
@@ -229,6 +405,15 @@ class CreateUser < ROM::Commands::Create[:memory]
    result :one
 end
 ```
+---
+```rust
+class CreateUser < ROM::Commands::Create[:memory]
+   register_as :create
+   relation :users
+   result :one
+end
+```
+{% end %}
 
 ^INFO
 Typically, you're going to use [repository command interface and changesets](/learn/repository/%{version}/quick-start); custom command types are useful when the built-in command support in repositories doesn't meet your requirements.

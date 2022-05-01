@@ -24,7 +24,8 @@ solve this you often need to qualify and rename columns.
 
 To qualify all attributes in a relation:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -42,10 +43,31 @@ class Users < ROM::Relation[:sql]
   # produces "SELECT users.id, users.name ..."
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      has_many :tasks
+      has_many :posts
+    end
+  end
+
+  def with_tasks
+    join(:tasks, user_id: :id)
+
+    # the same will be done when you use a shortcut:
+    join(tasks)
+  end
+  # produces "SELECT users.id, users.name ..."
+end
+```
+{% end %}
 
 To rename all attributes in a relation:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
     associations do
@@ -60,10 +82,28 @@ class Users < ROM::Relation[:sql]
   # produces "SELECT users.id AS user_id, users.name AS user_name ..."
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true) do
+    associations do
+      has_many :tasks
+      has_many :posts
+    end
+  end
+
+  def with_tasks
+    prefix(:user)
+  end
+  # produces "SELECT users.id AS user_id, users.name AS user_name ..."
+end
+```
+{% end %}
 
 To rename attributes in block-based DSLs you can use `as` method:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
 
@@ -72,7 +112,19 @@ class Users < ROM::Relation[:sql]
   end
   # produces "SELECT users.id AS user_id, users.name AS user_name ..."
 end
-````
+```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true)
+
+  def index
+    select { [id.as(:user_id), name.as(:user_name) }
+  end
+  # produces "SELECT users.id AS user_id, users.name AS user_name ..."
+end
+```
+{% end %}`
 
 ## Creating functions from attributes
 
@@ -80,7 +132,8 @@ You can use an attribute to create a function. This is useful in cases where
 you would like to append a function that's created from an attribute coming
 from another relation. For example:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
 
@@ -92,12 +145,27 @@ class Users < ROM::Relation[:sql]
   # SELECT "users"."id", "users"."name", COUNT("tasks"."id") AS "task_count" FROM "users" LEFT JOIN "tasks" ON ("users"."id" = "tasks"."user_id") GROUP BY "users"."id" ORDER BY "users"."id"
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true)
+
+  def index
+    select(:id, :name, tasks[:id].func { int::count(id).as(:task_count) }).
+      left_join(tasks).
+      group(:id)
+  end
+  # SELECT "users"."id", "users"."name", COUNT("tasks"."id") AS "task_count" FROM "users" LEFT JOIN "tasks" ON ("users"."id" = "tasks"."user_id") GROUP BY "users"."id" ORDER BY "users"."id"
+end
+```
+{% end %}
 
 ## Using attributes for restrictions
 
 You can use Attribute API in restriction methods such as `#where`:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
 
@@ -107,6 +175,18 @@ class Users < ROM::Relation[:sql]
   # SELECT "id", "name" FROM "users" WHERE (("name" = 'Jane') OR ("name" = 'Joe')) ORDER BY "users"."id""
 end
 ```
+---
+```rust
+class Users < ROM::Relation[:sql]
+  schema(infer: true)
+
+  def index
+    where { name.is('Jane') | name.is('Joe') }
+  end
+  # SELECT "id", "name" FROM "users" WHERE (("name" = 'Jane') OR ("name" = 'Joe')) ORDER BY "users"."id""
+end
+```
+{% end %}
 
 ## Learn more
 

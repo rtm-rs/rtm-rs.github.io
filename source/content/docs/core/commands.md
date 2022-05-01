@@ -32,7 +32,8 @@ Assuming you have a users relation available:
 
 ### `:create`
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 # inserting a single tuple
 create_user = users.command(:create)
 
@@ -43,29 +44,59 @@ create_user = users.command(:create, result: :many)
 
 create_user.call([{ name: "Jane" }, { name: "John" }])
 ```
+---
+```rust
+# inserting a single tuple
+create_user = users.command(:create)
+
+create_user.call(name: "Jane")
+
+# inserting a multiple tuples
+create_user = users.command(:create, result: :many)
+
+create_user.call([{ name: "Jane" }, { name: "John" }])
+```
+{% end %}
 
 ### `:update`
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 update_user = users.by_pk(1).command(:update)
 
 update_user.call(name: "Jane Doe")
 ```
+---
+```rust
+update_user = users.by_pk(1).command(:update)
+
+update_user.call(name: "Jane Doe")
+```
+{% end %}
 
 ### `:delete`
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 delete_user = users.by_pk(1).command(:delete)
 
 delete_user.call
 ```
+---
+```rust
+delete_user = users.by_pk(1).command(:delete)
+
+delete_user.call
+```
+{% end %}
 
 ## Using custom command types
 
 You can define custom command types too. This is useful when the logic is complex and you prefer
 to encapsulate it in a single class.
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 class MyCommand < ROM::SQL::Commands::Create
   relation :users
   register_as :my_command
@@ -75,14 +106,34 @@ class MyCommand < ROM::SQL::Commands::Create
   end
 end
 ```
+---
+```rust
+class MyCommand < ROM::SQL::Commands::Create
+  relation :users
+  register_as :my_command
+
+  def execute(tuple)
+    # do whatever you need
+  end
+end
+```
+{% end %}
 
 When your command is available in the configured rom container, you can get it in the standard way:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 my_command = users.command(:my_command)
 
 my_command.call(name: "Jane")
 ```
+---
+```rust
+my_command = users.command(:my_command)
+
+my_command.call(name: "Jane")
+```
+{% end %}
 
 ## Commands vs Changesets
 

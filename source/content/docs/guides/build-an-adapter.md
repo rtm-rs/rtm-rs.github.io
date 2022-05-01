@@ -37,7 +37,8 @@ Adapter's gateway is used by RTM to retrieve datasets and inject them into
 adapter's relations as their data-access backends. Here's a simple
 implementation:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 require 'rom'
 
 module ROM
@@ -68,6 +69,39 @@ tasks = gateway.dataset(:tasks)
 gateway.dataset?(:users) # true
 gateway.dataset?(:tasks) # true
 ```
+---
+```rust
+require 'rom'
+
+module ROM
+  module ArrayAdapter
+    class Gateway < ROM::Gateway
+      attr_reader :datasets
+
+      def initialize
+        @datasets = Hash.new { |h, k| h[k] = [] }
+      end
+
+      def dataset(name)
+        datasets[name]
+      end
+
+      def dataset?(name)
+        datasets.key?(name)
+      end
+    end
+  end
+end
+
+gateway = ROM::ArrayAdapter::Gateway.new
+
+users = gateway.dataset(:users)
+tasks = gateway.dataset(:tasks)
+
+gateway.dataset?(:users) # true
+gateway.dataset?(:tasks) # true
+```
+{% end %}
 
 This allows RTM to ask for specific datasets from your gateway.
 
@@ -81,7 +115,8 @@ relation.
 Since our datasets are just arrays, we can expose various array methods to the
 relation using `forward` macro:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 module ROM
   module ArrayAdapter
     class Relation < ROM::Relation
@@ -103,6 +138,30 @@ relation = ROM::ArrayAdapter::Relation.new(gateway.dataset(:users))
 relation.select { |tuple| tuple[:name] == 'Jane' }.inspect
 # #<ROM::ArrayAdapter::Relation dataset=[{:name=>"Jane"}]>
 ```
+---
+```rust
+module ROM
+  module ArrayAdapter
+    class Relation < ROM::Relation
+      # we must configure adapter identifier here
+      adapter :array
+
+      forward :select, :reject
+    end
+  end
+end
+
+users = gateway.dataset(:users)
+
+users << { name: 'Jane' }
+users << { name: 'John' }
+
+relation = ROM::ArrayAdapter::Relation.new(gateway.dataset(:users))
+
+relation.select { |tuple| tuple[:name] == 'Jane' }.inspect
+# #<ROM::ArrayAdapter::Relation dataset=[{:name=>"Jane"}]>
+```
+{% end %}
 
 ^WARNING
 Please remember about setting `adapter` identifier - it is used by RTM to infer component types specific to a given adapter. It's essential during the setup.
@@ -115,13 +174,20 @@ used to set up RTM components for that particular adapter.
 
 To register your adapter:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 ROM.register_adapter(:array, ROM::ArrayAdapter)
 ```
+---
+```rust
+ROM.register_adapter(:array, ROM::ArrayAdapter)
+```
+{% end %}
 
 This is it! Now our array adapter can be setup using ROM:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 configuration= ROM::Configuration.new(:array)
 
 class Users < ROM::Relation[:array]
@@ -142,6 +208,29 @@ users << { name: 'John' }
 rom.relations[:users].by_name('Jane').to_a
 # [{:name=>"Jane"}]
 ```
+---
+```rust
+configuration= ROM::Configuration.new(:array)
+
+class Users < ROM::Relation[:array]
+  def by_name(name)
+    select { |user| user[:name] == name }
+  end
+end
+
+configuration.register_relation(Users)
+
+rom = ROM.container(configuration)
+
+users = rom.gateways[:default].dataset(:users)
+
+users << { name: 'Jane' }
+users << { name: 'John' }
+
+rom.relations[:users].by_name('Jane').to_a
+# [{:name=>"Jane"}]
+```
+{% end %}
 
 ## Commands
 
@@ -175,7 +264,8 @@ Commands will require an interface to insert, delete and update data and also
 
 Let's provide that:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 module ROM
   module ArrayAdapter
     class Relation < ROM::Relation
@@ -194,12 +284,34 @@ module ROM
   end
 end
 ```
+---
+```rust
+module ROM
+  module ArrayAdapter
+    class Relation < ROM::Relation
+      adapter :array
+
+      # reading
+      forward :select, :reject
+
+      # writing
+      forward :<<, :delete
+
+      def count
+        dataset.size
+      end
+    end
+  end
+end
+```
+{% end %}
 
 #### Commands::Create
 
 To implement a create command:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 require 'rom/commands/create' # require what you require!
 
 module ROM
@@ -225,12 +337,41 @@ create_users.call([{ name: 'Jane' }])
 puts users.to_a.inspect
 # [{:name=>"Jane"}]
 ```
+---
+```rust
+require 'rom/commands/create' # require what you require!
+
+module ROM
+  module ArrayAdapter
+    module Commands
+      class Create < ROM::Commands::Create
+        # Just like in case of Relation, we must configure adapter identifier
+        adapter :array
+
+        def execute(tuples)
+          tuples.each { |tuple| relation << tuple }
+        end
+      end
+    end
+  end
+end
+
+users = ROM::ArrayAdapter::Relation.new(gateway.dataset(:users))
+create_users = ROM::ArrayAdapter::Commands::Create.new(users)
+
+create_users.call([{ name: 'Jane' }])
+
+puts users.to_a.inspect
+# [{:name=>"Jane"}]
+```
+{% end %}
 
 #### Commands::Delete
 
 To implement a delete command:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 require 'rom/commands/delete'
 
 module ROM
@@ -254,6 +395,32 @@ delete_users.call
 puts users.to_a.inspect
 # []
 ```
+---
+```rust
+require 'rom/commands/delete'
+
+module ROM
+  module ArrayAdapter
+    module Commands
+      class Delete < ROM::Commands::Delete
+        adapter :array
+
+        def execute
+          relation.each { |tuple| source.delete(tuple) }
+        end
+      end
+    end
+  end
+end
+
+delete_users = ROM::ArrayAdapter::Commands::Delete.new(users)
+
+delete_users.call
+
+puts users.to_a.inspect
+# []
+```
+{% end %}
 
 Notice that here delete command yields tuples from its current `relation` but
 deletes it from the `source` relation, since this is our canonical source of
@@ -263,7 +430,8 @@ data.
 
 To implement an update command:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 require 'rom/commands/update'
 
 module ROM
@@ -287,6 +455,32 @@ update_users.call(age: 21)
 puts users.to_a.inspect
 # [{:name=>"Jane", :age=>21}]
 ```
+---
+```rust
+require 'rom/commands/update'
+
+module ROM
+  module ArrayAdapter
+    module Commands
+      class Update < ROM::Commands::Update
+        adapter :array
+
+        def execute(attributes)
+          relation.each { |tuple| tuple.update(attributes) }
+        end
+      end
+    end
+  end
+end
+
+update_users = ROM::ArrayAdapter::Commands::Update.new(users)
+
+update_users.call(age: 21)
+
+puts users.to_a.inspect
+# [{:name=>"Jane", :age=>21}]
+```
+{% end %}
 
 Here we simply rely on `Hash#update` which mutates tuples using the input
 attributes.
@@ -296,7 +490,8 @@ attributes.
 Once your command types are defined RTM will pick them up from your namespace
 and they will be available during setup:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 configuration = ROM::Configuration.new(:array)
 
 class Users < ROM::Relation[:array]
@@ -355,3 +550,64 @@ delete_user.by_name('John').call
 puts rom.relations[:users].to_a.inspect
 # [{:name=>"Jane Doe"}]
 ```
+---
+```rust
+configuration = ROM::Configuration.new(:array)
+
+class Users < ROM::Relation[:array]
+  def by_name(name)
+    select { |user| user[:name] == name }
+  end
+end
+
+class CreateUser < ROM::Commands::Create[:array]
+  relation :users
+  register_as :create
+end
+
+class UpdateUser < ROM::Commands::Update[:array]
+  relation :users
+  result :one
+  register_as :update
+end
+
+class DeleteUser < ROM::Commands::Delete[:array]
+  relation :users
+  result :one
+  register_as :delete
+end
+
+configuration.register_relation(Users)
+
+configuration.register_command(CreateUser)
+configuration.register_command(UpdateUser)
+configuration.register_command(DeleteUser)
+
+rom = ROM.container(configuration)
+
+create_users = rom.commands[:users][:create]
+update_user = rom.commands[:users][:update]
+delete_user = rom.commands[:users][:delete]
+
+create_users.call([{ name: 'Jane' }, { name: 'John' }])
+
+puts rom.relations[:users].to_a.inspect
+# [{:name=>"Jane"}, {:name=>"John"}]
+
+
+puts rom.relations[:users].by_name('Jane').to_a.inspect
+# [{:name=>"Jane"}]
+
+
+update_user.by_name('Jane').call(name: 'Jane Doe')
+
+puts rom.relations[:users].to_a.inspect
+# [{:name=>"Jane Doe"}, {:name=>"John"}]
+
+
+delete_user.by_name('John').call
+
+puts rom.relations[:users].to_a.inspect
+# [{:name=>"Jane Doe"}]
+```
+{% end %}

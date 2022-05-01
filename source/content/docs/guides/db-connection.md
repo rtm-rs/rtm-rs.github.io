@@ -22,7 +22,8 @@ This article assumes:
 
 To connect to your database and define a repository for `users` table, simply do:
 
-``` ruby
+{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+```ruby
 require "rom"
 
 rom = ROM.container(:sql, 'postgres://localhost/my_db', username: 'user', password: 'secret') do |config|
@@ -38,6 +39,24 @@ users.changeset(:create, name: "Jane").commit
 
 jane = users.where(name: "Jane").one
 ```
+---
+```rust
+require "rom"
+
+rom = ROM.container(:sql, 'postgres://localhost/my_db', username: 'user', password: 'secret') do |config|
+  config.relation(:users) do
+    schema(infer: true)
+    auto_struct true
+  end
+end
+
+users = rom.relations[:users]
+
+users.changeset(:create, name: "Jane").commit
+
+jane = users.where(name: "Jane").one
+```
+{% end %}
 
 ## Learn more
 

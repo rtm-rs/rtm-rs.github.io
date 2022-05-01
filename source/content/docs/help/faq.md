@@ -42,6 +42,8 @@ Martin Fowler has a succinct synopsis of [CQRS and its downsides](https://martin
 The [`cqrs-es`](https://doc.rust-cqrs.org/intro.html) crate provides a
 lightweight framework for building applications utilizing CQRS and event sourcing.
 
+Some useful references are collected [here](https://gist.github.com/brendanzab/a6073e73f751a6ca9750f960a92f2afe)
+
 ## Other documentation?
 
 - Crate documents
