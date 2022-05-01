@@ -1,6 +1,6 @@
 +++
 title = "Introduction"
-description = "RTM is a Rust crate helping you build modern applications, it is a port of the Ruby Object Mapper ideas for Rust."
+description = "."
 date = 2021-05-01T08:00:00+00:00
 updated = 2021-05-01T08:00:00+00:00
 draft = false

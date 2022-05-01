@@ -91,8 +91,8 @@ and `command` graphs for working with nested structures and associations.
 
 #### CQRS
 
-Command and Query Responsibility Segregation (CQRS), is a way of organizing
-your application so that reading data is separated from changing data - the
-responsibility of handling commands (mutations) from the responsibility of
-handling side-effect-free query/read access.
-In RTM it is easily achievable by using [relations](#relation) and [commands](#command).
+***RTM is not a CQRS framework*** - Command and Query Responsibility
+Segregation (CQRS), is a way of organizing your application so that reading
+data is separated from changing data - the responsibility of handling commands
+(mutations) from the responsibility of handling side-effect-free query/read access.
+In RTM part of this pattern is easily achievable by using [relations](#relation) and [commands](#command).  Because RTM may be useful when implementing a CQRS pattern, it does not follow that a project adopting RTM must commit to the full complexity of CQRS or Event-Sourcing. Martin Fowler has a succinct synopsis of [CQRS and its downsides](https://martinfowler.com/bliki/CQRS.html).

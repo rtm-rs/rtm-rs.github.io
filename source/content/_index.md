@@ -14,7 +14,7 @@ repo_url = "https://github.com/rtm-rs/rtm"
 [[extra.menu.main]]
 name = "Learn"
 section = "docs"
-url = "/docs/learn/introduction/"
+url = "/docs/learn/introduction"
 weight = 10
 
 [[extra.menu.main]]
@@ -31,7 +31,7 @@ weight = 20
 
 [[extra.menu.main]]
 name = "FAQ"
-section = "doc"
+section = "docs"
 url = "/docs/help/faq/"
 weight = 20
 
@@ -44,6 +44,7 @@ weight = 20
 [[extra.list]]
 title = "Learn"
 content = 'The what, why and how of RTM - which is mostly the what, why and how of ROM and precursors 🙏.'
+url = "/docs/learn/overview/"
 
 [[extra.list]]
 title = "Guides"

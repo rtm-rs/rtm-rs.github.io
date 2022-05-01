@@ -1,10 +1,10 @@
 +++
 title = "Contributing"
-description = "Find out how to contribute to AdiDoks."
+description = "Find out how to contribute to RTM."
 date = 2022-05-01T18:00:00+00:00
 updated = 2021-05-01T18:00:00+00:00
 template = "docs/section.html"
 sort_by = "weight"
-weight = 6
+weight = 40
 draft = false
 +++

@@ -41,3 +41,17 @@ cargo test
 ```bash
 cargo test
 ```
+
+{% fenced_code_tab(tabs=["rust", "C", "java"]) %}
+```rust
+prinln!("Hello World!");
+```
+---
+```C
+prinf("Hello World!\n");
+```
+---
+```java
+system.out.println("Hello World!");
+```
+{% end %}

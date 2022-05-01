@@ -14,17 +14,33 @@ toc = true
 top = false
 +++
 
-## What is the RTM?
+## What is RTM?
 
 Rust Type Mapper (RTM) is an open-source persistence and mapping toolkit for Rust built for speed and simplicity.
 The toolkit is modelled on the [Ruby Object Mapper (v5.0)](https://rom-rb.org).
+As such the principal use cases are (non-trivial) prototyping through to production.
 
-## Keyboard shortcuts for search?
+## Is RTM a CQRS-ES framework?
 
-- focus: `/`
-- select: `↓` and `↑`
-- open: `Enter`
-- close: `Esc`
+***RTM is not a CQRS and/or ES framework.*** - Command and Query Responsibility
+Segregation (CQRS), is a way of organizing your application so that reading
+data is separated from changing data - the responsibility of handling commands
+(mutations) from the responsibility of handling side-effect-free query/read access.
+Event Sourcing (ES) uses the generated events as the source of truth for the state of the application.
+In RTM part of this pattern is easily achievable by using [relations](./glossary/#relation) and [commands](./glossary/#command).
+
+**Because RTM may be useful when implementing a CQRS pattern, it does not
+follow that a project adopting RTM must or will be committing to the full
+complexity of CQRS or Event-Sourcing.**
+It is not yet clear, from practice, whether a project that needs the head-room
+of CQRS-ES will be able to utilise RTM all the way.  However we are interested
+in supporting these usecases until we can't, so please open feature and issue
+reports if you encounter any difficulties.
+
+Martin Fowler has a succinct synopsis of [CQRS and its downsides](https://martinfowler.com/bliki/CQRS.html).
+
+The [`cqrs-es`](https://doc.rust-cqrs.org/intro.html) crate provides a
+lightweight framework for building applications utilizing CQRS and event sourcing.
 
 ## Other documentation?
 
@@ -37,8 +53,15 @@ The toolkit is modelled on the [Ruby Object Mapper (v5.0)](https://rom-rb.org).
   - [rtm-json](https://docs.rs/rtm-json/)
   - [rtm-yaml](https://docs.rs/rtm-yaml/)
 
+## Keyboard shortcuts for search?
+
+- focus: `/`
+- select: `↓` and `↑`
+- open: `Enter`
+- close: `Esc`
+
 ## Contact the creator?
 
-Send *Mark* an E-mail:
+Send *Mark* an E-mail, however we'd prefer light-weight RFC's then pull-requests 🥇:
 
 - <mark@taqtiqa.com>
