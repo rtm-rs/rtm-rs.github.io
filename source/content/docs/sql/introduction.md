@@ -208,7 +208,8 @@ configure the connection between RTM and the database.
 The only supported structure for connecting to PostgreSQL databases is the
 Connection String URI format:
 
-```
+
+```bash
 'postgres://[user[:password]@][host][:port][,...][/database][?param1=value1&...]'
 ```
 
@@ -385,7 +386,8 @@ documentation page.
 
 MySQL2 driver connection string uses the following pattern:
 
-```
+
+```bash
 'mysql2://[user[:password]@][host][:port][/database][?param1=value1&...]'
 ```
 
@@ -752,7 +754,8 @@ documentation or for URI file formats see
 
 OCI8 driver connection strings use the following pattern:
 
-```
+
+```bash
 'oracle://[user[:password]@][host][:port][/database][?param1=value1&...]'
 ```
 
@@ -884,7 +887,8 @@ connection.
 Connection strings are similar to their documented patterns above however all
 connection strings must start with `jdbc:` for example:
 
-```
+
+```bash
 # Postgres Example
 jdbc:postgresql://username@localhost/database
 

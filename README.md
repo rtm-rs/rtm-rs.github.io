@@ -93,20 +93,21 @@ bundle exec rake projects:symlink
 
 If you're getting the following error:
 
-```
+
+```bash
 Unable to load the EventMachine C extension; To use the pure-ruby reactor, require 'em/pure_ruby'
 ```
 
 or features such as Live Reload are not working then it's because the
 C extension for eventmachine needs to be installed.
 
-```
+```bash
 gem uninstall eventmachine
 ```
 
 take note of the version being used. (At the time of writing '1.2.0.1')
 
-```
+```bash
 gem install eventmachine -v '[VERSION]' --platform=ruby
 ```
 
