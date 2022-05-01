@@ -16,7 +16,7 @@ top = false
 
 Changesets are an advanced abstraction for making changes in your database. They work on top of commands, and provide additional data mapping functionality and have support for associating data.
 
-Built-in changesets support all core command types, you can also define custom changeset classes and connect them to custom commands.
+Built-in changesets support all core command types, you can also define custom changeset types and connect them to custom commands.
 
 ## Working with changesets
 

@@ -14,7 +14,7 @@ toc = true
 top = false
 +++
 
-It's best to create multiple Repository classes that each focus on a segment of the data. One rough guideline is to make a repository for each concept within your app:
+It's best to create multiple Repository types that each focus on a segment of the data. One rough guideline is to make a repository for each concept within your app:
 
 ```ruby
 # Assuming a database with tables 'users' and 'projects'

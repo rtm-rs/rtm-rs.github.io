@@ -44,7 +44,7 @@ configuration = ROM::Configuration.new(:memory, 'memory://test')
 # Declare Relations, Commands, and Mappers here
 ```
 
-If you prefer to create explicit classes for your components you must register them with the configuration directly:
+If you prefer to create explicit types for your components you must register them with the configuration directly:
 
 ```ruby
 configuration = ROM::Configuration.new(:memory, 'memory://test')
@@ -231,5 +231,5 @@ end
 ```
 
 ^INFO
-Typically, you're going to use [repository command interface and changesets](/learn/repository/%{version}/quick-start); custom command classes are useful when the built-in command support in repositories doesn't meet your requirements.
+Typically, you're going to use [repository command interface and changesets](/learn/repository/%{version}/quick-start); custom command types are useful when the built-in command support in repositories doesn't meet your requirements.
 ^

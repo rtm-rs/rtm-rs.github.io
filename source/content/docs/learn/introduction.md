@@ -63,7 +63,7 @@ Most likely, a decent percentage of developers will see the added abstractions a
 
 RTM leverages Ruby’s linguistic strengths with a blend of Object Oriented and Functional styles. Following a powerful composition pattern, every RTM object shares a common pipeline interface and returns data without side-effects.
 
-All RTM components are stand-alone; they are loosely coupled, can be used independently, and follow the single responsibility principle. A single object that handles coercion, state, persistence, validation, and all-important business logic rapidly becomes complex. Instead, RTM provides the infrastructure that allows you to easily create small, dedicated classes for handling each concern individually, and then ties them together in a developer-friendly way.
+All RTM components are stand-alone; they are loosely coupled, can be used independently, and follow the single responsibility principle. A single object that handles coercion, state, persistence, validation, and all-important business logic rapidly becomes complex. Instead, RTM provides the infrastructure that allows you to easily create small, dedicated types for handling each concern individually, and then ties them together in a developer-friendly way.
 
 Above all else RTM favors:
 

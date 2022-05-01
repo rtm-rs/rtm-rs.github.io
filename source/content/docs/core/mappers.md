@@ -51,7 +51,7 @@ user_names.to_a
 => ["Jane", "John"]
 ```
 
-Typically though, custom mappers will be used in more complex cases, when the underlying database doesn't provide enough functionality that's needed to get desired data structures. In such cases, you can define mapper classes and configure mapping there.
+Typically though, custom mappers will be used in more complex cases, when the underlying database doesn't provide enough functionality that's needed to get desired data structures. In such cases, you can define mapper types and configure mapping there.
 
 ``` ruby
 require 'rom/transformer'

@@ -153,7 +153,7 @@ RTM adheres to the CQRS but it doesn't enforce it, this means that relations do
 implement CRUD and commands are just thin wrappers around CUD and they depend on
 relations.
 
-By convention all command classes live under `ROM::YourAdapter::Commands`
+By convention all command types live under `ROM::YourAdapter::Commands`
 namespace.
 
 ### Common Command Behavior
@@ -293,7 +293,7 @@ attributes.
 
 ### Putting It All Together
 
-Once your command classes are defined RTM will pick them up from your namespace
+Once your command types are defined RTM will pick them up from your namespace
 and they will be available during setup:
 
 ``` ruby

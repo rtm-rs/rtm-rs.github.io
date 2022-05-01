@@ -18,8 +18,8 @@ Relations return plain hashes by default, but it's more common to use simple obj
 
 You can work with structs in 3 different ways:
 
-1. Rely on `auto_struct` without defining custom struct classes - this works very well in the beginning of a project, where you don't need your own methods at all
-2. Use `auto_struct` with custom struct classes - a nice middle-ground where you benefit from dynamic mapping but you also have access to your own methods
+1. Rely on `auto_struct` without defining custom struct types - this works very well in the beginning of a project, where you don't need your own methods at all
+2. Use `auto_struct` with custom struct types - a nice middle-ground where you benefit from dynamic mapping but you also have access to your own methods
 3. Use custom objects - the most advanced technique, where data are mapped to your own objects. This approach should be used in mature projects where complete separation from persistence layer is going to be beneficial.
 
 ^INFO
@@ -56,7 +56,7 @@ This feature is **enabled by default in repositories**.
 
 ## Auto-struct with custom classes
 
-Relations support configuring `struct_namespace`, it is set to `ROM::Struct` by default, which means struct classes are generated for you automatically within `ROM::Struct` namespace. If you want to provide your own struct classes, simply put them in a module and configure it as the `struct_namespace`.
+Relations support configuring `struct_namespace`, it is set to `ROM::Struct` by default, which means struct types are generated for you automatically within `ROM::Struct` namespace. If you want to provide your own struct classes, simply put them in a module and configure it as the `struct_namespace`.
 
 Let's say you have `Entities` namespace and would like to provide a custom `Entities::User` class:
 
@@ -81,9 +81,9 @@ user.full_name
 # => "Jane Doe"
 ```
 
-### How struct classes are determined
+### How struct types are determined
 
-Mappers will look for struct classes based on `Relation#name`, but this is not restricted
+Mappers will look for struct types based on `Relation#name`, but this is not restricted
 to canonical names of your relations, as they can be aliased too. For instance, you may
 define `:admins` relation, which is restricted to users with `type` set to `"Admin"`. Then
 if you have a `Entities::Admin` class, it will be used as the struct class for `:admins`
