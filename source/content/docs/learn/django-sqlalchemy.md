@@ -47,17 +47,21 @@ The closest implementation to models would be `ROM::Struct`, which is essentiall
 
 <h4 class="text-center">ROM</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
 end
 ```
+
 {% end %}
 
 As you can see, ActiveRecord and RTM have similar boilerplate and as this guide progresses both will use similar APIs to accomplish the same tasks. The difference between models and relations lies within their scope and intended purposes. ActiveRecord models represent an all encompassing thing that contains *state*, *behavior*, *identity*, *persistence logic* and *validations* whereas RTM relations describe how data is connected to other relations and provides stateless APIs for applying *views* of that data on demand.
@@ -68,6 +72,7 @@ The most direct analog to ActiveRecord models in RTM is a `ROM::Struct`. RTM str
 
 <h4 class="text-center">Active Record</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class User < ApplicationRecord
   def first_name
@@ -88,7 +93,9 @@ user.first_name
 user.last_name
 #> "Doe"
 ```
+
 ---
+
 ```rust
 class User < ApplicationRecord
   def first_name
@@ -109,10 +116,12 @@ user.first_name
 user.last_name
 #> "Doe"
 ```
+
 {% end %}
 
 <h4 class="text-center">ROM</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   struct_namespace Entities
@@ -141,7 +150,9 @@ user.first_name
 user.last_name
 #> "Doe"
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   struct_namespace Entities
@@ -170,6 +181,7 @@ user.first_name
 user.last_name
 #> "Doe"
 ```
+
 {% end %}
 
 For a brief overview and links to more in-depth information about relations see the Relations in our [Core](/learn/core/5.2/relations) section.
@@ -182,85 +194,109 @@ Once you have a relation, it becomes almost trivial to start querying for inform
 
 <h4 class="text-center">Active Record</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 User.where(name: "Jane").first
 #> #<User id: 1, name: "Jane">
 ```
+
 ---
+
 ```rust
 User.where(name: "Jane").first
 #> #<User id: 1, name: "Jane">
 ```
+
 {% end %}
 
 <h4 class="text-center">ROM</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 users_relation.where(name: "Jane").first
 #<ROM::Struct::User id=1 name="Jane">
 ```
+
 ---
+
 ```rust
 users_relation.where(name: "Jane").first
 #<ROM::Struct::User id=1 name="Jane">
 ```
+
 {% end %}
 
 ### Query Subset of Data
 
 <h4 class="text-center">Active Record</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 User.select("name").where(name: name).first
 
 #> #<User id: nil, name: "Jane">
 ```
+
 ---
+
 ```rust
 User.select("name").where(name: name).first
 
 #> #<User id: nil, name: "Jane">
 ```
+
 {% end %}
 
 <h4 class="text-center">ROM</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 users_relation.select(:name).where(name: name).one
 
 #> #<ROM::Struct::User name="Jane">
 ```
+
 ---
+
 ```rust
 users_relation.select(:name).where(name: name).one
 
 #> #<ROM::Struct::User name="Jane">
 ```
+
 {% end %}
 
 ### Query with Complex Conditions
 
 <h4 class="text-center">Active Record</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 User.where("admin IS ? OR moderator IS ?", true, true)
 ```
+
 ---
+
 ```rust
 User.where("admin IS ? OR moderator IS ?", true, true)
 ```
+
 {% end %}
 
 
 <h4 class="text-center">ROM</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 users_relation.where { admin.is(true) | (moderator.is(true)) }
 ```
+
 ---
+
 ```rust
 users_relation.where { admin.is(true) | (moderator.is(true)) }
 ```
+
 {% end %}
 
 For several SQL keywords, such as `select` & `where`, RTM provides a DSL for blocks. The benefit is the ability to use any SQL functions supported by your database.
@@ -278,24 +314,32 @@ Similar to ActiveRecord, RTM uses associations as a means of describing the inte
 
 <h4 class="text-center">Active Record</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 Article.joins(:users)
 ```
+
 ---
+
 ```rust
 Article.joins(:users)
 ```
+
 {% end %}
 
 <h4 class="text-center">ROM</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 articles_relation.join(:users)
 ```
+
 ---
+
 ```rust
 articles_relation.join(:users)
 ```
+
 {% end %}
 
 Obviously the join interface for both frameworks can support different configurations to handle different types of joins, however this example illustrates that other than a minor name change, in the majority of use-cases they will act the same.
@@ -306,33 +350,41 @@ Obviously the join interface for both frameworks can support different configura
 
 <h4 class="text-center">Active Record</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 User.create(name: "Jane")
 #> #<User id: 1, name: "Jane">
 ```
+
 ---
+
 ```rust
 User.create(name: "Jane")
 #> #<User id: 1, name: "Jane">
 ```
+
 {% end %}
 
 
 <h4 class="text-center">ROM</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 users_relation
   .changeset(:create, name: "Jane")
   .commit
 #> #<ROM::Struct::User id=1 name="Jane">
 ```
+
 ---
+
 ```rust
 users_relation
   .changeset(:create, name: "Jane")
   .commit
 #> #<ROM::Struct::User id=1 name="Jane">
 ```
+
 {% end %}
 
 Changesets are an abstraction created over commands which are what actually manipulate stored records. They are preferred over commands due to additional functionality they provide.
@@ -341,24 +393,29 @@ Changesets are an abstraction created over commands which are what actually mani
 
 <h4 class="text-center">Active Record</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 user = User.find_by(name: "Jane")
 user.update(name: "Jane Doe")
 
 #> #<User id=1 name="Jane Doe">
 ```
+
 ---
+
 ```rust
 user = User.find_by(name: "Jane")
 user.update(name: "Jane Doe")
 
 #> #<User id=1 name="Jane Doe">
 ```
+
 {% end %}
 
 
 <h4 class="text-center">ROM</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 users_relation
   .where(name: "Jane")
@@ -367,7 +424,9 @@ users_relation
 
 #> #<ROM::Struct::User id=1 name="Jane Doe">
 ```
+
 ---
+
 ```rust
 users_relation
   .where(name: "Jane")
@@ -376,6 +435,7 @@ users_relation
 
 #> #<ROM::Struct::User id=1 name="Jane Doe">
 ```
+
 {% end %}
 
 It should be noted that updating a record in ActiveRecord generally requires that record to first be loaded then updated then committed. We view this as a bad practice as it leads to more round trips from the database and entities that are initialized in an invalid state. If a developer is sufficiently validating data at the boundaries of the application then updating or creating a record without loading it should be no problem and in fact preferable.
@@ -384,6 +444,7 @@ It should be noted that updating a record in ActiveRecord generally requires tha
 
 <h4 class="text-center">Active Record</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class User < ApplicationRecord
   has_many :tasks
@@ -402,7 +463,9 @@ user_data = {
 
 user = User.create(user_data)
 ```
+
 ---
+
 ```rust
 class User < ApplicationRecord
   has_many :tasks
@@ -421,6 +484,7 @@ user_data = {
 
 user = User.create(user_data)
 ```
+
 {% end %}
 
 %
@@ -430,6 +494,7 @@ user = User.create(user_data)
 
 <h4 class="text-center">ROM</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -461,7 +526,9 @@ users_relation
 #>  #<ROM::Struct::Task id=3 user_id=4 title="Task 1">
 #> ]>
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -493,6 +560,7 @@ users_relation
 #>  #<ROM::Struct::Task id=3 user_id=4 title="Task 1">
 #> ]>
 ```
+
 {% end %}
 
 Instead of requiring changes to a relation to handle nested attributes, a RTM relation can leverage its existing associations to determine nested input and changesets can wire up any ids needed by sub records.  This is all possible without a tool like `accepts_nested_attributes_for` because RTM relations are not expected to handle raw input from a multitude of external sources and they're not expected to handle an object that could be in any random state at any time. Changesets utilize relation schemas to be sure that each attribute is the correct data type and when composed with `#combine` they know to expect associated relations.
@@ -509,6 +577,7 @@ ActiveRecord mixes domain-specific data validation with persistence layer. An ac
 As long as there is an adapter, RTM can theoretically support any datastore.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:mongo]
   schema do
@@ -517,7 +586,9 @@ class Users < ROM::Relation[:mongo]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:mongo]
   schema do
@@ -526,6 +597,7 @@ class Users < ROM::Relation[:mongo]
   end
 end
 ```
+
 {% end %}
 
 ### Cross Database Associations
@@ -533,6 +605,7 @@ end
 Couple multi-database support with cross database associations and suddenly a world of opportunity opens up.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -552,7 +625,9 @@ class Tasks < ROM::Relation[:yaml]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -572,11 +647,13 @@ class Tasks < ROM::Relation[:yaml]
   end
 end
 ```
+
 {% end %}
 
 ### Mapping Custom Models
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class CustomUser < MySuperModelLibary
 end
@@ -585,7 +662,9 @@ users_relation.map_to(CustomUser).first
 
 #> #<CustomUser id="1", username="Joe">
 ```
+
 ---
+
 ```rust
 class CustomUser < MySuperModelLibary
 end
@@ -594,6 +673,7 @@ users_relation.map_to(CustomUser).first
 
 #> #<CustomUser id="1", username="Joe">
 ```
+
 {% end %}
 
 RTM does not care what your final output object is as long as it accepts a hash of all the attributes and their values. Coupled with other mappers, the output from a query can be incredibly flexible.
@@ -602,6 +682,7 @@ RTM does not care what your final output object is as long as it accepts a hash 
 
 <h4 class="text-center">Active Record</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 User
   .select("*, concat(first_name, ' ', last_name) as 'full_name')")
@@ -609,7 +690,9 @@ User
 
 #> #<User id=1 full_name="Jane Doe">
 ```
+
 ---
+
 ```rust
 User
   .select("*, concat(first_name, ' ', last_name) as 'full_name')")
@@ -617,11 +700,13 @@ User
 
 #> #<User id=1 full_name="Jane Doe">
 ```
+
 {% end %}
 
 
 <h4 class="text-center">ROM</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 users_relation.select_append {
   str::first_name.concat(' ', last_name).as(:full_name)
@@ -629,7 +714,9 @@ users_relation.select_append {
 
 #> #<ROM::Struct::User id=1, full_name="Jane Doe">
 ```
+
 ---
+
 ```rust
 users_relation.select_append {
   str::first_name.concat(' ', last_name).as(:full_name)
@@ -637,12 +724,14 @@ users_relation.select_append {
 
 #> #<ROM::Struct::User id=1, full_name="Jane Doe">
 ```
+
 {% end %}
 
 ### Legacy Schemas
 
 <h4 class="text-center">Active Record</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class User < ApplicationRecord
   self.table_name = 'SomeHorriblyNamedUserTable'
@@ -661,7 +750,9 @@ User.where('name IS ?', 'Jane').first
 # 🔥🔥 KA-BOOM! 🔥🔥
 # ActiveRecord::StatementInvalid: no such column
 ```
+
 ---
+
 ```rust
 class User < ApplicationRecord
   self.table_name = 'SomeHorriblyNamedUserTable'
@@ -680,11 +771,13 @@ User.where('name IS ?', 'Jane').first
 # 🔥🔥 KA-BOOM! 🔥🔥
 # ActiveRecord::StatementInvalid: no such column
 ```
+
 {% end %}
 
 
 <h4 class="text-center">ROM</h4>
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(:SomeHorriblyNamedUserTable, as: :users) do
@@ -697,7 +790,9 @@ users_relation.where(name: 'Jane').first
 
 #> #<ROM::Struct::User id=1 name="Jane">
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(:SomeHorriblyNamedUserTable, as: :users) do
@@ -710,6 +805,7 @@ users_relation.where(name: 'Jane').first
 
 #> #<ROM::Struct::User id=1 name="Jane">
 ```
+
 {% end %}
 
 RTM makes working with legacy schemas a breeze. All that's needed is to define attributes on the relations schema along with their aliases. Afterwards just reuse the aliased names throughout your RTM queries - *quick* and *easy*.
@@ -719,6 +815,7 @@ Working with ActiveRecord in this regard is a bit more difficult. While you can 
 ### Custom Mappers
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class EncryptionMapper < ROM::Mapper
   register_as :encryption
@@ -732,7 +829,9 @@ end
 
 users.map_with(:encryption)
 ```
+
 ---
+
 ```rust
 class EncryptionMapper < ROM::Mapper
   register_as :encryption
@@ -746,6 +845,7 @@ end
 
 users.map_with(:encryption)
 ```
+
 {% end %}
 
 ### Transform Data Before Persisting
@@ -753,6 +853,7 @@ users.map_with(:encryption)
 Not only can data be transformed when reading records from the database, they can also be transformed just before storage as well. Changesets offer a built in method for executing a set of transformations that can be used to make minor adjustments such as the example below, where an attribute needs to be renamed.  They can also handle more powerful transformations such as flattening nested objects. For more information on available transformations see [Transproc](https://github.com/solnic/transproc)
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class NewUser < ROM::Changeset::Create
   map do
@@ -762,7 +863,9 @@ end
 
 users_relation.changeset(NewUser, user_name: "Jane").commit
 ```
+
 ---
+
 ```rust
 class NewUser < ROM::Changeset::Create
   map do
@@ -772,6 +875,7 @@ end
 
 users_relation.changeset(NewUser, user_name: "Jane").commit
 ```
+
 {% end %}
 
 ## NEXT

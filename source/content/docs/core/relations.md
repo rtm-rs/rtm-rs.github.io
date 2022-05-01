@@ -41,17 +41,21 @@ Let's say we have a `:users` table in a SQL database, here's how you would defin
 a relation class for it:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
 end
 ```
+
 {% end %}
 
 Notice a few things:
@@ -69,6 +73,7 @@ whenever you use a query interface provided by adapters. In our example we use
 `rom-sql`, let's define a relation view called `listing`, using SQL query DSL:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation
   def listing
@@ -76,7 +81,9 @@ class Users < ROM::Relation
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation
   def listing
@@ -84,6 +91,7 @@ class Users < ROM::Relation
   end
 end
 ```
+
 {% end %}
 
 ## Materializing relations
@@ -95,15 +103,19 @@ To materialize a relation means asking it to load its data from a database. Rela
 To get all results, simply coerce a relation to an array via `Relation#to_a`:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 users.to_a
 => [{:id=>1, :name=>"Jane Doe"}, {:id=>2, :name=>"John Doe"}]
 ```
+
 ---
+
 ```rust
 users.to_a
 => [{:id=>1, :name=>"Jane Doe"}, {:id=>2, :name=>"John Doe"}]
 ```
+
 {% end %}
 
 ### Getting a single result
@@ -111,6 +123,7 @@ users.to_a
 To materialize a relation and retrieve just a single result, use `#one` or `#one!`:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 # Produces a single result or nil if none found.
 # Raises an error if there are more than one.
@@ -120,7 +133,9 @@ users.one
 # Raises an error if there are 0 results or more than one.
 users.one!
 ```
+
 ---
+
 ```rust
 # Produces a single result or nil if none found.
 # Raises an error if there are more than one.
@@ -130,6 +145,7 @@ users.one
 # Raises an error if there are 0 results or more than one.
 users.one!
 ```
+
 {% end %}
 
 ### Iteration
@@ -137,6 +153,7 @@ users.one!
 If you start iterating over a relation via `Relation#each`, the relation will get its data via `#to_a` and yield results to the block.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 users.each do |user|
   puts user[:name]
@@ -144,7 +161,9 @@ end
 # Jane Doe
 # John Doe
 ```
+
 ---
+
 ```rust
 users.each do |user|
   puts user[:name]
@@ -152,6 +171,7 @@ end
 # Jane Doe
 # John Doe
 ```
+
 {% end %}
 
 ### Next

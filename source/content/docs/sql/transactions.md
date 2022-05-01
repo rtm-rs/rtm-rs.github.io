@@ -18,6 +18,7 @@ top = false
 To use a transaction simply wrap an operation via `Relation#transaction` method:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 # rollback happens when any error is raised
 users.transaction do |t|
@@ -30,7 +31,9 @@ users.transaction do |t|
   t.rollback!
 end
 ```
+
 ---
+
 ```rust
 # rollback happens when any error is raised
 users.transaction do |t|
@@ -43,6 +46,7 @@ users.transaction do |t|
   t.rollback!
 end
 ```
+
 {% end %}
 
 ## Learn more

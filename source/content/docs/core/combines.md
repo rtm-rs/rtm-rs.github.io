@@ -41,6 +41,7 @@ Suppose we have a set of relations `:projects`, `:project_tasks`, `:users` and a
 dataset defined as such:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 # Dataset representation
 
@@ -98,7 +99,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 # Dataset representation
 
@@ -156,11 +159,13 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 To load a specific user with all of their projects is pretty easy in ROM:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 # Example: 1
 users_relation.by_id(2).one
@@ -172,7 +177,9 @@ users_relation.combine(:projects).by_id(2).one
 #     :username=>"mary_matrix",
 #     :projects=>[{:id=>2, :user_id=>2, :name=>"Super Important Project"}]}
 ```
+
 ---
+
 ```rust
 # Example: 1
 users_relation.by_id(2).one
@@ -184,6 +191,7 @@ users_relation.combine(:projects).by_id(2).one
 #     :username=>"mary_matrix",
 #     :projects=>[{:id=>2, :user_id=>2, :name=>"Super Important Project"}]}
 ```
+
 {% end %}
 
 As you can see from the output in the first example, only the data available in the user
@@ -198,6 +206,7 @@ Using the same relations as defined in the [Basic Combine](#basic-combine) secti
 can combine as many relations as we wish at any arbitrary depth:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 user_relation.by_id(2).combine(projects: :project_tasks).one
 
@@ -224,7 +233,9 @@ user_relation.by_id(2).combine(projects: :project_tasks).one
 #     ]
 #   }
 ```
+
 ---
+
 ```rust
 user_relation.by_id(2).combine(projects: :project_tasks).one
 
@@ -251,6 +262,7 @@ user_relation.by_id(2).combine(projects: :project_tasks).one
 #     ]
 #   }
 ```
+
 {% end %}
 
 Nested combines allow developers to create properly normalized data sets and then query them with
@@ -260,6 +272,7 @@ For instance, say every project and project task required a 'reviewer' to be tra
 the record; something like this:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Projects < ROM::Relation[:sql]
   schema(infer: true) do
@@ -280,7 +293,9 @@ class ProjectTasks < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Projects < ROM::Relation[:sql]
   schema(infer: true) do
@@ -301,12 +316,14 @@ class ProjectTasks < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 We can then combine a set of nested relations by passing combine a `Hash` made of
 sub hashes or arrays matching the nested structure of our relations. As an example:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 
 user_relation
@@ -334,7 +351,9 @@ user_relation
 #        :reviewed_by=>{:id=>1, :username=>"briang"}}],
 #     :reviewed_by=>{:id=>2, :username=>"mary_matrix"}}]}
 ```
+
 ---
+
 ```rust
 
 user_relation
@@ -362,6 +381,7 @@ user_relation
 #        :reviewed_by=>{:id=>1, :username=>"briang"}}],
 #     :reviewed_by=>{:id=>2, :username=>"mary_matrix"}}]}
 ```
+
 {% end %}
 
 Admittedly the combine can become a bit messy when dealing with nested
@@ -380,6 +400,7 @@ more accurately `Relation::Combined#node`. The node method allows for the adjust
 of all the relations in the composition.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 user_relation
   .by_id(1)
@@ -407,7 +428,9 @@ user_relation
 #      :name=>"Secret Mega Project",
 #      :project_tasks=>[]}]}
 ```
+
 ---
+
 ```rust
 user_relation
   .by_id(1)
@@ -435,6 +458,7 @@ user_relation
 #      :name=>"Secret Mega Project",
 #      :project_tasks=>[]}]}
 ```
+
 {% end %}
 
 Here we can see that a restriction was applied to project tasks and only the task matching
@@ -444,6 +468,7 @@ To grab only a subset of the data associated with a nested relation we can adjus
 projection by using `select`:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 user_relation
   .by_id(2)
@@ -462,7 +487,9 @@ user_relation
 #      :name=>"Super Important Project",
 #      :project_tasks=>[{:id=>3, :project_id=>2}, {:id=>4, :project_id=>2}]}]}
 ```
+
 ---
+
 ```rust
 user_relation
   .by_id(2)
@@ -481,6 +508,7 @@ user_relation
 #      :name=>"Super Important Project",
 #      :project_tasks=>[{:id=>3, :project_id=>2}, {:id=>4, :project_id=>2}]}]}
 ```
+
 {% end %}
 
 ^INFO

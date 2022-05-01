@@ -28,6 +28,7 @@ it's a composite primary key).
 To infer a schema automatically:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 require 'rom-sql'
 
@@ -35,7 +36,9 @@ class Users < ROM::Relation[:sql]
   schema(infer: true) # that's it
 end
 ```
+
 ---
+
 ```rust
 require 'rom-sql'
 
@@ -43,6 +46,7 @@ class Users < ROM::Relation[:sql]
   schema(infer: true) # that's it
 end
 ```
+
 {% end %}
 
 ## Coercions
@@ -52,6 +56,7 @@ Default attribute types in schemas are used for input coercions in commands, if 
 coercions when relations read their data, you can do it via `:read` type in schema definitions:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Posts < ROM::Relation[:sql]
   schema(infer: true) do
@@ -64,7 +69,9 @@ id = posts.insert(title: 'Hello World', status: :draft)
 posts.by_pk(1).one
 # => {:id => 1, :title => "Hello World", status: :draft }
 ```
+
 ---
+
 ```rust
 class Posts < ROM::Relation[:sql]
   schema(infer: true) do
@@ -77,6 +84,7 @@ id = posts.insert(title: 'Hello World', status: :draft)
 posts.by_pk(1).one
 # => {:id => 1, :title => "Hello World", status: :draft }
 ```
+
 {% end %}
 
 ## PostgreSQL Types
@@ -86,6 +94,7 @@ will be automatically coerced before executing commands, so you don't have to
 handle that yourself.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 require 'rom-sql'
 
@@ -109,7 +118,9 @@ Users.schema[:tags][%w(red green blue)].class
 Users.schema[:info][{ some: 'info' }].class
 # => Sequel::Postgres::HStore
 ```
+
 ---
+
 ```rust
 require 'rom-sql'
 
@@ -133,6 +144,7 @@ Users.schema[:tags][%w(red green blue)].class
 Users.schema[:info][{ some: 'info' }].class
 # => Sequel::Postgres::HStore
 ```
+
 {% end %}
 
 For getting `hstore` to work be sure you have the `pg_hstore` extension loaded.

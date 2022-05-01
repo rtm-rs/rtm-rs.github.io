@@ -26,26 +26,34 @@ Requests and responses can be handled by the built-in handlers, or you can regis
 To install <mark>rom-http</mark> add the following to your <mark>Gemfile</mark>.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 gem 'rom-http', '~> 0.8'
 ```
+
 ---
+
 ```rust
 gem 'rom-http', '~> 0.8'
 ```
+
 {% end %}
 
 Afterwards either load `rom-http` through your bundler setup or manually in your custom
 script like so:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 require 'rom-http'
 ```
+
 ---
+
 ```rust
 require 'rom-http'
 ```
+
 {% end %}
 
 Once loaded the http Adapter will register itself with RTM and become available
@@ -56,13 +64,17 @@ for immediate use via the `:http` identifier.
 When you set up an `HTTP` gateway, you need to specify at the URI. Let's say we want to connect to GitHub API. To configure a gateway:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 config = ROM::Configuration.new(:http, uri: "https://api.github.com", handlers: :json)
 ```
+
 ---
+
 ```rust
 config = ROM::Configuration.new(:http, uri: "https://api.github.com", handlers: :json)
 ```
+
 {% end %}
 
 ^INFO
@@ -80,6 +92,7 @@ When you define relations for `HTTP` adapter, you need to specify the schemas as
 Here's an example how you could define a relation to fetch organizations from GitHub:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 module GitHub
   module Resources
@@ -102,7 +115,9 @@ config.register_relation(GitHub::Resources::Organizations)
 
 rom = ROM.container(config)
 ```
+
 ---
+
 ```rust
 module GitHub
   module Resources
@@ -125,11 +140,13 @@ config.register_relation(GitHub::Resources::Organizations)
 
 rom = ROM.container(config)
 ```
+
 {% end %}
 
 Now we can use our relation to query GitHub API:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 orgs = rom.relations[:orgs]
 
@@ -139,7 +156,9 @@ orgs.by_name('rom-rb').one
 orgs.with(auto_struct: true).by_name('rom-rb').one
 # #<ROM::Struct::Org id=4589832 name="rom-rb" created_at=2013-06-01 22:03:54 UTC updated_at=2019-04-03 14:36:48 UTC>
 ```
+
 ---
+
 ```rust
 orgs = rom.relations[:orgs]
 
@@ -149,6 +168,7 @@ orgs.by_name('rom-rb').one
 orgs.with(auto_struct: true).by_name('rom-rb').one
 # #<ROM::Struct::Org id=4589832 name="rom-rb" created_at=2013-06-01 22:03:54 UTC updated_at=2019-04-03 14:36:48 UTC>
 ```
+
 {% end %}
 
 ## Handlers
@@ -156,19 +176,23 @@ orgs.with(auto_struct: true).by_name('rom-rb').one
 Request and response handlers can be registered via `ROM::HTTP::Handlers` object:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 ROM::HTTP::Handlers.register(:my_handlers,
   request: MyRequestHandler,
   response: MyResponseHandler
 )
 ```
+
 ---
+
 ```rust
 ROM::HTTP::Handlers.register(:my_handlers,
   request: MyRequestHandler,
   response: MyResponseHandler
 )
 ```
+
 {% end %}
 
 Then you can use `:my_handlers` when setting up a gateway.

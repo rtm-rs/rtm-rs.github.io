@@ -33,6 +33,7 @@ Assuming you have a users relation available:
 ### `:create`
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 # inserting a single tuple
 create_user = users.command(:create)
@@ -44,7 +45,9 @@ create_user = users.command(:create, result: :many)
 
 create_user.call([{ name: "Jane" }, { name: "John" }])
 ```
+
 ---
+
 ```rust
 # inserting a single tuple
 create_user = users.command(:create)
@@ -56,38 +59,47 @@ create_user = users.command(:create, result: :many)
 
 create_user.call([{ name: "Jane" }, { name: "John" }])
 ```
+
 {% end %}
 
 ### `:update`
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 update_user = users.by_pk(1).command(:update)
 
 update_user.call(name: "Jane Doe")
 ```
+
 ---
+
 ```rust
 update_user = users.by_pk(1).command(:update)
 
 update_user.call(name: "Jane Doe")
 ```
+
 {% end %}
 
 ### `:delete`
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 delete_user = users.by_pk(1).command(:delete)
 
 delete_user.call
 ```
+
 ---
+
 ```rust
 delete_user = users.by_pk(1).command(:delete)
 
 delete_user.call
 ```
+
 {% end %}
 
 ## Using custom command types
@@ -96,6 +108,7 @@ You can define custom command types too. This is useful when the logic is comple
 to encapsulate it in a single class.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class MyCommand < ROM::SQL::Commands::Create
   relation :users
@@ -106,7 +119,9 @@ class MyCommand < ROM::SQL::Commands::Create
   end
 end
 ```
+
 ---
+
 ```rust
 class MyCommand < ROM::SQL::Commands::Create
   relation :users
@@ -117,22 +132,27 @@ class MyCommand < ROM::SQL::Commands::Create
   end
 end
 ```
+
 {% end %}
 
 When your command is available in the configured rom container, you can get it in the standard way:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 my_command = users.command(:my_command)
 
 my_command.call(name: "Jane")
 ```
+
 ---
+
 ```rust
 my_command = users.command(:my_command)
 
 my_command.call(name: "Jane")
 ```
+
 {% end %}
 
 ## Commands vs Changesets

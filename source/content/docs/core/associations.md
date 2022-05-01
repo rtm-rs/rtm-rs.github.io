@@ -26,6 +26,7 @@ as it gives you a lot of freedom in the way you fetch complex data structures fr
 Here's how it works using plain Ruby:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 users = [{ id: 1, name: "Jane" }, { id: 2, name: "John" }]
 tasks = [{ id: 1, user_id: 1, title: "Jane's task" }, { id: 2, user_id: 2, title: "John's task" }]
@@ -39,7 +40,9 @@ tasks_for_users = -> users {
 tasks_for_users.call([{ id: 2, name: "John" }])
 # [{ id: 2, user_id: 2, title: "John's task" }]
 ```
+
 ---
+
 ```rust
 users = [{ id: 1, name: "Jane" }, { id: 2, name: "John" }]
 tasks = [{ id: 1, user_id: 1, title: "Jane's task" }, { id: 2, user_id: 2, title: "John's task" }]
@@ -53,6 +56,7 @@ tasks_for_users = -> users {
 tasks_for_users.call([{ id: 2, name: "John" }])
 # [{ id: 2, user_id: 2, title: "John's task" }]
 ```
+
 {% end %}
 
 This example shows **the exact conceptual model of associations in ROM**. Here are important parts
@@ -65,6 +69,7 @@ to understand:
 Let's translate this to actual relations using the memory adapter:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 require "rom"
 require "rom/memory"
@@ -118,7 +123,9 @@ tasks.for_users(users.associations[:tasks], users.restrict(name: "John")).to_a
 puts users.restrict(name: "John").combine(:tasks).to_a
 # {:id=>2, :name=>"John", :tasks=>[{:id=>2, :user_id=>2, :title=>"John's task"}]}
 ```
+
 ---
+
 ```rust
 require "rom"
 require "rom/memory"
@@ -172,6 +179,7 @@ tasks.for_users(users.associations[:tasks], users.restrict(name: "John")).to_a
 puts users.restrict(name: "John").combine(:tasks).to_a
 # {:id=>2, :name=>"John", :tasks=>[{:id=>2, :user_id=>2, :title=>"John's task"}]}
 ```
+
 {% end %}
 
 Notice that:
@@ -186,6 +194,7 @@ behind associations in SQL, this is why in case of SQL, we could translate our
 previous example to this:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 require "rom"
 
@@ -228,7 +237,9 @@ users.combine(:tasks).to_a
 users.where(name: "John").combine(:tasks).to_a
 # [{:id=>2, :name=>"John", :tasks=>[{:id=>2, :user_id=>2, :title=>"John's task"}]}]
 ```
+
 ---
+
 ```rust
 require "rom"
 
@@ -271,6 +282,7 @@ users.combine(:tasks).to_a
 users.where(name: "John").combine(:tasks).to_a
 # [{:id=>2, :name=>"John", :tasks=>[{:id=>2, :user_id=>2, :title=>"John's task"}]}]
 ```
+
 {% end %}
 
 ## Learn more

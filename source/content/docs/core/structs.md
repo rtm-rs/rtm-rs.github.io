@@ -33,6 +33,7 @@ Auto-struct is a relation feature which can automatically transform plain relati
 You can enable this feature via `auto_struct(true)` in a relation class:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -50,7 +51,9 @@ users.by_pk(1).one
 users.by_pk(1).combine(:tasks).one
 => #<User id=1 name="Jane" tasks=[#<Task id=1 user_id=1 title="Jane's Task">]>
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -68,6 +71,7 @@ users.by_pk(1).one
 users.by_pk(1).combine(:tasks).one
 => #<User id=1 name="Jane" tasks=[#<Task id=1 user_id=1 title="Jane's Task">]>
 ```
+
 {% end %}
 
 ^WARNING
@@ -81,6 +85,7 @@ Relations support configuring `struct_namespace`, it is set to `ROM::Struct` by 
 Let's say you have `Entities` namespace and would like to provide a custom `Entities::User` class:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 module Entities
   class User < ROM::Struct
@@ -101,7 +106,9 @@ user = users.by_pk(1).one
 user.full_name
 # => "Jane Doe"
 ```
+
 ---
+
 ```rust
 module Entities
   class User < ROM::Struct
@@ -122,6 +129,7 @@ user = users.by_pk(1).one
 user.full_name
 # => "Jane Doe"
 ```
+
 {% end %}
 
 ### How struct types are determined
@@ -133,6 +141,7 @@ if you have a `Entities::Admin` class, it will be used as the struct class for `
 relation.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 module Entities
   class User < ROM::Struct
@@ -162,7 +171,9 @@ admin = admins.by_pk(1).one
 admin.admin?
 # true
 ```
+
 ---
+
 ```rust
 module Entities
   class User < ROM::Struct
@@ -192,6 +203,7 @@ admin = admins.by_pk(1).one
 admin.admin?
 # true
 ```
+
 {% end %}
 
 ^INFO
@@ -208,6 +220,7 @@ Your object class must have a constructor which accepts a hash with attributes.
 Here's a simple example:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class User
   attr_reader :attributes
@@ -224,7 +237,9 @@ end
 users.by_pk(1).map_to(User)
 # => #<User:0x007fa7eabf1a50 @attributes={:id=>1, :name=>"Jane"}>
 ```
+
 ---
+
 ```rust
 class User
   attr_reader :attributes
@@ -241,6 +256,7 @@ end
 users.by_pk(1).map_to(User)
 # => #<User:0x007fa7eabf1a50 @attributes={:id=>1, :name=>"Jane"}>
 ```
+
 {% end %}
 
 ## Learn more

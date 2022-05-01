@@ -27,29 +27,37 @@ Assuming you have a users relation available:
 ### `:create`
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 users.changeset(:create, name: "Jane").commit
 => {:id=>1, :name=>"Jane"}
 ```
+
 ---
+
 ```rust
 users.changeset(:create, name: "Jane").commit
 => {:id=>1, :name=>"Jane"}
 ```
+
 {% end %}
 
 ### `:update`
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 users.by_pk(4).changeset(:update, name: "Jane Doe").commit
 => {:id=>4, :name=>"Jane Doe"}
 ```
+
 ---
+
 ```rust
 users.by_pk(4).changeset(:update, name: "Jane Doe").commit
 => {:id=>4, :name=>"Jane Doe"}
 ```
+
 {% end %}
 
 ^WARNING
@@ -60,6 +68,7 @@ users.by_pk(4).changeset(:update, name: "Jane Doe").commit
 ### `:delete`
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 users.by_pk(4).changeset(:delete).commit
 => {:id=>4, :name=>"Jane Doe"}
@@ -67,7 +76,9 @@ users.by_pk(4).changeset(:delete).commit
 users.by_pk(4).changeset(:delete).commit
 # => nil
 ```
+
 ---
+
 ```rust
 users.by_pk(4).changeset(:delete).commit
 => {:id=>4, :name=>"Jane Doe"}
@@ -75,6 +86,7 @@ users.by_pk(4).changeset(:delete).commit
 users.by_pk(4).changeset(:delete).commit
 # => nil
 ```
+
 {% end %}
 
 ^INFO

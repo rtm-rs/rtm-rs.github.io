@@ -25,6 +25,7 @@ but we want them ordered by Team name, and if they're in the same team, we want 
 ordered by creation date. Here are our relations:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 module Relations
   class Users < ROM::Relation[:sql]
@@ -48,7 +49,9 @@ module Relations
   end
 end
 ```
+
 ---
+
 ```rust
 module Relations
   class Users < ROM::Relation[:sql]
@@ -72,6 +75,7 @@ module Relations
   end
 end
 ```
+
 {% end %}
 
 And here is the code to get such ordering:

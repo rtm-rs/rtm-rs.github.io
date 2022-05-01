@@ -23,6 +23,7 @@ This article assumes:
 To connect to your database and define a repository for `users` table, simply do:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 require "rom"
 
@@ -39,7 +40,9 @@ users.changeset(:create, name: "Jane").commit
 
 jane = users.where(name: "Jane").one
 ```
+
 ---
+
 ```rust
 require "rom"
 
@@ -56,6 +59,7 @@ users.changeset(:create, name: "Jane").commit
 
 jane = users.where(name: "Jane").one
 ```
+
 {% end %}
 
 ## Learn more

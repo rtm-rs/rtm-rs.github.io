@@ -25,6 +25,7 @@ This API is limited to `Create` commands only. Use [changesets](/learn/changeset
 Let's say we have `:users` with `:tasks` and we'd like to persist a nested data structure which represents this association.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 require 'rom-repository'
 
@@ -58,7 +59,9 @@ rom = ROM.container(:sql, 'sqlite::memory') do |config|
   end
 end
 ```
+
 ---
+
 ```rust
 require 'rom-repository'
 
@@ -92,6 +95,7 @@ rom = ROM.container(:sql, 'sqlite::memory') do |config|
   end
 end
 ```
+
 {% end %}
 
 Once we establish canonical associations for our relations, repositories will know how to prepare commands for persisting nested data.
@@ -99,6 +103,7 @@ Once we establish canonical associations for our relations, repositories will kn
 Let's define a repository which exposes an interface for persisting a new user along with associated tasks:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class UserRepo < ROM::Repository[:users]
   def create_with_tasks(user)
@@ -115,7 +120,9 @@ user_repo.create_with_tasks(
 )
 # => #<ROM::Struct[User] id=1 name="Jane" email="jane@doe.org" tasks=[#<ROM::Struct[Task] id=1 user_id=1 title="Task 1">, #<ROM::Struct[Task] id=2 user_id=1 title="Task 2">]>
 ```
+
 ---
+
 ```rust
 class UserRepo < ROM::Repository[:users]
   def create_with_tasks(user)
@@ -132,4 +139,5 @@ user_repo.create_with_tasks(
 )
 # => #<ROM::Struct[User] id=1 name="Jane" email="jane@doe.org" tasks=[#<ROM::Struct[Task] id=1 user_id=1 title="Task 1">, #<ROM::Struct[Task] id=2 user_id=1 title="Task 2">]>
 ```
+
 {% end %}

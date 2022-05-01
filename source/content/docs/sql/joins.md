@@ -19,6 +19,7 @@ To load associated relations you can simply use `join`, `left_join`, or `right_j
 ## Using joins with relations
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -37,7 +38,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -56,6 +59,7 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 ## Using joins with explicit name and options
@@ -63,6 +67,7 @@ end
 If you want to have more control, you can pass table name and additional options yourself:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -81,7 +86,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -100,6 +107,7 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 ## Using joins with additional options
@@ -107,6 +115,7 @@ end
 The second option hash can be used too, if you want to provide more options:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -125,7 +134,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -144,6 +155,7 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 ## Learn more

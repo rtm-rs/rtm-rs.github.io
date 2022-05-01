@@ -38,6 +38,7 @@ adapter's relations as their data-access backends. Here's a simple
 implementation:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 require 'rom'
 
@@ -69,7 +70,9 @@ tasks = gateway.dataset(:tasks)
 gateway.dataset?(:users) # true
 gateway.dataset?(:tasks) # true
 ```
+
 ---
+
 ```rust
 require 'rom'
 
@@ -101,6 +104,7 @@ tasks = gateway.dataset(:tasks)
 gateway.dataset?(:users) # true
 gateway.dataset?(:tasks) # true
 ```
+
 {% end %}
 
 This allows RTM to ask for specific datasets from your gateway.
@@ -116,6 +120,7 @@ Since our datasets are just arrays, we can expose various array methods to the
 relation using `forward` macro:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 module ROM
   module ArrayAdapter
@@ -138,7 +143,9 @@ relation = ROM::ArrayAdapter::Relation.new(gateway.dataset(:users))
 relation.select { |tuple| tuple[:name] == 'Jane' }.inspect
 # #<ROM::ArrayAdapter::Relation dataset=[{:name=>"Jane"}]>
 ```
+
 ---
+
 ```rust
 module ROM
   module ArrayAdapter
@@ -161,6 +168,7 @@ relation = ROM::ArrayAdapter::Relation.new(gateway.dataset(:users))
 relation.select { |tuple| tuple[:name] == 'Jane' }.inspect
 # #<ROM::ArrayAdapter::Relation dataset=[{:name=>"Jane"}]>
 ```
+
 {% end %}
 
 ^WARNING
@@ -175,18 +183,23 @@ used to set up RTM components for that particular adapter.
 To register your adapter:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 ROM.register_adapter(:array, ROM::ArrayAdapter)
 ```
+
 ---
+
 ```rust
 ROM.register_adapter(:array, ROM::ArrayAdapter)
 ```
+
 {% end %}
 
 This is it! Now our array adapter can be setup using ROM:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 configuration= ROM::Configuration.new(:array)
 
@@ -208,7 +221,9 @@ users << { name: 'John' }
 rom.relations[:users].by_name('Jane').to_a
 # [{:name=>"Jane"}]
 ```
+
 ---
+
 ```rust
 configuration= ROM::Configuration.new(:array)
 
@@ -230,6 +245,7 @@ users << { name: 'John' }
 rom.relations[:users].by_name('Jane').to_a
 # [{:name=>"Jane"}]
 ```
+
 {% end %}
 
 ## Commands
@@ -265,6 +281,7 @@ Commands will require an interface to insert, delete and update data and also
 Let's provide that:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 module ROM
   module ArrayAdapter
@@ -284,7 +301,9 @@ module ROM
   end
 end
 ```
+
 ---
+
 ```rust
 module ROM
   module ArrayAdapter
@@ -304,6 +323,7 @@ module ROM
   end
 end
 ```
+
 {% end %}
 
 #### Commands::Create
@@ -311,6 +331,7 @@ end
 To implement a create command:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 require 'rom/commands/create' # require what you require!
 
@@ -337,7 +358,9 @@ create_users.call([{ name: 'Jane' }])
 puts users.to_a.inspect
 # [{:name=>"Jane"}]
 ```
+
 ---
+
 ```rust
 require 'rom/commands/create' # require what you require!
 
@@ -364,6 +387,7 @@ create_users.call([{ name: 'Jane' }])
 puts users.to_a.inspect
 # [{:name=>"Jane"}]
 ```
+
 {% end %}
 
 #### Commands::Delete
@@ -371,6 +395,7 @@ puts users.to_a.inspect
 To implement a delete command:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 require 'rom/commands/delete'
 
@@ -395,7 +420,9 @@ delete_users.call
 puts users.to_a.inspect
 # []
 ```
+
 ---
+
 ```rust
 require 'rom/commands/delete'
 
@@ -420,6 +447,7 @@ delete_users.call
 puts users.to_a.inspect
 # []
 ```
+
 {% end %}
 
 Notice that here delete command yields tuples from its current `relation` but
@@ -431,6 +459,7 @@ data.
 To implement an update command:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 require 'rom/commands/update'
 
@@ -455,7 +484,9 @@ update_users.call(age: 21)
 puts users.to_a.inspect
 # [{:name=>"Jane", :age=>21}]
 ```
+
 ---
+
 ```rust
 require 'rom/commands/update'
 
@@ -480,6 +511,7 @@ update_users.call(age: 21)
 puts users.to_a.inspect
 # [{:name=>"Jane", :age=>21}]
 ```
+
 {% end %}
 
 Here we simply rely on `Hash#update` which mutates tuples using the input
@@ -491,6 +523,7 @@ Once your command types are defined RTM will pick them up from your namespace
 and they will be available during setup:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 configuration = ROM::Configuration.new(:array)
 
@@ -550,7 +583,9 @@ delete_user.by_name('John').call
 puts rom.relations[:users].to_a.inspect
 # [{:name=>"Jane Doe"}]
 ```
+
 ---
+
 ```rust
 configuration = ROM::Configuration.new(:array)
 
@@ -610,4 +645,5 @@ delete_user.by_name('John').call
 puts rom.relations[:users].to_a.inspect
 # [{:name=>"Jane Doe"}]
 ```
+
 {% end %}

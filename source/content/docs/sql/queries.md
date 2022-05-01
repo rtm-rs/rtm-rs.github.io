@@ -19,6 +19,7 @@ top = false
 All relations come with the default `#by_pk` method. It supports composite PKs too.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 # with a single PK
 users.by_pk(1)
@@ -26,7 +27,9 @@ users.by_pk(1)
 # with a composite [post_id, tag_id] PK
 posts_tags.by_pk(1, 2)
 ```
+
 ---
+
 ```rust
 # with a single PK
 users.by_pk(1)
@@ -34,6 +37,7 @@ users.by_pk(1)
 # with a composite [post_id, tag_id] PK
 posts_tags.by_pk(1, 2)
 ```
+
 {% end %}
 
 ## Selecting columns
@@ -41,6 +45,7 @@ posts_tags.by_pk(1, 2)
 To explicitly select columns you can either use a list of symbols or relation schema:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -58,7 +63,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -76,6 +83,7 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 In a basic case, which is selecting unqualified columns using their canonical names,
@@ -89,6 +97,7 @@ If you have a relation with some columns already selected and you want to add mo
 you can use `select_append` method:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -102,7 +111,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -116,6 +127,7 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 ## Projection DSL
@@ -129,6 +141,7 @@ Within the block you can refer to relation attributes by their names and use
 [api::rom-sql::SQL](Attribute) API for projections:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -138,7 +151,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -148,6 +163,7 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 ### Projecting function results
@@ -155,6 +171,7 @@ end
 Apart from returning column values, you can also project function results:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -165,7 +182,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -176,11 +195,13 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 Functions can accept any number of arguments:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -191,7 +212,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -202,6 +225,7 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 ## Restricting relations
@@ -214,6 +238,7 @@ conditions or a block for more advanced usage.
 If you pass a hash to `where` all conditions will be translated into SQL and ANDed together:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -234,7 +259,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -255,6 +282,7 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 ### Complex conditions
@@ -262,6 +290,7 @@ end
 If you pass a block to `where` you can use restriction DSL to compose more complex conditions:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -281,7 +310,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -301,6 +332,7 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 ## Aggregations and HAVING
@@ -309,6 +341,7 @@ To create `HAVING` clause simply use `having` method, which works in a similar w
 and supports creating aggregate functions for your conditions:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -321,7 +354,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -334,6 +369,7 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 ## Order
@@ -341,6 +377,7 @@ end
 `order` method with block will order your query:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -354,7 +391,9 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -368,6 +407,7 @@ class Users < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 ## Nullify
@@ -378,6 +418,7 @@ relations.  After calling `nullify`, there will never issue a query to the datab
 [Check out the Sequel docs for more information.](http://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/null_dataset_rb.html)
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Tasks < ROM::Relation[:sql]
   schema(infer: true)
@@ -391,7 +432,9 @@ end
 tasks = ROM.env.relations[:tasks]
 tasks.for_working_status(:on_vacation).count # => 0
 ```
+
 ---
+
 ```rust
 class Tasks < ROM::Relation[:sql]
   schema(infer: true)
@@ -405,6 +448,7 @@ end
 tasks = ROM.env.relations[:tasks]
 tasks.for_working_status(:on_vacation).count # => 0
 ```
+
 {% end %}
 
 ## Learn more

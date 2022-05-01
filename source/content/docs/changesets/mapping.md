@@ -26,6 +26,7 @@ Changeset mappings support all transformation functions from [transproc](https:/
 If you want to process data before sending them to be persisted, you can define a custom Changeset class and specify your own mapping. Let's say we have a nested hash with `address` key but we store it as a flat structure with address attributes having `address_*` prefix:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class NewUserChangeset < ROM::Changeset::Create
   map do
@@ -33,7 +34,9 @@ class NewUserChangeset < ROM::Changeset::Create
   end
 end
 ```
+
 ---
+
 ```rust
 class NewUserChangeset < ROM::Changeset::Create
   map do
@@ -41,11 +44,13 @@ class NewUserChangeset < ROM::Changeset::Create
   end
 end
 ```
+
 {% end %}
 
 Then we can ask users relation for your changeset:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 user_data = { name: 'Jane', address: { city: 'NYC', street: 'Street 1' } }
 
@@ -56,7 +61,9 @@ changeset.to_h
 
 changeset.commit
 ```
+
 ---
+
 ```rust
 user_data = { name: 'Jane', address: { city: 'NYC', street: 'Street 1' } }
 
@@ -67,6 +74,7 @@ changeset.to_h
 
 changeset.commit
 ```
+
 {% end %}
 
 ### Custom mapping block
@@ -74,6 +82,7 @@ changeset.commit
 If you don't want to use built-in transformations, simply configure a mapping and pass `tuple` argument to the map block:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class NewUserChangeset < ROM::Changeset::Create
   map do |tuple|
@@ -91,7 +100,9 @@ changeset.to_h
 user_repo.create(changeset)
 # => #<ROM::Struct[User] id=1 name="Jane" created_on=2017-01-21>
 ```
+
 ---
+
 ```rust
 class NewUserChangeset < ROM::Changeset::Create
   map do |tuple|
@@ -109,6 +120,7 @@ changeset.to_h
 user_repo.create(changeset)
 # => #<ROM::Struct[User] id=1 name="Jane" created_on=2017-01-21>
 ```
+
 {% end %}
 
 ^INFO
@@ -120,6 +132,7 @@ Custom mapping blocks are executed in the context of your changeset objects, whi
 There are situations where you would like to perform an additional mapping but adding a special changeset class would be an overkill. That's why it's possible to apply additional mappings at run-time without having to use a custom changeset class. To do this simply use `Changeset#map` method:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 changeset = users
   .changeset(:create, name: 'Joe', email: 'joe@doe.org')
@@ -128,7 +141,9 @@ changeset = users
 changeset.commit(changeset)
 # => #<ROM::Struct[User] id=1 name="Joe" email="joe@doe.org" created_at=2016-07-22 14:45:02 +0200 updated_at=2016-07-22 14:45:02 +0200>
 ```
+
 ---
+
 ```rust
 changeset = users
   .changeset(:create, name: 'Joe', email: 'joe@doe.org')
@@ -137,4 +152,5 @@ changeset = users
 changeset.commit(changeset)
 # => #<ROM::Struct[User] id=1 name="Joe" email="joe@doe.org" created_at=2016-07-22 14:45:02 +0200 updated_at=2016-07-22 14:45:02 +0200>
 ```
+
 {% end %}

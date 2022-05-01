@@ -21,6 +21,7 @@ One of the nicest features of PostgreSQL nowadays, is support for semi-structure
 Once you defined schema attributes as having the JSONB type, you can call the methods specific to this type on the attributes.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema do
@@ -35,7 +36,9 @@ users_with_emails = users.where { properties.has_key('email') }
 # equivalent to "properties" @> '{"name": "John"}'::jsonb
 johns = users.where { properties.contain(name: 'John') }
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema do
@@ -50,6 +53,7 @@ users_with_emails = users.where { properties.has_key('email') }
 # equivalent to "properties" @> '{"name": "John"}'::jsonb
 johns = users.where { properties.contain(name: 'John') }
 ```
+
 {% end %}
 
 ## Learn more

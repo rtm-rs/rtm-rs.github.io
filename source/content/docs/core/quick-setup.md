@@ -31,6 +31,7 @@ The configuration options explained in this document are the same for [Framework
 Call `ROM.container` with the adapter symbol and configuration details for that adapter:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 # This creates a rom-sql adapter backed by SQLite in-memory database
 ROM.container(:sql, 'sqlite::memory') do |config|
@@ -47,7 +48,9 @@ ROM.container(:memory, 'memory://test') do |config|
   # define relations and commands here...
 end
 ```
+
 ---
+
 ```rust
 # This creates a rom-sql adapter backed by SQLite in-memory database
 ROM.container(:sql, 'sqlite::memory') do |config|
@@ -64,6 +67,7 @@ ROM.container(:memory, 'memory://test') do |config|
   # define relations and commands here...
 end
 ```
+
 {% end %}
 
 ### Connect to multiple databases
@@ -71,6 +75,7 @@ end
 Sometimes you have multiple data sources. You can provide multiple [gateway](/learn/introduction/glossary/#gateway) configurations with a name hash.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 # Example: an old mysql database, “tasks”, and a new database “task_master”
 # This registers two rom-sql adapters and then labels postgres with “default” and mysql with “legacy”
@@ -81,7 +86,9 @@ ROM.container(
     # setup code goes here...
 end
 ```
+
 ---
+
 ```rust
 # Example: an old mysql database, “tasks”, and a new database “task_master”
 # This registers two rom-sql adapters and then labels postgres with “default” and mysql with “legacy”
@@ -92,11 +99,13 @@ ROM.container(
     # setup code goes here...
 end
 ```
+
 {% end %}
 
 If there is only one adapter provided, then its identifier is automatically set to `:default`:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 # This setup call...
 ROM.container(:sql, 'sqlite::memory')
@@ -104,7 +113,9 @@ ROM.container(:sql, 'sqlite::memory')
 # is equivalent to this one:
 ROM.container(default: [:sql, 'sqlite::memory'])
 ```
+
 ---
+
 ```rust
 # This setup call...
 ROM.container(:sql, 'sqlite::memory')
@@ -112,6 +123,7 @@ ROM.container(:sql, 'sqlite::memory')
 # is equivalent to this one:
 ROM.container(default: [:sql, 'sqlite::memory'])
 ```
+
 {% end %}
 
 ## Access the container
@@ -119,17 +131,21 @@ ROM.container(default: [:sql, 'sqlite::memory'])
 `ROM.container` always returns the finalized environment container **object**. This object is not global, and it must be managed either by you or a framework that you use.
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 rom = ROM.container(:sql, 'sqlite::memory') do |config|
   # define relations and commands here...
 end
 ```
+
 ---
+
 ```rust
 rom = ROM.container(:sql, 'sqlite::memory') do |config|
   # define relations and commands here...
 end
 ```
+
 {% end %}
 
 ^WARNING

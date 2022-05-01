@@ -25,6 +25,7 @@ solve this you often need to qualify and rename columns.
 To qualify all attributes in a relation:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -43,7 +44,9 @@ class Users < ROM::Relation[:sql]
   # produces "SELECT users.id, users.name ..."
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -62,11 +65,13 @@ class Users < ROM::Relation[:sql]
   # produces "SELECT users.id, users.name ..."
 end
 ```
+
 {% end %}
 
 To rename all attributes in a relation:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -82,7 +87,9 @@ class Users < ROM::Relation[:sql]
   # produces "SELECT users.id AS user_id, users.name AS user_name ..."
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -98,11 +105,13 @@ class Users < ROM::Relation[:sql]
   # produces "SELECT users.id AS user_id, users.name AS user_name ..."
 end
 ```
+
 {% end %}
 
 To rename attributes in block-based DSLs you can use `as` method:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -113,7 +122,9 @@ class Users < ROM::Relation[:sql]
   # produces "SELECT users.id AS user_id, users.name AS user_name ..."
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -124,6 +135,7 @@ class Users < ROM::Relation[:sql]
   # produces "SELECT users.id AS user_id, users.name AS user_name ..."
 end
 ```
+
 {% end %}`
 
 ## Creating functions from attributes
@@ -133,6 +145,7 @@ you would like to append a function that's created from an attribute coming
 from another relation. For example:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -145,7 +158,9 @@ class Users < ROM::Relation[:sql]
   # SELECT "users"."id", "users"."name", COUNT("tasks"."id") AS "task_count" FROM "users" LEFT JOIN "tasks" ON ("users"."id" = "tasks"."user_id") GROUP BY "users"."id" ORDER BY "users"."id"
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -158,6 +173,7 @@ class Users < ROM::Relation[:sql]
   # SELECT "users"."id", "users"."name", COUNT("tasks"."id") AS "task_count" FROM "users" LEFT JOIN "tasks" ON ("users"."id" = "tasks"."user_id") GROUP BY "users"."id" ORDER BY "users"."id"
 end
 ```
+
 {% end %}
 
 ## Using attributes for restrictions
@@ -165,6 +181,7 @@ end
 You can use Attribute API in restriction methods such as `#where`:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -175,7 +192,9 @@ class Users < ROM::Relation[:sql]
   # SELECT "id", "name" FROM "users" WHERE (("name" = 'Jane') OR ("name" = 'Joe')) ORDER BY "users"."id""
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true)
@@ -186,6 +205,7 @@ class Users < ROM::Relation[:sql]
   # SELECT "id", "name" FROM "users" WHERE (("name" = 'Jane') OR ("name" = 'Joe')) ORDER BY "users"."id""
 end
 ```
+
 {% end %}
 
 ## Learn more

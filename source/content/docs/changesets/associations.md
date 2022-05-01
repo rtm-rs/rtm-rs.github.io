@@ -17,6 +17,7 @@ top = false
 Changesets can be associated with each other using `Changeset#associate` method, which will automatically set foreign keys for you, based on schema associations. Let's define `:users` relation that has many `:tasks`:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -34,7 +35,9 @@ class Tasks < ROM::Relation[:sql]
   end
 end
 ```
+
 ---
+
 ```rust
 class Users < ROM::Relation[:sql]
   schema(infer: true) do
@@ -52,11 +55,13 @@ class Tasks < ROM::Relation[:sql]
   end
 end
 ```
+
 {% end %}
 
 With associations established in the schema, we can easily associate data using changesets and commit them in a transaction:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 task = tasks.transaction do
   user = users.changeset(:create, name: 'Jane').commit
@@ -69,7 +74,9 @@ end
 task
 # {:id=>1, :user_id=>1, :title=>"Task One"}
 ```
+
 ---
+
 ```rust
 task = tasks.transaction do
   user = users.changeset(:create, name: 'Jane').commit
@@ -82,6 +89,7 @@ end
 task
 # {:id=>1, :user_id=>1, :title=>"Task One"}
 ```
+
 {% end %}
 
 ^INFO

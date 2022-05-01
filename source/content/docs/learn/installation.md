@@ -69,15 +69,19 @@ Simply install `rom` or add it to your `Gemfile`. Adapters will be auto-loaded b
 For example, if you'd like to use RTM with an SQL database, add following gems to you `Gemfile`:
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
+
 ```ruby
 gem 'rom'
 gem 'rom-sql'
 ```
+
 ---
+
 ```rust
 gem 'rom'
 gem 'rom-sql'
 ```
+
 {% end %}
 
 ## Next
