@@ -15,7 +15,7 @@
 
 # Ignore node packages
 /node_modules
-docs
+source/public
 
 # docsite repo clones
 projects/*
