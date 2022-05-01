@@ -1,5 +1,5 @@
 +++
-title = "Core Concepts"
+title = "Core concepts"
 description = "A high-level overview of what each major component of RTM is and its overall purpose."
 date = 2022-05-01T15:00:00+00:00
 updated = 2022-05-01T15:00:00+00:00

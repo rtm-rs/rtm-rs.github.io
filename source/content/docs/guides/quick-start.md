@@ -1,5 +1,5 @@
 +++
-title = "Quick Start"
+title = "Quick start"
 description = "One page summary of how to start a new RTM project."
 date = 2022-05-01T08:20:00+00:00
 updated = 2022-05-01T08:20:00+00:00
