@@ -18,7 +18,7 @@ Relations are really the heart of ROM. They provide APIs for reading the data
 from various databases, and low-level interfaces for making changes in the databases.
 Relations are adapter-specific, which means that each adapter provides its own
 relation specialization, exposing interfaces that make it easy to leverage the
-features of your database. At the same time, these relations encapsulate data
+features of their backend. At the same time, these relations encapsulate data
 access, so that details about how it's done don't leak into your application domain
 layer.
 

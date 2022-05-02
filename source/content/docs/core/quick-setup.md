@@ -16,15 +16,13 @@ top = false
 
 This guide explains how to quickly configure RTM using setup DSL, which is suitable for simple scripts.
 
-^INFO
-#### RTM & frameworks
+{% info() %}
+**RTM & frameworks:** If you want to use RTM with a framework, see specific instructions in the documentation for that framework.
+{% end %}
 
-If you want to use RTM with a framework, see specific instructions in the documentation for that framework.
-
-#### Configuration
-
-The configuration options explained in this document are the same for [Framework setup](/learn/core/%{version}/framework-setup) using `ROM::Configuration` object.
-^
+{% info() %}
+**Configuration:** The configuration options explained in this document are the same for [Framework setup](/learn/core/%{version}/framework-setup) using `ROM::Configuration` object.
+{% end %}
 
 ## Connect to a single database
 
@@ -148,14 +146,14 @@ end
 
 {% end %}
 
-^WARNING
+{% info() %}
 ActiveRecord and DataMapper provide global access to their components, but this
 is considered a bad practice in modern standards. RTM creates an isolated, local
 container without polluting global namespaces. This allows you to easily pass
 it around without being worried about accidental side-effects like conflicting
 database connections or configurations being overridden in a non-thread-safe
 way.
-^
+{% end %}
 
 ## Learn more
 

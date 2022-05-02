@@ -46,11 +46,9 @@ end
 
 {% end %}
 
-^INFO
-#### Naming convention
-
-This method is a shortcut for `many_to_one :users, as: :user`.
-^
+{% info() %}
+**Naming convention:** This method is a shortcut for `many_to_one :users, as: :user`.
+{% end %}
 
 ## has_many (one-to-many)
 
@@ -163,11 +161,9 @@ end
 
 {% end %}
 
-^INFO
-#### Naming convention
-
-This method is a shortcut for `has_one :accounts, as: :account`.
-^
+{% info() %}
+**Naming convention:** This method is a shortcut for `has_one :accounts, as: :account`.
+{% end %}
 
 ## has_one-through (one-to-one-through)
 
@@ -252,9 +248,9 @@ end
 
 {% end %}
 
-^INFO
+{% info() %}
 The alias is used by auto-mapping, which means that in our example, if you load an aggregate with posts and its authors, the attribute name in post structs will be called **author**.
-^
+{% end %}
 
 ## Extending associations with custom views
 
@@ -469,9 +465,9 @@ end
 
 {% end %}
 
-^INFO
+{% info() %}
 All association types support this option.
-^
+{% end %}
 
 ## Learn more
 

@@ -77,17 +77,17 @@ config = ROM::Configuration.new(:http, uri: "https://api.github.com", handlers: 
 
 {% end %}
 
-^INFO
+{% info() %}
   Setting up a gateway assumes that all registered relations will use the `uri` as the `base_path` for all requests.
-^
+{% end %}
 
 ## Relations
 
 When you define relations for `HTTP` adapter, you need to specify the schemas as there's no way to infer them.
 
-^INFO
+{% info() %}
   By defining schemas you tell `ROM` which attributes you're interested in, everything else will be rejected from the original responses.
-^
+{% end %}
 
 Here's an example how you could define a relation to fetch organizations from GitHub:
 
@@ -197,9 +197,9 @@ ROM::HTTP::Handlers.register(:my_handlers,
 
 Then you can use `:my_handlers` when setting up a gateway.
 
-^INFO
+{% info() %}
   Your custom handlers must be compatible with the required interface. Refer to [the built-in JSON handlers](https://github.com/taqtiqa/ramets-http/blob/main/lib/rom/http/handlers/json.rb) to get the idea.
-^
+{% end %}
 
 ## Learn more
 

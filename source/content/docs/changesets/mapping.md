@@ -123,9 +123,9 @@ user_repo.create(changeset)
 
 {% end %}
 
-^INFO
+{% info() %}
 Custom mapping blocks are executed in the context of your changeset objects, which means you have access to changeset's state.
-^
+{% end %}
 
 ### On-demand mapping
 

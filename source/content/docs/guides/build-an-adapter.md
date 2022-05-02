@@ -171,9 +171,9 @@ relation.select { |tuple| tuple[:name] == 'Jane' }.inspect
 
 {% end %}
 
-^WARNING
+{% info() %}
 Please remember about setting `adapter` identifier - it is used by RTM to infer component types specific to a given adapter. It's essential during the setup.
-^
+{% end %}
 
 ## Registering Your Adapter
 

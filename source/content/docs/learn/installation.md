@@ -56,11 +56,10 @@ Outdated (help wanted!) adapters:
 |Event Store|`gem install rom-event_store`|
 |RethinkDB|`gem install rom-rethinkdb`| - |
 
-^INFO
-#### How to choose an adapter?
 
-The most popular adapter is `rom-sql`, but some projects connect to an HTTP API, or need the expandability of MongoDB and CouchDB. It's up to you to choose the appropriate solution for your application's needs.
-^
+{% info() %}
+**How to choose an adapter?** The most popular adapter is `rom-sql`, but some projects connect to an HTTP API, or need the expandability of MongoDB and CouchDB. It's up to you to choose the appropriate solution for your application's needs.
+{% end %}
 
 ## Install rom
 
@@ -94,6 +93,6 @@ Depending on your application needs, you may want to use different setup strateg
 * [Framework setup](/learn/core/5.2/framework-setup) - suitable for custom environments (**advanced usage** only needed when your framework does not provide integration with ROM)
 * [Rails](/learn/rails) - setup integrated with Rails
 
-^INFO
+{% info() %}
 Most guide examples are written specifically for the `rom-sql` adapter. If you are using a different one, consult that adapter's documentation as well.
-^
+{% end %}

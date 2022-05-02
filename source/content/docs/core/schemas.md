@@ -172,9 +172,9 @@ end
 
 {% end %}
 
-^INFO
+{% info() %}
 `primary_key` is a shortcut for the annotation: Types::Int.meta(primary_key: true)
-^
+{% end %}
 
 ## Foreign Keys
 
@@ -206,9 +206,9 @@ end
 
 {% end %}
 
-^INFO
+{% info() %}
 `foreign_key` is a shortcut for the annotation: Types::Int.meta(foreign_key: true, relation: :users)
-^
+{% end %}
 
 ## Annotations
 

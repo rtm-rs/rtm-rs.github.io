@@ -60,10 +60,10 @@ users.by_pk(4).changeset(:update, name: "Jane Doe").commit
 
 {% end %}
 
-^WARNING
+{% info() %}
 #### Checking diffs
   Update changesets check the difference between the original tuple and new data. If there's no diff, an update changeset **will not execute its command**.
-^
+{% end %}
 
 ### `:delete`
 
@@ -89,9 +89,9 @@ users.by_pk(4).changeset(:delete).commit
 
 {% end %}
 
-^INFO
+{% info() %}
 In the examples above, we used `Relation#by_pk` method, this is a built-in method which restricts a relation by its primary key; however, you can use any method that's available, including native adapter query methods.
-^
+{% end %}
 
 ## Learn more
 

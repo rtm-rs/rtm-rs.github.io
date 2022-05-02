@@ -161,10 +161,10 @@ Commands are the underlying abstraction for making changes in your database, whe
 should be treated as a more advanced abstraction, which provides additional data mapping functionality,
 and support for associating data.
 
-^INFO
+{% info() %}
 For consistency, you should consider using changesets instead of commands; however, if you're processing
 larger amounts of data, and performance is a concern, you may want to use commands instead.
-^
+{% end %}
 
 Here are benchmarks showing you roughly performance difference between the two:
 

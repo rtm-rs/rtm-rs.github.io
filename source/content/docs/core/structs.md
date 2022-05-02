@@ -22,9 +22,9 @@ You can work with structs in 3 different ways:
 2. Use `auto_struct` with custom struct types - a nice middle-ground where you benefit from dynamic mapping but you also have access to your own methods
 3. Use custom objects - the most advanced technique, where data are mapped to your own objects. This approach should be used in mature projects where complete separation from persistence layer is going to be beneficial.
 
-^INFO
+{% info() %}
   Notice that you can use all 3 ways at the same time, depending on what makes sense in a given use case
-^
+{% end %}
 
 ## Auto-struct
 
@@ -74,9 +74,9 @@ users.by_pk(1).combine(:tasks).one
 
 {% end %}
 
-^WARNING
+{% info() %}
 This feature is **enabled by default in repositories**.
-^
+{% end %}
 
 ## Auto-struct with custom classes
 
@@ -206,11 +206,11 @@ admin.admin?
 
 {% end %}
 
-^INFO
 #### Usage with repositories
 
+{% info() %}
 It is recommended to configure `struct_namespace` in repositories, as it's the appropriate layer where application-specific data structures are coming from.
-^
+{% end %}
 
 ## Mapping to custom objects
 

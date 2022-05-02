@@ -20,15 +20,15 @@ Our intention for this guide is to act as a primer for anyone familiar with Rail
 
 All RTM examples are based on `rom-sql` which is an adapter needed to use SQL databases with ROM. Information on installing and configuring rom-sql for your database can be found in the [SQL](/learn/sql) guide.
 
-^INFO
+{% info() %}
 Examples below assume a configured environment for each framework. For RTM examples this means an initialized `ROM::Container` with each component registered.
 
 For information on how to configure RTM see either [Quick setup](/learn/core/5.2/quick-setup) or [Rails](/learn/rails) guides.
-^
+{% end %}
 
-^INFO
+{% info() %}
 Both frameworks have many similar APIs but philosophically they are completely different. In this guide, we attempt to highlight these differences and provide context for why we chose a different path. That is not to say RTM is better than ActiveRecord or vise-versa, it's that they're different and each has its own strengths and weaknesses.
-^
+{% end %}
 
 ## Models vs Relations
 

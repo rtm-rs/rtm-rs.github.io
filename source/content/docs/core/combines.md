@@ -29,11 +29,11 @@ which offer lazy loading by default. Since composing data is so quick and easy
 lazy loading is not needed preventing a whole class of issues such as N+1
 query performance problems.
 
-^INFO
+{% info() %}
   Before you can combine relations an association has to be configured in
   the relations' schema. See [associations](/learn/core/%{version}/associations)
   for more details.
-^
+{% end %}
 
 ## Basic Combine
 
@@ -511,11 +511,11 @@ user_relation
 
 {% end %}
 
-^INFO
+{% info() %}
   When adjusting combines, the order of `#combine` and `#node` is important.
   `#node` must come after `#combine` in the call chain otherwise
   the *block* will be ignored and the adjustment will fail
-^
+{% end %}
 
 ## Learn More
 
