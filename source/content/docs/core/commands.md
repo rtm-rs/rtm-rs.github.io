@@ -4,7 +4,7 @@ description = "Adapter specific commands to make changes in your data."
 date = 2022-05-01T19:30:00+00:00
 updated = 2022-05-01T19:30:00+00:00
 draft = false
-weight = 30
+weight = 70
 sort_by = "weight"
 template = "docs/page.html"
 

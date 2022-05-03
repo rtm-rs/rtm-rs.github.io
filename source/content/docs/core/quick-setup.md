@@ -4,7 +4,7 @@ description = "Explains how to quickly set up ROM."
 date = 2022-05-01T19:30:00+00:00
 updated = 2022-05-01T19:30:00+00:00
 draft = false
-weight = 30
+weight = 20
 sort_by = "weight"
 template = "docs/page.html"
 
@@ -21,7 +21,7 @@ This guide explains how to quickly configure RTM using setup DSL, which is suita
 {% end %}
 
 {% info() %}
-**Configuration:** The configuration options explained in this document are the same for [Framework setup](/learn/core/%{version}/framework-setup) using `ROM::Configuration` object.
+**Configuration:** The configuration options explained in this document are the same for [Framework setup](/learn/core/framework-setup) using `ROM::Configuration` object.
 {% end %}
 
 ## Connect to a single database

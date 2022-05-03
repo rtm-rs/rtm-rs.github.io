@@ -4,7 +4,7 @@ description = "Define explicit attribute names and types within a relation."
 date = 2022-05-01T19:30:00+00:00
 updated = 2022-05-01T19:30:00+00:00
 draft = false
-weight = 30
+weight = 40
 sort_by = "weight"
 template = "docs/page.html"
 

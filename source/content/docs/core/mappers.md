@@ -4,7 +4,7 @@ description = "Mappers process relation data; merging results into nested data s
 date = 2022-05-01T19:30:00+00:00
 updated = 2022-05-01T19:30:00+00:00
 draft = false
-weight = 30
+weight = 90
 sort_by = "weight"
 template = "docs/page.html"
 
@@ -173,7 +173,7 @@ users.map_with(:my_mapper).to_a
 
 ## Learn more
 
-* [Structs](/learn/core/%{version}/structs)
+* [Structs](/learn/core/structs)
 * [api::rom::Relation](.schema)
 * [api::rom::Relation](.auto_struct)
 * [api::rom::Relation](.struct_namespace)

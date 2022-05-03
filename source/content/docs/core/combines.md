@@ -4,7 +4,7 @@ description = "Reliably combine and construct complex nested data structures."
 date = 2022-05-01T19:30:00+00:00
 updated = 2022-05-01T19:30:00+00:00
 draft = false
-weight = 30
+weight = 60
 sort_by = "weight"
 template = "docs/page.html"
 
@@ -14,8 +14,8 @@ toc = true
 top = false
 +++
 
-Combines are a feature provided by [relations](/learn/core/%{version}/relations)
-that take advantage of [associations](/learn/core/%{version}/associations)
+Combines are a feature provided by [relations](/learn/core/relations)
+that take advantage of [associations](/learn/core/associations)
 between relations to reliably merge (aka combine) and construct complex nested
 data structures.
 
@@ -31,7 +31,7 @@ query performance problems.
 
 {% info() %}
   Before you can combine relations an association has to be configured in
-  the relations' schema. See [associations](/learn/core/%{version}/associations)
+  the relations' schema. See [associations](/learn/core/associations)
   for more details.
 {% end %}
 

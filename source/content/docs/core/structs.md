@@ -4,7 +4,7 @@ description = "Types with attribute readers to represent data in your applicatio
 date = 2022-05-01T19:30:00+00:00
 updated = 2022-05-01T19:30:00+00:00
 draft = false
-weight = 30
+weight = 80
 sort_by = "weight"
 template = "docs/page.html"
 
