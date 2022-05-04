@@ -14,25 +14,50 @@ toc = true
 top = false
 +++
 
-Commands are used to make changes in your data. Every adapter provides its own command
-specializations, that can use database-specific features.
+Commands are used to make changes in your data. Every adapter provides its own
+command specializations, that can use database-specific features.
 
 Core commands include following types:
 
-* `:create` - a command which inserts new tuples
-* `:update` - a command which updates existing tuples
-* `:delete` - a command which deletes existing tuples
+* `Create` - a command which inserts new tuples
+* `Update` - a command which updates existing tuples
+* `Delete` - a command which deletes existing tuples
 
 ## Working with commands
 
-You can get a command object via `Relation#command` interface. All core command types are
-supported by this method.
+You can get a command object via `rtm::Relation::command` interface.
+All core command types are supported by this method.
 
 Assuming you have a users relation available:
 
-### `:create`
+### `Create`
 
-{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+{% fenced_code_tab(tabs=["rust", "ruby"]) %}
+
+```rust
+// inserting a single tuple
+rtm!(relation=Users, type = CommandCreate, alias = create_user, ext::crate::function())]
+Users::create_user(whatever-sea-sequel-accepts("name", "Jane"));
+//
+// OR
+//
+#[rtm(relation=Users, type = CommandCreate)]
+fn create() { /*...*/ };
+Users::create(whatever-sea-sequel-accepts("name", "Jane"))
+//
+// OR (do we really need this alternative)
+//
+let create_user = Users::command("create_user");
+create_user.call(whatever-sea-sequel-accepts("name", "Jane"))
+
+// inserting a multiple tuples
+// Implementation:
+// - https://blog.yoshuawuyts.com/optimizing-hashmaps-even-more/
+create_user = Users::command("create");
+create_user.call(whatever-sea-sequel-accepts([("name", "Jane"), { name: "John" }])
+```
+
+---
 
 ```ruby
 # inserting a single tuple
@@ -46,23 +71,9 @@ create_user = users.command(:create, result: :many)
 create_user.call([{ name: "Jane" }, { name: "John" }])
 ```
 
----
-
-```rust
-# inserting a single tuple
-create_user = users.command(:create)
-
-create_user.call(name: "Jane")
-
-# inserting a multiple tuples
-create_user = users.command(:create, result: :many)
-
-create_user.call([{ name: "Jane" }, { name: "John" }])
-```
-
 {% end %}
 
-### `:update`
+### `Update`
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
 
@@ -82,7 +93,7 @@ update_user.call(name: "Jane Doe")
 
 {% end %}
 
-### `:delete`
+### `Delete`
 
 {% fenced_code_tab(tabs=["ruby", "rust"]) %}
 
