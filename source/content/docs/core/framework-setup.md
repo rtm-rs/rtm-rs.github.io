@@ -101,9 +101,14 @@ let container = rtm::Container::new(configuration);
 //
 container.configure.relation(OneOfMyRelations)
 container.configure.relation(AnotherOfMyRelations)
-// Implementation hints: https://stackoverflow.com/a/57419729 or https://stackoverflow.com/a/30540869 or https://stackoverflow.com/a/25182801
-container.configure.command("alias1", user_create); // Can we add to `inventory` without an alias/name?
-container.configure.mapper("alias2", use_mapper) // Do we have to be able to run the command/mapper individually
+// Implementation hints:
+// - https://stackoverflow.com/a/57419729 or
+// - https://stackoverflow.com/a/30540869 or
+// - https://stackoverflow.com/a/25182801
+//
+// NOTE: Outside of a proc-macro we cannot create an alias function.
+container.configure.command(user_create); // Can we add to `inventory` without an alias/name?
+container.configure.mapper(use_mapper) // Do we have to be able to run the command/mapper individually
 ```
 
 ---
