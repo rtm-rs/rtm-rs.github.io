@@ -211,11 +211,12 @@ end
 
 Keep in mind with this crate-strategy:
 
-1. each member of a component must be located within a module matching the component name:
+1. each member of a component must be located within a module matching the
+   component name:
 
-  - `relations`
-  - `commands`
-  - `mappers`
+   - `relations`
+   - `commands`
+   - `mappers`
 
 2. All types (relations) and functions (commands and mapper) are registered.
 
@@ -357,8 +358,31 @@ container = ROM.container(configuration)
 mod persistence {
   mod commands {
 
-    #[rtm(relation = Users, type = CommandsCreate, alias = "short")]
-    fn create_user_command(self: impl rtm::Relation, data: impl HashMap) {
+    // Command execution order is set in the implementation of the Arbiter
+    // trait logic.
+    #[derive(rtm::Create)] // Update or Delete commands
+    // Alias is the registered name of the command
+    // Fields of the relation are added to this struct.
+    // The order in which fields are initialised matters - not the order they
+    // are declared
+    #[rtm(relation = Users, alias = "create_user", result = one)] // or `result = many`
+    struct MakeUser {
+      make_account: UserAccount ,
+      create_profile: UserProfile,
+    }
+
+    // These are not commands
+    struct UserAccount {
+      account_id: String,
+      account_type: String
+    }
+    struct UserProfile {
+      nick_name: String,
+      email: String
+    }
+
+    // By convention this function is imported.  Error if not found.
+    fn make_user(self: MakeUser) {
       // somethings with `mine` and `too` where too has field data
       // self // is the relation
       // self.configuration.adapter
@@ -367,6 +391,9 @@ mod persistence {
       // Using `self.connection` would be an anti-pattern for CQRS, but
       // maybe required in other cases.
     }
+    // Implements:
+    //
+
     // Implementation:
     // https://stackoverflow.com/a/57419729 or
     // https://stackoverflow.com/a/30540869 or
@@ -376,12 +403,12 @@ mod persistence {
     //   name: &'static str,
     //   call: fn(),
     // }
-    // impl rtm::Sql::Commands::Create for Users {
-    //   fn short(self, args: HashMap ) { self.update_user_command(args) }
+    // impl rtm::Sql::Commands::Create for MakeUser {
+    //   fn create_user(self, args: HashMap ) { self.make_user(args) }
     // };
-    // inventory::submit!(Cmd(name: "short", call: update_user_command));
+    // inventory::submit!(Cmd(name: "create_user", call: make_user));
     // inventory::collect!(Cmd);
-    // impl Users {
+    // impl MakeUser {
     //   fn commands() -> {
     //       let mut registry = BTreeMap::new();
     //       // Access the registry
@@ -395,9 +422,9 @@ mod persistence {
 }
 
 let users = Users { /* ... */ };
-let my_creation = users.short(HashMap::new("name", "Jane"));
-let my_creation = short(users, HashMap::new("name", "Jane"));
-let my_creation = if let Some(cmd) = users.commands().get("short"){
+let my_creation = users.create_user(HashMap::new("name", "Jane"));
+let my_creation = create_user(users, HashMap::new("name", "Jane"));
+let my_creation = if let Some(cmd) = users.commands().get("create_user"){
   (cmd.call)(users, HashMap::new("name", "Jane"));
 }
 
