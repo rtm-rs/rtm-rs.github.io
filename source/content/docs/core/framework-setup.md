@@ -147,7 +147,7 @@ These mechanisms do not clash.  However, it is a user responsibility to ensure
 a component is not registered more than once - by apply two mechanisms to a
 component.
 
-#### Crate inner-attribute: `#![rtm(...)]`
+#### Crate inner-attribute: `#![rtm(...)]` {#crate-inner-attribute}
 
 ***Pending resolution of:***
 
@@ -220,7 +220,7 @@ Keep in mind with this crate-strategy:
 
 2. All types (relations) and functions (commands and mapper) are registered.
 
-#### Module inner-attribute: `#![rtm(...)]`
+#### Module inner-attribute: `#![rtm(...)]` {#module-inner-attribute}
 
 The module inner attribute `#![rtm(...)]` registers all functions in the module[^2].
 By convention the table name is the `struct name` and detail of the `struct` is
@@ -266,7 +266,7 @@ container = ROM.container(configuration)
 
 {% end %}
 
-#### Function & enum/struct/type outer-attribute: `#[rtm(...)]`
+#### Function outer-attribute: `#[rtm(...)]` {#function-outer-attribute}
 
 The function outer-attribute `#[rtm(...)]` registers only the function or
 struct/enum/type the attribute is above.
@@ -519,15 +519,14 @@ end
 
 {% end %}
 
-
 #### Registering outside the namespace conventions
 
 You can also keep all components under modules different from the convention of
 `commands`, `mappers`, `relations`.  You can auto-register components using the
-[Module inner-attribute](#module-inner-attribute), or register components
-individually using the [Function out-attribute](#function-outer-attribute).
+[Module inner-attribute](module-inner-attribute), or register components
+individually using the [Function outer-attribute](function-outer-attribute).
 
-Only the [Crate inner-attribute](#crate-inner-attribute) auto-registration will
+Only the [Crate inner-attribute](crate-inner-attribute) auto-registration will
 not work.
 
 ## Relations
