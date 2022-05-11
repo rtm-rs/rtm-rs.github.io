@@ -74,17 +74,7 @@ Every method in a relation should return another relation, this happens automati
 whenever you use a query interface provided by adapters. In our example we use
 `rtm-sql`, let's define a relation view called `listing`, using the SQL query DSL:
 
-{% fenced_code_tab(tabs=["ruby", "rust"]) %}
-
-```ruby
-class Users < ROM::Relation
-  def listing
-    select(:id, :name, :email).order(:name)
-  end
-end
-```
-
----
+{% fenced_code_tab(tabs=["rust", "ruby"]) %}
 
 ```rust
 #[derive(rtm::Relation)]
@@ -112,6 +102,16 @@ impl Users {
     //       .await?
   }
 }
+```
+
+---
+
+```ruby
+class Users < ROM::Relation
+  def listing
+    select(:id, :name, :email).order(:name)
+  end
+end
 ```
 
 {% end %}
@@ -147,19 +147,7 @@ users.to_a
 
 To materialize a relation and retrieve just a single result, use `#one` or `#one`:
 
-{% fenced_code_tab(tabs=["ruby", "rust"]) %}
-
-```ruby
-# Produces a single result or nil if none found.
-# Raises an error if there are more than one.
-users.one
-
-# Produces a single tuple.
-# Raises an error if there are 0 results or more than one.
-users.one!
-```
-
----
+{% fenced_code_tab(tabs=["rust", "ruby"]) %}
 
 ```rust
 // Produces a single `Option` with `Some(type)` or `None` if none found.
@@ -169,6 +157,18 @@ users.one!()
 // Produces a Result with Option type Some(value) or `None` if none found.
 // Return a Result if there are 0 results or more than one.
 users.try_one!()
+```
+
+---
+
+```ruby
+# Produces a single result or nil if none found.
+# Raises an error if there are more than one.
+users.one
+
+# Produces a single tuple.
+# Raises an error if there are 0 results or more than one.
+users.one!
 ```
 
 {% end %}
