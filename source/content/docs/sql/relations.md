@@ -1,6 +1,6 @@
 +++
 title = "Relations"
-description = "The heart of ROM."
+description = "The heart of RTM."
 date = 2022-05-01T15:00:00+00:00
 updated = 2022-05-01T15:00:00+00:00
 draft = false
@@ -9,25 +9,39 @@ sort_by = "weight"
 template = "docs/page.html"
 
 [extra]
-lead = 'The heart of ROM.'
+lead = 'The heart of RTM.'
 toc = true
 top = false
 +++
 
 To define an SQL relation you can use the standard way of defining relations in
-ROM:
+RTM:
 
-{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+{% fenced_code_tab(tabs=["rust", "ruby"]) %}
 
-```ruby
-class Users < ROM::Relation[:sql]
-  schema(infer: true)
-end
+```rust
+#[derive(rtm::Relation)]
+#[rtm(adapter = sql, infer = true)] // `adapter = sql, infer = true` are defaults so could be omitted
+struct Users;
+
+impl Users {
+  async fn listing<C>(conn: &C ) -> Vec<UsersData>
+      where C: rtm::Connection
+  {
+    find!().order!(Name, ascending).all!(conn).await?;
+    // For Sea ORM:
+    // Users::find()
+    //       //.filter(users::Column::Name.contains("bob"))
+    //       .order_by_asc(users::Column::Name)
+    //       .all(conn)
+    //       .await?
+  }
+}
 ```
 
 ---
 
-```rust
+```ruby
 class Users < ROM::Relation[:sql]
   schema(infer: true)
 end
