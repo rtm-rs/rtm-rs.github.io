@@ -9,6 +9,7 @@
 
 ## Performance and ergonomics ideas
 
+- [Rust configuration example](https://blog.logrocket.com/configuration-management-in-rust-web-services/)
 - [Sub and super traits](https://users.rust-lang.org/t/solved-calling-a-default-subtrait-method-from-the-supertrait-default-method/39648/9?u=taqtiqa-mark)
 - [Vector/collection of trait objects](https://users.rust-lang.org/t/how-to-make-a-struct-that-holds-a-vector-collection-of-trait-objects/12829/7)
   - [Playground Poc - Vector](https://play.rust-lang.org/?gist=b5a3be0dc0127e22360726542a66b193&version=stable)
