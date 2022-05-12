@@ -7,6 +7,26 @@
 - Events transparent in RTM, user responsibility in Sequent and cqrs-es.
 - Ephemera
 
+## Performance and ergonomics ideas
+
+- [Sub and super traits](https://users.rust-lang.org/t/solved-calling-a-default-subtrait-method-from-the-supertrait-default-method/39648/9?u=taqtiqa-mark)
+- [Vector/collection of trait objects](https://users.rust-lang.org/t/how-to-make-a-struct-that-holds-a-vector-collection-of-trait-objects/12829/7)
+  - [Playground Poc - Vector](https://play.rust-lang.org/?gist=b5a3be0dc0127e22360726542a66b193&version=stable)
+  - [Playground PoC - HashMap](https://play.rust-lang.org/?gist=30ccb6b37e76afa72faf72be858c4121&version=stable)
+  - [HashMap with type erased keys](https://stackoverflow.com/questions/64838355/how-do-i-create-a-hashmap-with-type-erased-keys)
+  - [Clone solution](https://users.rust-lang.org/t/how-to-make-a-struct-that-holds-a-vector-collection-of-trait-objects/12829/10?u=taqtiqa-mark)
+- [Atomic Arcs and caching](https://vorner.github.io/2020/09/03/performance-cheating.html)
+  - [arc-swap](https://crates.io/crates/arc-swap)
+  - Use: RTM Configuration structures modelled on Sea-ORM.
+- [Dropping large data structures](https://abramov.io/rust-dropping-things-in-another-thread)
+  - Use: The large count of rows.
+- [Bumpalo](https://github.com/fitzgen/bumpalo)
+  - [Hide Bumpalo's lifetime parameter](https://blog.reverberate.org/2021/12/19/arenas-and-rust.html)
+  - [Areanas in Rust](https://manishearth.github.io/blog/2021/03/15/arenas-in-rust/)
+  - Use: Append-only memory pool. It only bumps a pointer to pre-allocated
+    memory. It doesn't support freeing or recycling of memory, other than via
+    destruction of the entire pool.
+
 ## Aggregates & Events
 
 Different implementations take different approaches:
