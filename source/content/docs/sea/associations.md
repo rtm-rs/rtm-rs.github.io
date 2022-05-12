@@ -473,8 +473,8 @@ All association types support this option.
 
 Check out API documentation:
 
-* [api::rom-sql::SQL/Schema](AssociationsDSL)
-* [api::rom-sql::SQL/Associations](OneToMany)
-* [api::rom-sql::SQL/Associations](OneToOne)
-* [api::rom-sql::SQL/Associations](ManyToOne)
-* [api::rom-sql::SQL/Associations](ManyToMany)
+- [api::rom-sql::SQL/Schema](AssociationsDSL)
+- [api::rom-sql::SQL/Associations](OneToMany)
+- [api::rom-sql::SQL/Associations](OneToOne)
+- [api::rom-sql::SQL/Associations](ManyToOne)
+- [api::rom-sql::SQL/Associations](ManyToMany)

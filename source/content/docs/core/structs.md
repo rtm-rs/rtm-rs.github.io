@@ -14,7 +14,14 @@ toc = true
 top = false
 +++
 
-Relations return plain hashes by default, but it's more common to use simple objects with attribute readers to represent data in your application. These objects should be treated as pure data structures, that don't have to be mutated at run-time, and don't depend on any external systems (such as mailers, API clients, message buses etc.). Their methods should only deal with the attributes they encapsulate. It's also common to use structs as aggregate roots, in which case they may provide methods to simplify accessing data represented by aggregate children.
+Relations return plain hashes by default, but it's more common to use simple
+objects with attribute readers to represent data in your application. These
+objects should be treated as pure data structures, that don't have to be mutated
+at run-time, and don't depend on any external systems (such as mailers, API
+clients, message buses etc.). Their methods should only deal with the attributes
+they encapsulate. It's also common to use structs as aggregate roots, in which
+case they may provide methods to simplify accessing data represented by
+aggregate children.
 
 You can work with structs in 3 different ways:
 
