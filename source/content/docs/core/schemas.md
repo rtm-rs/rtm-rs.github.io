@@ -75,7 +75,7 @@ defined as:
 
 ```rust
 #[derive(rtm::Relation)]
-#[rtm(adapter = sql, infer = true)]
+#[rtm(adapter = sql, interpolate = true)]
 struct Users;
 ```
 
@@ -91,11 +91,11 @@ end
 
 You can also **override inferred attributes**:
 
-{% fenced_code_tab(tabs=["ruby", "rust"]) %}
+{% fenced_code_tab(tabs=["rust", "ruby"]) %}
 
 ```rust
 #[derive(rtm::Relation)]
-#[rtm(adapter = sql, infer = true)]
+#[rtm(adapter = sql, interpolate = true)]
 struct Users {
   name: rtm::Types::MyCustomNameType,
 };

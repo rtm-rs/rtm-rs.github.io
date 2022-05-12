@@ -45,7 +45,7 @@ a relation class for it:
 
 ```rust
 #[derive(rtm::Relation)]
-#[rtm(adapter = sql, infer = true)] // `adapter = sql, infer = true` are defaults so could be omitted
+#[rtm(adapter = sql, interpolate = true)] // `adapter = sql, interpolate = true` are defaults so could be omitted
 struct Users;
 ```
 
@@ -61,11 +61,11 @@ end
 
 Notice a few things:
 
-- `rtm::Relation` uses `rtm(adapter = sql, infer = true)` attribute to resolve
+- `rtm::Relation` uses `rtm(adapter = sql, interpolate = true)` attribute to resolve
   a relation type for the `rtm-sql` adapter
 - `Users` type name is used by default to infer the `dataset` name and set it
   to `users`
-- `infer = true` means type fields are inferred from the database schema, and
+- `interpolate = true` means type fields are inferred from the database schema, and
   will include fields based on the table columns
 
 ### Relation methods
@@ -78,7 +78,7 @@ whenever you use a query interface provided by adapters. In our example we use
 
 ```rust
 #[derive(rtm::Relation)]
-#[rtm(adapter = sql, infer = true)] // `adapter = sql, infer = true` are defaults so could be omitted
+#[rtm(adapter = sql, interpolate = true)] // `adapter = sql, interpolate = true` are defaults so could be omitted
 struct Users;
 // Implements find!(){find!(Users)}, etc.
 

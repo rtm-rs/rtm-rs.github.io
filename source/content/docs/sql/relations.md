@@ -21,7 +21,7 @@ RTM:
 
 ```rust
 #[derive(rtm::Relation)]
-#[rtm(adapter = sql, infer = true)] // `adapter = sql, infer = true` are defaults so could be omitted
+#[rtm(adapter = sql, interpolate = true)] // `adapter = sql, interpolate = true` are defaults so could be omitted
 struct Users;
 
 impl Users {

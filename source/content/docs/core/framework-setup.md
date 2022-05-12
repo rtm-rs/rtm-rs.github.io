@@ -164,7 +164,7 @@ inner attribute, `#![rtm(...)]`, at the crate level:
 // The Top Level Module (TLM)
 mod rtm{ //This is a convention to workaround #41430 and #54726
   #![rtm(adapter = Memory, uri = "memory:///temp")]
-  // Using defaults: `infer = true` and `register = true`
+  // Using defaults: `interpolate = true` and `register = true`
   // Sets up:
   // pub use rtm::Configuration;
   // configuration = crate::rtm::Configuration::new(Memory, "memory:///temp");
@@ -225,7 +225,7 @@ Keep in mind with this crate-strategy:
 The module inner attribute `#![rtm(...)]` registers all functions in the module[^2].
 By convention the table name is the `struct name` and detail of the `struct` is
 then inferred from the table.
-Using `#![rtm(infer = false)]` will produce an error, for reasons we will cover later:
+Using `#![rtm(interpolate = false)]` will produce an error, for reasons we will cover later:
 
 {% fenced_code_tab(tabs=["rust", "ruby"]) %}
 
@@ -281,7 +281,7 @@ the function or struct/type follow the RTM conventions:
    - `map`,`maps`, `mapper` is registered as a mapper.
 1. infer the schema name and structure by convention.
 
-Using `#![rtm(infer = false)]` will not produce an error - this is useful when
+Using `#![rtm(interpolate = false)]` will not produce an error - this is useful when
 dealing with legacy datastores.
 
 ##### Enum/struct/type
