@@ -1,6 +1,6 @@
 +++
 title = "Framework setup"
-description = "For simple, quick'n'dirty scripts that need to access databases."
+description = "For simple, quick'n'easy scripts that need to access databases."
 date = 2022-05-01T19:30:00+00:00
 updated = 2022-05-01T19:30:00+00:00
 draft = false
@@ -9,62 +9,82 @@ sort_by = "weight"
 template = "docs/page.html"
 
 [extra]
-lead = "For simple, quick'n'dirty scripts that need to access databases."
+lead = "For simple, quick'n'easy scripts that need to access databases."
 toc = true
 top = false
 +++
 
-Quick style setup is suitable for simple, quick'n'dirty scripts that need to access databases, in a typical application setup, you want to break down individual component definitions, like relations or commands, into separate files and define them as explicit classes.
+Quick style setup is suitable for simple, quick'n'easy scripts that need to
+access databases, in a typical application setup, you want to break down
+individual component definitions, like relations or commands, into separate
+files and define them as explicit classes.
 
 {% note() %}
-    Framework integrations **take care of the setup for you**.
-    If you want to use RTM with a framework, please refer to specific
-    instructions for that framework.
+
+  Framework integrations **take care of the setup for you**. If you want to use
+  RTM with a framework, please refer to specific instructions for that
+  framework.
+
 {% end %}
 
 {% warning() %}
-It is not currently possible for RTM macros and attributes (procedural
-macros) to use crate local state.
-This is tracked in [issue #44034](https://github.com/rust-lang/rust/issues/44034).
-Consequently:
 
-1. Proc macros may not be run on every compilation, for instance if incremental
-   compilation is on and they are in a module that is clean
-2. There is no guarantee of ordering -- if `do_it!` needs data from all
-   `config!` invocations, that is a problem.
+  It is not currently possible for RTM macros and attributes (procedural
+  macros) to use crate local state.
+  This is tracked in [issue #44034](https://github.com/rust-lang/rust/issues/44034).
+  Consequently:
 
-For these reasons, and others, you must adopt the following pattern:
+  1. Proc macros may not be run on every compilation, for instance if incremental
+    compilation is on and they are in a module that is clean
+  2. There is no guarantee of ordering -- if `do_it!` needs data from all
+    `config!` invocations, that is a problem.
 
-1. Write the RTM portions of your application in a separate lib crate.
-This has the advantage of forcing your application (domain) logic to be
-separated from how you persist data.
-2. In your RTM crate write the whole library within `mod rtm`.
-Specifically:
+  For these reasons, and others, you must adopt the following pattern:
 
-```rust
-// app-rtm/src/lib.rs
-mod rtm {
-  #![rtm(...)]
+  1. Write the RTM portions of your application in a separate lib crate.
+  This has the advantage of forcing your application (domain) logic to be
+  separated from how you persist data.
+  2. In your RTM crate write the whole library within `mod rtm{ ... }`.
+  Specifically:
 
-  // Everything else
+  ```rust
+  // app-rtm/src/lib.rs
+  mod rtm {
+    #![rtm(...)]
 
-}
-```
+    // Everything else
+
+  }
+  ```
 
 {% end %}
 
 ## Flat-style Setup
 
 To do setup in flat style, create a `rtm::Configuration` type.
-This is the same object that gets yielded into your block in block-style setup,
+This is the same object that gets passed in builder-style setup,
 so the API is identical.
 
 {% fenced_code_tab(tabs=["rust", "ruby"]) %}
 
 ```rust
+#![rtm()] // Set up the following
+use once_cell::sync::OnceCell;
+use dotenv::dotenv;
+
+static RTM_CONFIGURATION: OnceCell<rtm::Configuration> = OnceCell::new();
+// Read the database environment from the `.env` file
+dotenv().ok();
+let database_url = dotenv::var("DATABASE_URL")?;
+
+// The feature flag "sql-sea" determines the ORM used by the `Sql` adapter
+let db = rtm::connect(Sql, database_url).await?;
+RTM_CONFIGURATION.set(db).unwrap();
+
+// This nest call implements the above
 let configuration = rtm::Configuration::new("memory://test");
-let container = ;
-container.configuration.relation(User)
+let capsule = rtm::Capsule::new(configuration);
+capsule.configuration.relation(Users);
 // ... etc
 ```
 
@@ -107,8 +127,10 @@ container.configure.relation(AnotherOfMyRelations)
 // - https://stackoverflow.com/a/25182801
 //
 // NOTE: Outside of a proc-macro we cannot create an alias function.
-container.configure.command(user_create); // Can we add to `inventory` without an alias/name?
-container.configure.mapper(use_mapper) // Do we have to be able to run the command/mapper individually
+// Can we add to `inventory` without an alias/name?
+container.configure.command(user_create);
+// Do we have to be able to run the command/mapper individually
+container.configure.mapper(user_mapper);
 ```
 
 ---
@@ -621,9 +643,9 @@ end
 ---
 
 ```rust
-class CreateUser < ROM::Commands::Create[:memory]
-
-end
+#[derive(Create)]
+#[rtm(adapter = memory, relation = Users)]
+struct CreateUser;
 ```
 
 {% end %}
@@ -647,19 +669,20 @@ end
 ---
 
 ```rust
-struct CreateUser
-impl rtm::Commands::Create<Memory> for CreateUser;
-CreateUser::register_as("create");
-CreateUser::relation(Users);
-CreateUser::result();
+#[derive(rtm::Create)]
+#[rtm(adapter = memory, relation = Users, alias = my_create)]
+struct CreateUser;
+let user = User{/*...*/};
+CreateUser::my_create(user);
 ```
 
 {% end %}
 
 {% info() %}
-Typically, you're going to use the [repository command interface and changesets](/repositories/quick-start);
-custom command types are useful when the built-in command support in
-repositories doesn't meet your requirements.
+
+  Typically, you use the [repository command interface and changesets](/docs/repositories/quick-start/). Custom command types are useful when the built-in
+  command support in repositories doesn't meet your requirements, or when you require additional throughput.
+
 {% end %}
 
 ### Footnotes
