@@ -1,6 +1,12 @@
 +++
 title = "Rust Type Mapper"
 
+# This determines whether to insert a link for each header like the ones you can see on this site if you hover over
+# a header.
+# The default template can be overridden by creating an `anchor-link.html` file in the `templates` directory.
+# This value can be "left", "right" or "none".
+insert_anchor_links = "right"
+
 # The homepage contents
 [extra]
 lead = '<b><a href="https://github.com/rtm-rs/">RTM</a></b> is an open-source persistence and mapping toolkit for Rust built for speed and simplicity. Modelled on <a href="https://github.com/rom-rb/">ROM</a>.'
@@ -59,11 +65,11 @@ title = "Pragmatic"
 content = "We recognize there are no solutions, only tradeoffs.  We aim to provide the flexibility to allow you to make the tradeoffs you prefer."
 
 [[extra.list]]
-title = "Flexible & Correct"
-content = "We support proto-type and production use cases as first class citizens."
+title = "Flexible & Welcoming"
+content = "We support prototype and production use cases as first class citizens. Likewise new users are as welcome as veterans."
 
 [[extra.list]]
 title = "Fast by choice ⚡️"
-content = "We value performance.  While no 'code' is faster than 'no code', we recognize improving performance requires iterating on the tradeoffs being made."
+content = "We value performance.  We also recognize improving performance requires iterating on the tradeoffs being made."
 
 +++
